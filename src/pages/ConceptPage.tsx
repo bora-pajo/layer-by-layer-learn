@@ -71,13 +71,27 @@ const ConceptPage = () => {
         back
         eyebrow={`${group.title} · ${concept.number}`}
         right={
-          <button
-            onClick={() => setShowJump(true)}
-            aria-label="Jump to concept"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
-          >
-            <List className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowTabs(true)}
+              aria-label="Your tabbed pages"
+              className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
+            >
+              <StickyNote className="h-4 w-4" />
+              {tabs.length > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-accent px-1 text-[9px] font-mono font-bold text-accent-foreground">
+                  {tabs.length}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => setShowJump(true)}
+              aria-label="Jump to concept"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
+            >
+              <List className="h-4 w-4" />
+            </button>
+          </div>
         }
       />
 
