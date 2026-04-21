@@ -20,7 +20,7 @@ export function ConceptVisual({ kind, hue = 78, className = "", large = false }:
   const surface = "hsl(var(--surface-2))";
   const lime = "hsl(78 95% 62%)";
 
-  const size = large ? "h-64 sm:h-80" : "h-36";
+  const size = large ? "h-48 sm:h-64" : "h-32";
 
   return (
     <div className={`relative w-full ${size} overflow-hidden rounded-2xl ${className}`}>
