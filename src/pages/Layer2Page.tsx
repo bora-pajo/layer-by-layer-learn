@@ -1,22 +1,30 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, NotebookPen } from "lucide-react";
 import { LayerHeader } from "@/components/LayerHeader";
 import { JumpDrawer } from "@/components/JumpDrawer";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
+import { useTabs } from "@/hooks/useTabs";
 
 /**
  * Layer 2 — "A little more" sheet. Cream paper, eyebrow, title, brief,
- * key term chips, related-concept card, bottom CTAs: Read full text + Skip.
+ * key term chips, related-concept card, sticky-tab + margin note,
+ * bottom CTAs: Read full text + Skip.
  */
 const Layer2Page = () => {
   const { id = "" } = useParams();
   const navigate = useNavigate();
   const concept = getConcept(id);
   const [showJump, setShowJump] = useState(false);
+  const { isTabbed, toggleTab, getNote, setNote: persistNote } = useTabs();
+  const [showNotes, setShowNotes] = useState(false);
+  const [note, setNoteState] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setShowNotes(false);
+    if (concept) setNoteState(getNote(concept.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {
@@ -32,6 +40,7 @@ const Layer2Page = () => {
 
   const { next } = getAdjacent(concept.id);
   const group = chapter.groups.find((g) => g.id === concept.groupId)!;
+  const tabbed = isTabbed(concept.id);
 
   // Pick a "if you like this, see…" — next concept in same group, or next overall
   const related =
@@ -50,7 +59,7 @@ const Layer2Page = () => {
         showTab
       />
 
-      <section className="px-6 pt-6 pb-40">
+      <section className="px-6 pt-6 pb-44">
         <div className="flex items-center gap-2">
           <span
             className="h-1.5 w-1.5 rounded-full"
@@ -105,11 +114,84 @@ const Layer2Page = () => {
             </div>
           </Link>
         )}
+
+        {/* Sticky-tab + margin note */}
+        <div className="mt-8">
+          <button
+            onClick={() => toggleTab(concept.id)}
+            aria-pressed={tabbed}
+            className="group relative flex w-full items-center gap-3 overflow-hidden rounded-2xl bg-surface px-4 py-4 text-left shadow-soft active:scale-[0.99] transition-transform"
+            style={{ paddingLeft: "2.25rem" }}
+          >
+            {/* Post-it tab sticking out from the left edge */}
+            <span
+              aria-hidden
+              className={`absolute left-[-6px] top-1/2 -translate-y-1/2 h-12 w-7 rounded-sm shadow-[2px_2px_0_rgba(0,0,0,0.18)] transition-all ${
+                tabbed ? "rotate-[-3deg]" : "rotate-[-8deg] opacity-60 group-hover:opacity-100 group-hover:rotate-[-3deg]"
+              }`}
+              style={{
+                background: tabbed ? accent : `hsl(${concept.hue} 50% 75%)`,
+              }}
+            />
+            <div className="flex-1">
+              <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+                {tabbed ? "Tabbed" : "Mark this page"}
+              </div>
+              <div className="mt-0.5 font-display text-[15px] text-ink">
+                {tabbed ? "This page is tabbed" : "Stick a tab on this page"}
+              </div>
+            </div>
+            <span className="font-mono text-[10px] tracking-widest text-ink-muted">
+              {tabbed ? "REMOVE" : "ADD"}
+            </span>
+          </button>
+
+          <button
+            onClick={() => setShowNotes((s) => !s)}
+            aria-expanded={showNotes}
+            className={`mt-2 flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 transition-colors ${
+              showNotes
+                ? "bg-surface text-ink shadow-soft"
+                : "bg-surface-2 text-ink-soft hover:text-ink"
+            }`}
+          >
+            <NotebookPen className="h-4 w-4" />
+            <span className="font-display text-sm">
+              {note ? "Edit your note" : "Add a margin note"}
+            </span>
+          </button>
+
+          {showNotes && (
+            <div className="mt-3 rounded-2xl bg-surface p-4 shadow-soft animate-fade-up">
+              <div className="flex items-center justify-between">
+                <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+                  Margin note
+                </div>
+                <span className="font-mono text-[9px] tracking-widest uppercase text-ink-muted">
+                  Saved locally
+                </span>
+              </div>
+              <textarea
+                value={note}
+                onChange={(e) => {
+                  setNoteState(e.target.value);
+                  persistNote(concept.id, e.target.value);
+                }}
+                placeholder="Write what this concept sparks for you…"
+                rows={4}
+                className="mt-2 w-full resize-none rounded-xl bg-surface-2 px-3 py-2 font-display text-[15px] leading-relaxed text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/40"
+              />
+              <div className="mt-2 text-[11px] text-ink-muted">
+                Sign in (coming soon) to sync across devices.
+              </div>
+            </div>
+          )}
+        </div>
       </section>
 
       {/* Bottom action bar */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-30 px-5 pt-3"
+        className="absolute bottom-0 left-0 right-0 z-30 px-5 pt-3 glass border-t border-border"
         style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 1rem)" }}
       >
         <div className="flex items-center justify-center gap-3">
