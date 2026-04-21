@@ -20,6 +20,8 @@ export default {
         foreground: "hsl(var(--foreground))",
         paper: "hsl(var(--paper))",
         "paper-deep": "hsl(var(--paper-deep))",
+        surface: "hsl(var(--surface))",
+        "surface-2": "hsl(var(--surface-2))",
         ink: {
           DEFAULT: "hsl(var(--ink))",
           soft: "hsl(var(--ink-soft))",

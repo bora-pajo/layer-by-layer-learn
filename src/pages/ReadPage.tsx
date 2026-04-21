@@ -1,44 +1,42 @@
 import { Link } from "react-router-dom";
-import { TopBar } from "@/components/TopBar";
+import { MobileHeader } from "@/components/MobileHeader";
+import { BottomNav } from "@/components/BottomNav";
 import { chapter } from "@/content/chapter1";
 import { ArrowUpRight } from "lucide-react";
 
 const ReadPage = () => {
   return (
-    <div className="min-h-screen paper-grain">
-      <TopBar />
+    <div className="phone-shell pb-safe">
+      <MobileHeader eyebrow={`Read mode · Chapter ${chapter.number}`} title={chapter.title} />
 
-      <article className="mx-auto max-w-3xl px-6 py-16 md:py-24">
-        <div className="font-mono text-[10px] tracking-[0.25em] text-ink-muted">
-          READ MODE · CHAPTER {chapter.number}
-        </div>
-        <h1 className="mt-4 font-display text-4xl leading-tight text-ink text-balance md:text-6xl">
+      <article className="px-5 pt-6">
+        <h1 className="font-display text-3xl leading-tight text-ink text-balance">
           {chapter.title}
         </h1>
-        <p className="mt-6 font-display text-xl italic text-ink-soft text-pretty md:text-2xl">
+        <p className="mt-3 font-display text-base italic text-ink-soft text-pretty">
           {chapter.subtitle}
         </p>
 
-        <div className="mt-16 space-y-20">
+        <div className="mt-10 space-y-12">
           {chapter.groups.map((group) => (
-            <section key={group.id} className="scroll-mt-24" id={group.id}>
-              <div className="flex items-center gap-3">
+            <section key={group.id} id={group.id} className="scroll-mt-20">
+              <div className="flex items-center gap-2">
                 <span
                   className="h-2 w-2 rounded-full"
-                  style={{ background: `hsl(${group.hue} 65% 52%)` }}
+                  style={{ background: `hsl(${group.hue} 90% 65%)` }}
                 />
                 <span className="font-mono text-[10px] tracking-widest text-ink-muted">
-                  REGION {group.number}
+                  {group.number}
                 </span>
               </div>
-              <h2 className="mt-4 font-display text-3xl text-ink text-balance md:text-4xl">
+              <h2 className="mt-2 font-display text-2xl text-ink text-balance">
                 {group.title}
               </h2>
-              <p className="mt-3 font-display text-lg italic text-ink-soft text-pretty">
+              <p className="mt-1 font-display text-sm italic text-ink-soft text-pretty">
                 {group.tagline}
               </p>
 
-              <div className="mt-10 space-y-14">
+              <div className="mt-6 space-y-10">
                 {group.concepts.map((c) => (
                   <div key={c.id} className="reading-column">
                     <div className="flex items-baseline gap-3">
@@ -48,16 +46,16 @@ const ReadPage = () => {
                       <span className="h-px flex-1 bg-border" />
                       <Link
                         to={`/c/${c.id}`}
-                        className="inline-flex items-center gap-1 text-[11px] text-ink-muted hover:text-accent"
+                        className="inline-flex items-center gap-1 text-[10px] text-accent"
                       >
-                        view in atlas <ArrowUpRight className="h-3 w-3" />
+                        atlas <ArrowUpRight className="h-3 w-3" />
                       </Link>
                     </div>
-                    <h3 className="mt-3 font-display text-2xl text-ink text-balance">{c.title}</h3>
+                    <h3 className="mt-2 font-display text-xl text-ink text-balance">{c.title}</h3>
                     {c.full.map((p, i) => (
                       <p
                         key={i}
-                        className="mt-4 font-display text-lg leading-[1.75] text-ink-soft text-pretty"
+                        className="mt-3 font-display text-[16px] leading-[1.7] text-ink-soft text-pretty"
                       >
                         {p}
                       </p>
@@ -69,10 +67,12 @@ const ReadPage = () => {
           ))}
         </div>
 
-        <div className="mt-24 border-t border-border pt-8 text-center text-xs text-ink-muted">
-          End of Chapter 01.
+        <div className="mt-16 mb-4 rounded-2xl border border-dashed border-border p-5 text-center">
+          <div className="font-display text-base text-ink">End of Chapter 01</div>
         </div>
       </article>
+
+      <BottomNav />
     </div>
   );
 };

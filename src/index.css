@@ -1,114 +1,97 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* ============================================================
-   The Atlas — Editorial design system for layered learning
-   Palette: Paper & Ink with deep ink blue + warm terracotta
+   The Atlas — Phone-first dark editorial system
+   Deep ink canvas · electric lime hero · soft violet accent
    ============================================================ */
 
 @layer base {
   :root {
-    /* Surfaces — warm paper with subtle warmth */
-    --background: 38 30% 96%;
-    --foreground: 220 30% 12%;
+    /* Surfaces */
+    --background: 240 12% 6%;
+    --foreground: 40 25% 96%;
 
-    --paper: 38 35% 94%;
-    --paper-deep: 36 28% 89%;
-    --ink: 220 30% 12%;
-    --ink-soft: 220 18% 28%;
-    --ink-muted: 220 12% 45%;
+    --paper: 240 12% 6%;
+    --paper-deep: 240 14% 4%;
+    --surface: 240 10% 10%;
+    --surface-2: 240 9% 13%;
 
-    --card: 38 40% 97%;
-    --card-foreground: 220 30% 12%;
+    --ink: 40 25% 96%;
+    --ink-soft: 40 14% 82%;
+    --ink-muted: 240 6% 58%;
 
-    --popover: 38 40% 97%;
-    --popover-foreground: 220 30% 12%;
+    --card: 240 10% 10%;
+    --card-foreground: 40 25% 96%;
 
-    /* Primary — deep ink blue */
-    --primary: 222 45% 18%;
-    --primary-foreground: 38 35% 96%;
+    --popover: 240 12% 8%;
+    --popover-foreground: 40 25% 96%;
 
-    /* Accent — terracotta ember (used sparingly) */
-    --accent: 14 65% 52%;
-    --accent-foreground: 38 35% 96%;
-    --accent-soft: 14 60% 92%;
+    /* Primary — bright paper-white for CTAs on dark */
+    --primary: 40 25% 96%;
+    --primary-foreground: 240 12% 6%;
 
-    /* Secondary — soft sage for supporting tags */
-    --secondary: 36 24% 88%;
-    --secondary-foreground: 220 30% 18%;
+    /* Accent — electric lime (the signature pop) */
+    --accent: 78 95% 62%;
+    --accent-foreground: 240 14% 6%;
+    --accent-soft: 78 60% 18%;
 
-    --muted: 36 22% 90%;
-    --muted-foreground: 220 12% 42%;
+    /* Secondary — soft violet (supporting energy) */
+    --secondary: 260 90% 70%;
+    --secondary-foreground: 240 14% 6%;
 
-    --destructive: 0 70% 45%;
-    --destructive-foreground: 38 35% 96%;
+    --muted: 240 8% 16%;
+    --muted-foreground: 240 6% 62%;
 
-    --border: 36 18% 84%;
-    --input: 36 18% 84%;
-    --ring: 222 45% 18%;
+    --destructive: 0 78% 60%;
+    --destructive-foreground: 40 25% 96%;
 
-    --radius: 0.75rem;
+    --border: 240 8% 18%;
+    --input: 240 8% 18%;
+    --ring: 78 95% 62%;
 
-    /* Concept group accent hues (HSL hue values used with --accent saturation/lightness) */
-    --hue-foundation: 200;
-    --hue-knowledge: 35;
-    --hue-popper: 14;
-    --hue-kuhn: 280;
-    --hue-methods: 160;
-    --hue-ai: 220;
-    --hue-ethics: 0;
-    --hue-bias: 45;
+    --radius: 1.25rem;
 
-    /* Editorial gradients */
-    --gradient-paper: linear-gradient(180deg, hsl(38 35% 96%) 0%, hsl(36 28% 92%) 100%);
-    --gradient-ink: linear-gradient(135deg, hsl(222 45% 18%) 0%, hsl(220 40% 10%) 100%);
-    --gradient-ember: linear-gradient(135deg, hsl(14 65% 52%) 0%, hsl(20 70% 58%) 100%);
+    /* Concept-region hues — punchy, modern */
+    --hue-foundation: 195;  /* cyan */
+    --hue-knowledge: 45;    /* amber */
+    --hue-popper: 12;       /* coral */
+    --hue-kuhn: 280;        /* violet */
+    --hue-methods: 160;     /* mint */
+    --hue-ai: 220;          /* electric blue */
+    --hue-ethics: 340;      /* magenta */
+    --hue-bias: 30;         /* tangerine */
 
-    /* Shadows — soft editorial depth */
-    --shadow-paper: 0 1px 2px hsl(220 30% 12% / 0.04), 0 8px 24px hsl(220 30% 12% / 0.06);
-    --shadow-lift: 0 2px 4px hsl(220 30% 12% / 0.06), 0 20px 50px hsl(220 30% 12% / 0.10);
-    --shadow-ink: 0 20px 60px hsl(222 45% 18% / 0.18);
+    /* Gradients */
+    --gradient-canvas: radial-gradient(120% 80% at 50% 0%, hsl(78 50% 18% / 0.35) 0%, hsl(240 12% 6%) 55%);
+    --gradient-hero: linear-gradient(135deg, hsl(78 95% 62%) 0%, hsl(160 90% 60%) 100%);
+    --gradient-violet: linear-gradient(135deg, hsl(260 90% 70%) 0%, hsl(290 85% 65%) 100%);
+    --gradient-ember: linear-gradient(135deg, hsl(12 90% 62%) 0%, hsl(340 85% 60%) 100%);
 
-    /* Motion */
+    /* Shadows — glowy on dark */
+    --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.4), 0 12px 30px hsl(0 0% 0% / 0.35);
+    --shadow-lift: 0 4px 8px hsl(0 0% 0% / 0.4), 0 24px 60px hsl(0 0% 0% / 0.45);
+    --shadow-glow: 0 0 0 1px hsl(78 95% 62% / 0.35), 0 12px 40px hsl(78 95% 62% / 0.18);
+
     --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 
-    --sidebar-background: 38 35% 96%;
-    --sidebar-foreground: 220 30% 12%;
-    --sidebar-primary: 222 45% 18%;
-    --sidebar-primary-foreground: 38 35% 96%;
-    --sidebar-accent: 36 22% 90%;
-    --sidebar-accent-foreground: 220 30% 18%;
-    --sidebar-border: 36 18% 84%;
-    --sidebar-ring: 222 45% 18%;
+    --sidebar-background: 240 12% 6%;
+    --sidebar-foreground: 40 25% 96%;
+    --sidebar-primary: 78 95% 62%;
+    --sidebar-primary-foreground: 240 14% 6%;
+    --sidebar-accent: 240 8% 16%;
+    --sidebar-accent-foreground: 40 25% 96%;
+    --sidebar-border: 240 8% 18%;
+    --sidebar-ring: 78 95% 62%;
   }
 
   .dark {
-    --background: 222 38% 8%;
-    --foreground: 38 30% 92%;
-    --paper: 222 35% 10%;
-    --paper-deep: 222 38% 7%;
-    --ink: 38 30% 92%;
-    --ink-soft: 38 20% 80%;
-    --ink-muted: 38 12% 60%;
-    --card: 222 35% 11%;
-    --card-foreground: 38 30% 92%;
-    --popover: 222 35% 11%;
-    --popover-foreground: 38 30% 92%;
-    --primary: 38 35% 92%;
-    --primary-foreground: 222 45% 12%;
-    --accent: 14 70% 58%;
-    --accent-foreground: 222 45% 12%;
-    --accent-soft: 14 40% 22%;
-    --secondary: 222 30% 16%;
-    --secondary-foreground: 38 30% 92%;
-    --muted: 222 28% 14%;
-    --muted-foreground: 38 12% 60%;
-    --border: 222 28% 18%;
-    --input: 222 28% 18%;
-    --ring: 38 35% 92%;
+    /* Same as :root — app is dark by default */
+    --background: 240 12% 6%;
+    --foreground: 40 25% 96%;
   }
 }
 
@@ -118,8 +101,18 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-feature-settings: "ss01", "ss02", "cv11";
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
   }
-  ::selection { background: hsl(var(--accent) / 0.25); color: hsl(var(--ink)); }
+  ::selection { background: hsl(var(--accent) / 0.35); color: hsl(var(--ink)); }
+
+  /* Hide scrollbars on horizontal scrollers but stay scrollable */
+  .scroll-x {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x mandatory;
+  }
+  .scroll-x::-webkit-scrollbar { display: none; }
 }
 
 @layer utilities {
@@ -130,52 +123,68 @@
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
 
-  .paper-grain {
-    background-color: hsl(var(--paper));
-    background-image:
-      radial-gradient(hsl(var(--ink) / 0.025) 1px, transparent 1px),
-      radial-gradient(hsl(var(--ink) / 0.015) 1px, transparent 1px);
-    background-size: 24px 24px, 16px 16px;
-    background-position: 0 0, 12px 12px;
+  /* Mobile shell — phone-shaped frame on larger screens, full-bleed on phones */
+  .phone-shell {
+    margin-inline: auto;
+    width: 100%;
+    max-width: 440px;
+    min-height: 100vh;
+    min-height: 100dvh;
+    position: relative;
+    background: hsl(var(--background));
+  }
+  @media (min-width: 768px) {
+    .phone-shell {
+      margin-block: 24px;
+      min-height: calc(100vh - 48px);
+      min-height: calc(100dvh - 48px);
+      border-radius: 38px;
+      border: 1px solid hsl(var(--border));
+      box-shadow: var(--shadow-lift);
+      overflow: hidden;
+    }
+    body { background: hsl(240 14% 4%); }
   }
 
-  .ink-rule {
-    background: linear-gradient(90deg, transparent, hsl(var(--ink) / 0.3), transparent);
-    height: 1px;
+  .canvas-glow { background: var(--gradient-canvas); }
+
+  .glass {
+    background: hsl(240 12% 6% / 0.78);
+    backdrop-filter: blur(16px) saturate(140%);
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
 
-  .concept-dot {
-    background: hsl(var(--accent));
-    box-shadow: 0 0 0 4px hsl(var(--accent) / 0.15), 0 0 0 8px hsl(var(--accent) / 0.06);
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-surface px-2.5 py-1 text-[10px] font-mono tracking-wider uppercase text-ink-muted;
   }
 
   .lift {
-    transition: transform 0.5s var(--ease-editorial), box-shadow 0.5s var(--ease-editorial);
+    transition: transform 0.4s var(--ease-editorial), box-shadow 0.4s var(--ease-editorial);
   }
-  .lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+  .lift:active { transform: scale(0.985); }
 
-  .reading-column { max-width: 68ch; }
-  .reading-column p { margin-bottom: 1.25em; }
+  .reading-column { max-width: 60ch; }
+
+  /* Safe area for bottom tab bar on iOS */
+  .pb-safe { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
+  .pt-safe { padding-top: calc(env(safe-area-inset-top)); }
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes draw-line {
-  from { stroke-dashoffset: 1000; }
-  to { stroke-dashoffset: 0; }
-}
 @keyframes pulse-soft {
   0%, 100% { opacity: 0.6; transform: scale(1); }
   50% { opacity: 1; transform: scale(1.08); }
 }
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
-.animate-fade-up { animation: fade-up 0.7s var(--ease-editorial) both; }
-.animate-fade-in { animation: fade-in 0.6s ease-out both; }
+.animate-fade-up { animation: fade-up 0.6s var(--ease-editorial) both; }
+.animate-fade-in { animation: fade-in 0.5s ease-out both; }
 .animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+.animate-float { animation: float 6s ease-in-out infinite; }

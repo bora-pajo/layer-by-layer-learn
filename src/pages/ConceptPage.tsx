@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { TopBar } from "@/components/TopBar";
+import { MobileHeader } from "@/components/MobileHeader";
+import { BottomNav } from "@/components/BottomNav";
 import { ConceptVisual } from "@/components/ConceptVisual";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
-import { ArrowLeft, ArrowRight, ChevronDown, BookOpen, Map } from "lucide-react";
+import { ArrowRight, ChevronDown, BookOpen, List, X } from "lucide-react";
 
 type Layer = 1 | 2 | 3;
 
@@ -14,15 +15,16 @@ const ConceptPage = () => {
   const concept = getConcept(id);
   const { markVisited } = useProgress();
   const [layer, setLayer] = useState<Layer>(1);
+  const [showJump, setShowJump] = useState(false);
 
   useEffect(() => {
     setLayer(1);
+    setShowJump(false);
     if (concept) markVisited(concept.id);
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  // Keyboard navigation
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.target instanceof HTMLElement && ["INPUT", "TEXTAREA"].includes(e.target.tagName)) return;
@@ -37,12 +39,13 @@ const ConceptPage = () => {
 
   if (!concept) {
     return (
-      <div className="min-h-screen paper-grain">
-        <TopBar />
-        <div className="mx-auto max-w-2xl px-6 py-32 text-center">
-          <h1 className="font-display text-3xl text-ink">Concept not found.</h1>
-          <Link to="/" className="mt-6 inline-block text-accent underline">Back to the atlas</Link>
+      <div className="phone-shell pb-safe">
+        <MobileHeader back title="Not found" />
+        <div className="px-6 py-20 text-center">
+          <h1 className="font-display text-2xl text-ink">Concept not found.</h1>
+          <Link to="/" className="mt-6 inline-block text-accent underline">Back to atlas</Link>
         </div>
+        <BottomNav />
       </div>
     );
   }
@@ -51,100 +54,81 @@ const ConceptPage = () => {
   const group = chapter.groups.find((g) => g.id === concept.groupId)!;
 
   return (
-    <div className="min-h-screen paper-grain">
-      <TopBar />
+    <div className="phone-shell pb-safe">
+      <MobileHeader
+        back
+        eyebrow={`${group.title} · ${concept.number}`}
+        right={
+          <button
+            onClick={() => setShowJump(true)}
+            aria-label="Jump to concept"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
+          >
+            <List className="h-4 w-4" />
+          </button>
+        }
+      />
 
-      {/* Breadcrumb */}
-      <nav aria-label="Breadcrumb" className="mx-auto max-w-5xl px-6 pt-8">
-        <ol className="flex flex-wrap items-center gap-2 text-xs text-ink-muted">
-          <li>
-            <Link to="/" className="inline-flex items-center gap-1.5 hover:text-ink">
-              <Map className="h-3.5 w-3.5" /> Atlas
-            </Link>
-          </li>
-          <li aria-hidden>·</li>
-          <li>
-            <Link to={`/#${group.id}`} className="hover:text-ink">{group.title}</Link>
-          </li>
-          <li aria-hidden>·</li>
-          <li className="font-mono tracking-widest text-ink">{concept.number}</li>
-          <li className="ml-auto font-mono text-[10px] tracking-widest">
-            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          </li>
-        </ol>
-      </nav>
+      {/* Position pill */}
+      <div className="px-5 pt-4">
+        <div className="flex items-center gap-2 font-mono text-[10px] tracking-widest text-ink-muted">
+          <span style={{ color: `hsl(${concept.hue} 90% 65%)` }}>●</span>
+          <span>LAYER {layer} OF 3</span>
+          <span className="ml-auto">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+        </div>
+      </div>
 
       {/* LAYER 1 — GLANCE */}
-      <section className="mx-auto max-w-5xl px-6 pt-10 pb-8 animate-fade-up">
-        <div className="flex items-center gap-3">
-          <span
-            className="h-2 w-2 rounded-full"
-            style={{ background: `hsl(${concept.hue} 65% 52%)` }}
-          />
-          <span className="font-mono text-[10px] tracking-[0.25em] text-ink-muted">
-            LAYER 1 · GLANCE
-          </span>
-        </div>
-
-        <h1 className="mt-4 font-display text-4xl leading-[1.05] text-ink text-balance md:text-6xl">
+      <section className="px-5 pt-4 animate-fade-up">
+        <h1 className="font-display text-3xl leading-[1.1] text-ink text-balance">
           {concept.title}
         </h1>
-        <p className="mt-6 max-w-3xl font-display text-2xl italic text-ink-soft text-pretty md:text-3xl">
+        <p className="mt-3 font-display text-lg italic text-ink-soft text-pretty">
           {concept.glance}
         </p>
-
-        <div className="mt-10">
+        <div className="mt-5">
           <ConceptVisual kind={concept.visual} hue={concept.hue} large />
         </div>
+      </section>
 
-        {/* Layer toggle */}
-        <div className="mt-12 flex flex-wrap items-center gap-3">
-          {layer === 1 && (
-            <button
-              onClick={() => setLayer(2)}
-              className="group inline-flex items-center gap-2 rounded-full bg-ink px-5 py-3 text-sm text-paper transition-transform hover:-translate-y-0.5"
-            >
-              Learn a little more
-              <ChevronDown className="h-4 w-4 transition-transform group-hover:translate-y-0.5" />
-            </button>
-          )}
-          {layer >= 2 && (
-            <button
-              onClick={() => setLayer(layer === 2 ? 3 : 2)}
-              className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-5 py-3 text-sm text-ink hover:border-ink"
-            >
-              <BookOpen className="h-4 w-4" />
+      {/* Action stack */}
+      <section className="px-5 pt-5 space-y-2">
+        {layer === 1 && (
+          <button
+            onClick={() => setLayer(2)}
+            className="group flex w-full items-center justify-between rounded-2xl bg-accent px-5 py-4 text-accent-foreground active:scale-[0.99] transition-transform"
+          >
+            <span className="font-display text-base font-medium">Learn a little more</span>
+            <ChevronDown className="h-5 w-5" />
+          </button>
+        )}
+        {layer >= 2 && (
+          <button
+            onClick={() => setLayer(layer === 2 ? 3 : 2)}
+            className="flex w-full items-center justify-between rounded-2xl border border-border bg-surface px-5 py-4 text-ink active:scale-[0.99] transition-transform"
+          >
+            <span className="font-display text-base">
               {layer === 2 ? "Read full text" : "Collapse to brief"}
-            </button>
-          )}
-          {next && (
-            <Link
-              to={`/c/${next.id}`}
-              className="ml-auto inline-flex items-center gap-2 text-sm text-ink-muted hover:text-ink"
-            >
-              Skip to next
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          )}
-        </div>
+            </span>
+            <BookOpen className="h-5 w-5" />
+          </button>
+        )}
       </section>
 
       {/* LAYER 2 — BRIEF */}
       {layer >= 2 && (
-        <section className="mx-auto max-w-5xl px-6 py-12 animate-fade-up">
-          <div className="rounded-2xl border border-border bg-card p-8 shadow-paper md:p-12">
-            <div className="font-mono text-[10px] tracking-[0.25em] text-ink-muted">
-              LAYER 2 · BRIEF
-            </div>
-            <p className="mt-4 reading-column font-display text-xl leading-relaxed text-ink text-pretty md:text-2xl">
+        <section className="px-5 pt-6 animate-fade-up">
+          <div className="rounded-3xl border border-border bg-surface p-5">
+            <div className="font-mono text-[10px] tracking-[0.2em] text-ink-muted">LAYER 2 · BRIEF</div>
+            <p className="mt-3 font-display text-lg leading-relaxed text-ink text-pretty">
               {concept.brief}
             </p>
             {concept.keyTerms && concept.keyTerms.length > 0 && (
-              <div className="mt-8 flex flex-wrap gap-2">
+              <div className="mt-4 flex flex-wrap gap-1.5">
                 {concept.keyTerms.map((t) => (
                   <span
                     key={t}
-                    className="rounded-full border border-ink/15 px-3 py-1 text-xs font-mono tracking-wide text-ink-soft"
+                    className="rounded-full border border-border bg-surface-2 px-2.5 py-1 text-[10px] font-mono tracking-wide text-ink-soft"
                   >
                     {t}
                   </span>
@@ -157,15 +141,13 @@ const ConceptPage = () => {
 
       {/* LAYER 3 — FULL */}
       {layer >= 3 && (
-        <section className="mx-auto max-w-3xl px-6 py-16 animate-fade-up">
-          <div className="font-mono text-[10px] tracking-[0.25em] text-ink-muted">
-            LAYER 3 · FULL TEXT
-          </div>
-          <div className="mt-6 reading-column">
+        <section className="px-5 pt-6 animate-fade-up">
+          <div className="font-mono text-[10px] tracking-[0.2em] text-ink-muted">LAYER 3 · FULL TEXT</div>
+          <div className="mt-3 reading-column">
             {concept.full.map((p, i) => (
               <p
                 key={i}
-                className="font-display text-lg leading-[1.75] text-ink-soft text-pretty md:text-xl"
+                className="mb-4 font-display text-[17px] leading-[1.7] text-ink-soft text-pretty"
               >
                 {p}
               </p>
@@ -175,61 +157,86 @@ const ConceptPage = () => {
       )}
 
       {/* Footer nav */}
-      <nav className="mx-auto mt-12 max-w-5xl border-t border-border px-6 py-10">
-        <div className="grid gap-4 md:grid-cols-2">
+      <nav className="px-5 pt-10 pb-4">
+        <div className="grid grid-cols-2 gap-2">
           {prev ? (
             <Link
               to={`/c/${prev.id}`}
-              className="lift group rounded-xl border border-border bg-card p-5"
+              className="lift rounded-2xl border border-border bg-surface p-3"
             >
-              <div className="flex items-center gap-2 text-xs text-ink-muted">
-                <ArrowLeft className="h-3.5 w-3.5" /> Previous
-              </div>
-              <div className="mt-2 font-display text-lg text-ink group-hover:text-accent transition-colors">
-                {prev.title}
-              </div>
+              <div className="text-[10px] font-mono tracking-widest text-ink-muted">PREV</div>
+              <div className="mt-1 font-display text-sm text-ink line-clamp-2">{prev.title}</div>
             </Link>
           ) : <div />}
           {next ? (
             <Link
               to={`/c/${next.id}`}
-              className="lift group rounded-xl border border-border bg-card p-5 text-right"
+              className="lift rounded-2xl bg-accent text-accent-foreground p-3 text-right"
             >
-              <div className="flex items-center justify-end gap-2 text-xs text-ink-muted">
-                Next <ArrowRight className="h-3.5 w-3.5" />
+              <div className="text-[10px] font-mono tracking-widest opacity-70 flex items-center justify-end gap-1">
+                NEXT <ArrowRight className="h-3 w-3" />
               </div>
-              <div className="mt-2 font-display text-lg text-ink group-hover:text-accent transition-colors">
-                {next.title}
-              </div>
+              <div className="mt-1 font-display text-sm line-clamp-2">{next.title}</div>
             </Link>
           ) : <div />}
         </div>
-
-        {/* Jump-ahead */}
-        <details className="mt-10 group">
-          <summary className="cursor-pointer list-none">
-            <div className="flex items-center justify-between border-y border-border py-4 text-sm">
-              <span className="font-mono text-[10px] tracking-widest text-ink-muted">JUMP AHEAD</span>
-              <ChevronDown className="h-4 w-4 transition-transform group-open:rotate-180" />
-            </div>
-          </summary>
-          <ul className="mt-4 grid gap-1 sm:grid-cols-2">
-            {allConcepts.map((c) => (
-              <li key={c.id}>
-                <Link
-                  to={`/c/${c.id}`}
-                  className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm hover:bg-muted ${
-                    c.id === concept.id ? "bg-muted" : ""
-                  }`}
-                >
-                  <span className="font-mono text-[10px] text-ink-muted w-10">{c.number}</span>
-                  <span className="text-ink">{c.title}</span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </details>
       </nav>
+
+      {/* Jump-ahead drawer */}
+      {showJump && (
+        <div
+          className="absolute inset-0 z-50 animate-fade-in"
+          onClick={() => setShowJump(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="absolute inset-0 bg-paper-deep/80" />
+          <div
+            className="absolute bottom-0 left-0 right-0 rounded-t-3xl border-t border-border bg-surface max-h-[80%] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+            style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+              <div className="font-display text-lg text-ink">Jump ahead</div>
+              <button
+                onClick={() => setShowJump(false)}
+                aria-label="Close"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-ink"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <ul className="overflow-y-auto px-2 py-2">
+              {chapter.groups.map((g) => (
+                <li key={g.id} className="mb-3">
+                  <div className="px-3 pt-2 pb-1 flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: `hsl(${g.hue} 90% 65%)` }} />
+                    <span className="font-mono text-[10px] tracking-widest text-ink-muted">{g.title}</span>
+                  </div>
+                  <ul>
+                    {g.concepts.map((c) => (
+                      <li key={c.id}>
+                        <Link
+                          to={`/c/${c.id}`}
+                          onClick={() => setShowJump(false)}
+                          className={`flex items-center gap-3 rounded-xl px-3 py-2.5 ${
+                            c.id === concept.id ? "bg-accent/15 text-ink" : "text-ink-soft"
+                          }`}
+                        >
+                          <span className="font-mono text-[10px] text-ink-muted w-10">{c.number}</span>
+                          <span className="font-display text-sm">{c.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
+      <BottomNav />
     </div>
   );
 };
