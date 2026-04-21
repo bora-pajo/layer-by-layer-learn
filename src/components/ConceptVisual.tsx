@@ -279,7 +279,7 @@ function render(
         </g>
       );
 
-
+    case "spectrum":
       return (
         <g>
           {Array.from({ length: 24 }).map((_, i) => (
