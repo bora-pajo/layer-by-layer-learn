@@ -5,7 +5,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { ConceptVisual } from "@/components/ConceptVisual";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
-import { ArrowRight, ChevronDown, BookOpen, List, X } from "lucide-react";
+import { ArrowRight, ChevronDown, BookOpen, List, X, Bookmark, BookmarkCheck, NotebookPen } from "lucide-react";
 
 type Layer = 1 | 2 | 3;
 
