@@ -83,7 +83,7 @@ const Layer2Page = () => {
             {concept.keyTerms.map((t) => (
               <span
                 key={t}
-                className="rounded-full px-3 py-1 text-[12px] font-display"
+                className="rounded-full px-3 py-1 text-[12px] font-display dark:text-ink"
                 style={{
                   background: `hsl(${concept.hue} 80% 94%)`,
                   color: accent,
