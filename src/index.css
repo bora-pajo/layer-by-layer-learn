@@ -1,105 +1,181 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* ============================================================
+   The Atlas — Editorial design system for layered learning
+   Palette: Paper & Ink with deep ink blue + warm terracotta
+   ============================================================ */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Surfaces — warm paper with subtle warmth */
+    --background: 38 30% 96%;
+    --foreground: 220 30% 12%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --paper: 38 35% 94%;
+    --paper-deep: 36 28% 89%;
+    --ink: 220 30% 12%;
+    --ink-soft: 220 18% 28%;
+    --ink-muted: 220 12% 45%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --card: 38 40% 97%;
+    --card-foreground: 220 30% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --popover: 38 40% 97%;
+    --popover-foreground: 220 30% 12%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Primary — deep ink blue */
+    --primary: 222 45% 18%;
+    --primary-foreground: 38 35% 96%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Accent — terracotta ember (used sparingly) */
+    --accent: 14 65% 52%;
+    --accent-foreground: 38 35% 96%;
+    --accent-soft: 14 60% 92%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Secondary — soft sage for supporting tags */
+    --secondary: 36 24% 88%;
+    --secondary-foreground: 220 30% 18%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --muted: 36 22% 90%;
+    --muted-foreground: 220 12% 42%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --destructive: 0 70% 45%;
+    --destructive-foreground: 38 35% 96%;
 
-    --radius: 0.5rem;
+    --border: 36 18% 84%;
+    --input: 36 18% 84%;
+    --ring: 222 45% 18%;
 
-    --sidebar-background: 0 0% 98%;
+    --radius: 0.75rem;
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Concept group accent hues (HSL hue values used with --accent saturation/lightness) */
+    --hue-foundation: 200;
+    --hue-knowledge: 35;
+    --hue-popper: 14;
+    --hue-kuhn: 280;
+    --hue-methods: 160;
+    --hue-ai: 220;
+    --hue-ethics: 0;
+    --hue-bias: 45;
 
-    --sidebar-primary: 240 5.9% 10%;
+    /* Editorial gradients */
+    --gradient-paper: linear-gradient(180deg, hsl(38 35% 96%) 0%, hsl(36 28% 92%) 100%);
+    --gradient-ink: linear-gradient(135deg, hsl(222 45% 18%) 0%, hsl(220 40% 10%) 100%);
+    --gradient-ember: linear-gradient(135deg, hsl(14 65% 52%) 0%, hsl(20 70% 58%) 100%);
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    /* Shadows — soft editorial depth */
+    --shadow-paper: 0 1px 2px hsl(220 30% 12% / 0.04), 0 8px 24px hsl(220 30% 12% / 0.06);
+    --shadow-lift: 0 2px 4px hsl(220 30% 12% / 0.06), 0 20px 50px hsl(220 30% 12% / 0.10);
+    --shadow-ink: 0 20px 60px hsl(222 45% 18% / 0.18);
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    /* Motion */
+    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 38 35% 96%;
+    --sidebar-foreground: 220 30% 12%;
+    --sidebar-primary: 222 45% 18%;
+    --sidebar-primary-foreground: 38 35% 96%;
+    --sidebar-accent: 36 22% 90%;
+    --sidebar-accent-foreground: 220 30% 18%;
+    --sidebar-border: 36 18% 84%;
+    --sidebar-ring: 222 45% 18%;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --background: 222 38% 8%;
+    --foreground: 38 30% 92%;
+    --paper: 222 35% 10%;
+    --paper-deep: 222 38% 7%;
+    --ink: 38 30% 92%;
+    --ink-soft: 38 20% 80%;
+    --ink-muted: 38 12% 60%;
+    --card: 222 35% 11%;
+    --card-foreground: 38 30% 92%;
+    --popover: 222 35% 11%;
+    --popover-foreground: 38 30% 92%;
+    --primary: 38 35% 92%;
+    --primary-foreground: 222 45% 12%;
+    --accent: 14 70% 58%;
+    --accent-foreground: 222 45% 12%;
+    --accent-soft: 14 40% 22%;
+    --secondary: 222 30% 16%;
+    --secondary-foreground: 38 30% 92%;
+    --muted: 222 28% 14%;
+    --muted-foreground: 38 12% 60%;
+    --border: 222 28% 18%;
+    --input: 222 28% 18%;
+    --ring: 38 35% 92%;
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02", "cv11";
+  }
+  ::selection { background: hsl(var(--accent) / 0.25); color: hsl(var(--ink)); }
+}
+
+@layer utilities {
+  .font-display { font-family: 'Fraunces', Georgia, serif; font-optical-sizing: auto; }
+  .font-body { font-family: 'Inter', system-ui, sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+
+  .paper-grain {
+    background-color: hsl(var(--paper));
+    background-image:
+      radial-gradient(hsl(var(--ink) / 0.025) 1px, transparent 1px),
+      radial-gradient(hsl(var(--ink) / 0.015) 1px, transparent 1px);
+    background-size: 24px 24px, 16px 16px;
+    background-position: 0 0, 12px 12px;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  .ink-rule {
+    background: linear-gradient(90deg, transparent, hsl(var(--ink) / 0.3), transparent);
+    height: 1px;
   }
+
+  .concept-dot {
+    background: hsl(var(--accent));
+    box-shadow: 0 0 0 4px hsl(var(--accent) / 0.15), 0 0 0 8px hsl(var(--accent) / 0.06);
+  }
+
+  .lift {
+    transition: transform 0.5s var(--ease-editorial), box-shadow 0.5s var(--ease-editorial);
+  }
+  .lift:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+
+  .reading-column { max-width: 68ch; }
+  .reading-column p { margin-bottom: 1.25em; }
 }
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes draw-line {
+  from { stroke-dashoffset: 1000; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.08); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-fade-up { animation: fade-up 0.7s var(--ease-editorial) both; }
+.animate-fade-in { animation: fade-in 0.6s ease-out both; }
+.animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
