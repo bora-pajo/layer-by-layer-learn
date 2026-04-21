@@ -1,4 +1,5 @@
 import { type VisualKind } from "@/content/chapter1";
+import { useTheme } from "@/hooks/useTheme";
 
 interface Props {
   kind: VisualKind;
@@ -8,42 +9,36 @@ interface Props {
 }
 
 /**
- * ConceptVisual — soft pastel tile with a white inner card holding a minimal SVG mark.
- * Matches the reference: rounded squircle, pastel tinted background, clean line-art inside.
+ * ConceptVisual — soft pastel tile with an inner card holding a minimal SVG mark.
+ * Theme-aware: light mode uses pastel + white; dark mode uses deep tinted + dark inner card.
  */
 export function ConceptVisual({ kind, hue = 258, className = "", large = false }: Props) {
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const tileBg = isDark ? `hsl(${hue} 35% 18%)` : `hsl(${hue} 75% 94%)`;
+  const innerBg = isDark ? `hsl(${hue} 22% 11%)` : `hsl(0 0% 100%)`;
+  const stroke = isDark ? `hsl(${hue} 75% 80%)` : `hsl(${hue} 60% 45%)`;
+  const strokeSoft = isDark ? `hsl(${hue} 45% 55%)` : `hsl(${hue} 55% 70%)`;
+  const fill = isDark ? `hsl(${hue} 80% 72%)` : `hsl(${hue} 70% 55%)`;
+
   const wrap = large
     ? "aspect-square w-full max-w-[300px] mx-auto"
     : "aspect-square w-[88px] sm:w-[100px]";
 
-  // Theme-aware colors via CSS custom properties so dark mode reads correctly
-  const styleVars = {
-    // Outer pastel tile
-    ["--tile-bg" as string]: `hsl(${hue} 75% 94%)`,
-    ["--tile-bg-dark" as string]: `hsl(${hue} 35% 22%)`,
-    // Inner card (the "white" square that holds the SVG)
-    ["--inner" as string]: `hsl(0 0% 100%)`,
-    ["--inner-dark" as string]: `hsl(${hue} 25% 14%)`,
-    // Strokes / fills used by the SVG
-    ["--vstroke" as string]: `hsl(${hue} 60% 45%)`,
-    ["--vstroke-dark" as string]: `hsl(${hue} 75% 78%)`,
-    ["--vstroke-soft" as string]: `hsl(${hue} 55% 70%)`,
-    ["--vstroke-soft-dark" as string]: `hsl(${hue} 40% 50%)`,
-    ["--vfill" as string]: `hsl(${hue} 70% 55%)`,
-    ["--vfill-dark" as string]: `hsl(${hue} 80% 70%)`,
-  } as React.CSSProperties;
-
-  const stroke = "var(--v-stroke)";
-  const strokeSoft = "var(--v-stroke-soft)";
-  const fill = "var(--v-fill)";
-
   return (
     <div
-      className={`concept-visual ${wrap} rounded-[28px] flex items-center justify-center ${className}`}
-      style={styleVars}
+      className={`${wrap} rounded-[28px] flex items-center justify-center ${className}`}
+      style={{ background: tileBg }}
     >
       <div
-        className={`${large ? "w-[78%] h-[78%]" : "w-[72%] h-[72%]"} concept-visual-inner rounded-2xl flex items-center justify-center`}
+        className={`${large ? "w-[78%] h-[78%]" : "w-[72%] h-[72%]"} rounded-2xl flex items-center justify-center`}
+        style={{
+          background: innerBg,
+          boxShadow: isDark
+            ? "0 1px 2px hsl(0 0% 0% / 0.3)"
+            : "0 1px 2px hsl(240 15% 10% / 0.04)",
+        }}
       >
         <svg viewBox="0 0 100 100" className="w-[80%] h-[80%]" fill="none">
           {render(kind, { stroke, strokeSoft, fill })}
