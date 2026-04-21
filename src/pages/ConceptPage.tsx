@@ -5,7 +5,7 @@ import { BottomNav } from "@/components/BottomNav";
 import { ConceptVisual } from "@/components/ConceptVisual";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
-import { ArrowRight, ChevronDown, BookOpen, List, X } from "lucide-react";
+import { ArrowRight, ChevronDown, BookOpen, List, X, Bookmark, BookmarkCheck, NotebookPen } from "lucide-react";
 
 type Layer = 1 | 2 | 3;
 
@@ -16,10 +16,16 @@ const ConceptPage = () => {
   const { markVisited } = useProgress();
   const [layer, setLayer] = useState<Layer>(1);
   const [showJump, setShowJump] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [note, setNote] = useState("");
 
   useEffect(() => {
     setLayer(1);
     setShowJump(false);
+    setShowNotes(false);
+    setNote("");
+    setSaved(false);
     if (concept) markVisited(concept.id);
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -91,9 +97,9 @@ const ConceptPage = () => {
         </div>
       </section>
 
-      {/* Action stack */}
-      <section className="px-5 pt-5 space-y-2">
-        {layer === 1 && (
+      {/* Layer 1 CTA — directly after the glance */}
+      {layer === 1 && (
+        <section className="px-5 pt-5">
           <button
             onClick={() => setLayer(2)}
             className="group flex w-full items-center justify-between rounded-2xl bg-accent px-5 py-4 text-accent-foreground active:scale-[0.99] transition-transform"
@@ -101,26 +107,8 @@ const ConceptPage = () => {
             <span className="font-display text-base font-medium">Learn a little more</span>
             <ChevronDown className="h-5 w-5" />
           </button>
-        )}
-        {layer === 2 && (
-          <button
-            onClick={() => setLayer(3)}
-            className="group flex w-full items-center justify-between rounded-2xl bg-accent px-5 py-4 text-accent-foreground active:scale-[0.99] transition-transform"
-          >
-            <span className="font-display text-base font-medium">Go deeper · read full text</span>
-            <BookOpen className="h-5 w-5" />
-          </button>
-        )}
-        {layer === 3 && (
-          <button
-            onClick={() => setLayer(2)}
-            className="flex w-full items-center justify-between rounded-2xl border border-border bg-surface px-5 py-4 text-ink active:scale-[0.99] transition-transform"
-          >
-            <span className="font-display text-base">Collapse to brief</span>
-            <ChevronDown className="h-5 w-5 rotate-180" />
-          </button>
-        )}
-      </section>
+        </section>
+      )}
 
       {/* LAYER 2 — BRIEF */}
       {layer >= 2 && (
@@ -143,6 +131,17 @@ const ConceptPage = () => {
               </div>
             )}
           </div>
+
+          {/* Layer 2 CTA — placed AFTER the brief content */}
+          {layer === 2 && (
+            <button
+              onClick={() => setLayer(3)}
+              className="mt-3 group flex w-full items-center justify-between rounded-2xl bg-accent px-5 py-4 text-accent-foreground active:scale-[0.99] transition-transform"
+            >
+              <span className="font-display text-base font-medium">Go deeper · read full text</span>
+              <BookOpen className="h-5 w-5" />
+            </button>
+          )}
         </section>
       )}
 
@@ -160,8 +159,71 @@ const ConceptPage = () => {
               </p>
             ))}
           </div>
+          <button
+            onClick={() => setLayer(2)}
+            className="mt-3 flex w-full items-center justify-between rounded-2xl border border-border bg-surface px-5 py-4 text-ink active:scale-[0.99] transition-transform"
+          >
+            <span className="font-display text-base">Collapse to brief</span>
+            <ChevronDown className="h-5 w-5 rotate-180" />
+          </button>
         </section>
       )}
+
+      {/* Save & Notes (visual preview — account features coming soon) */}
+      <section className="px-5 pt-6">
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => setSaved((s) => !s)}
+            aria-pressed={saved}
+            className={`flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 transition-colors ${
+              saved
+                ? "border-accent bg-accent/15 text-ink"
+                : "border-border bg-surface text-ink-soft hover:text-ink"
+            }`}
+          >
+            {saved ? <BookmarkCheck className="h-4 w-4 text-accent" /> : <Bookmark className="h-4 w-4" />}
+            <span className="font-display text-sm">{saved ? "Saved" : "Save"}</span>
+          </button>
+          <button
+            onClick={() => setShowNotes((s) => !s)}
+            aria-expanded={showNotes}
+            className={`flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 transition-colors ${
+              showNotes
+                ? "border-accent bg-accent/15 text-ink"
+                : "border-border bg-surface text-ink-soft hover:text-ink"
+            }`}
+          >
+            <NotebookPen className="h-4 w-4" />
+            <span className="font-display text-sm">Add note</span>
+          </button>
+        </div>
+
+        {showNotes && (
+          <div className="mt-3 rounded-2xl border border-border bg-surface p-4 animate-fade-up">
+            <div className="flex items-center justify-between">
+              <div className="font-mono text-[10px] tracking-[0.2em] text-ink-muted">YOUR NOTES</div>
+              <span className="font-mono text-[9px] tracking-widest text-ink-muted">PREVIEW</span>
+            </div>
+            <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Write what this concept sparks for you…"
+              rows={4}
+              className="mt-2 w-full resize-none rounded-xl border border-border bg-surface-2 px-3 py-2 font-display text-[15px] leading-relaxed text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/40"
+            />
+            <div className="mt-2 flex items-center justify-between">
+              <span className="text-[11px] text-ink-muted">Sign in to sync your notes across devices.</span>
+              <button
+                disabled
+                className="rounded-full bg-accent/40 px-3 py-1.5 text-[11px] font-mono tracking-widest text-accent-foreground/70 cursor-not-allowed"
+              >
+                SAVE NOTE
+              </button>
+            </div>
+          </div>
+        )}
+      </section>
+
 
       {/* Footer nav */}
       <nav className="px-5 pt-10 pb-4">
