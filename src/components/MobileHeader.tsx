@@ -29,11 +29,11 @@ export function MobileHeader({ title, eyebrow, back = false, right }: Props) {
             <ChevronLeft className="h-5 w-5" />
           </button>
         ) : (
-          <Link to="/" className="flex items-center gap-2" aria-label="Atlas home">
+          <Link to="/" className="flex items-center gap-2" aria-label="RORO home">
             <div className="h-8 w-8 rounded-xl bg-accent flex items-center justify-center">
-              <span className="font-display text-sm font-bold text-accent-foreground">A</span>
+              <span className="font-display text-sm font-bold text-accent-foreground">R</span>
             </div>
-            <span className="font-display text-base text-ink">Atlas</span>
+            <span className="font-display text-base font-semibold tracking-wide text-ink">RORO</span>
           </Link>
         )}
 

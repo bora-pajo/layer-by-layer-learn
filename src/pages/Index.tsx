@@ -26,9 +26,6 @@ const Index = () => {
         <h1 className="mt-4 font-display text-4xl leading-[1.05] text-ink text-balance">
           {chapter.title}.
         </h1>
-        <p className="mt-3 font-display text-base italic text-ink-soft text-pretty">
-          {chapter.subtitle}
-        </p>
 
         <Link
           to={`/c/${firstUnseen.id}`}
@@ -81,7 +78,7 @@ const Index = () => {
       {/* Regions */}
       <section className="pt-6">
         <div className="flex items-end justify-between px-5 pb-3">
-          <h2 className="font-display text-2xl text-ink">The atlas</h2>
+          <h2 className="font-display text-2xl text-ink">The map</h2>
           <span className="font-mono text-[10px] tracking-widest text-ink-muted">
             {chapter.groups.length} regions
           </span>
