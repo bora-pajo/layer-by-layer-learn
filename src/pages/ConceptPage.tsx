@@ -5,7 +5,8 @@ import { BottomNav } from "@/components/BottomNav";
 import { ConceptVisual } from "@/components/ConceptVisual";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
-import { ArrowRight, ChevronDown, BookOpen, List, X, Bookmark, BookmarkCheck, NotebookPen } from "lucide-react";
+import { useTabs } from "@/hooks/useTabs";
+import { ArrowRight, ChevronDown, BookOpen, List, X, NotebookPen, StickyNote } from "lucide-react";
 
 type Layer = 1 | 2 | 3;
 
@@ -14,19 +15,24 @@ const ConceptPage = () => {
   const navigate = useNavigate();
   const concept = getConcept(id);
   const { markVisited } = useProgress();
+  const { tabs, isTabbed, toggleTab, setNote: persistNote, getNote, remove } = useTabs();
   const [layer, setLayer] = useState<Layer>(1);
   const [showJump, setShowJump] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [showTabs, setShowTabs] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
-  const [note, setNote] = useState("");
+  const [note, setNoteState] = useState("");
+
+  const tabbed = concept ? isTabbed(concept.id) : false;
 
   useEffect(() => {
     setLayer(1);
     setShowJump(false);
+    setShowTabs(false);
     setShowNotes(false);
-    setNote("");
-    setSaved(false);
-    if (concept) markVisited(concept.id);
+    if (concept) {
+      markVisited(concept.id);
+      setNoteState(getNote(concept.id));
+    }
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
