@@ -308,7 +308,7 @@ const ConceptPage = () => {
           role="dialog"
           aria-modal="true"
         >
-          <div className="absolute inset-0 bg-paper-deep/80" />
+          <div className="absolute inset-0 bg-foreground/40" />
           <div
             className="absolute right-0 top-0 bottom-0 w-[88%] max-w-sm border-l border-border bg-surface flex flex-col animate-fade-in"
             onClick={(e) => e.stopPropagation()}
@@ -420,7 +420,7 @@ const ConceptPage = () => {
           role="dialog"
           aria-modal="true"
         >
-          <div className="absolute inset-0 bg-paper-deep/80" />
+          <div className="absolute inset-0 bg-foreground/40" />
           <div
             className="absolute bottom-0 left-0 right-0 rounded-t-3xl border-t border-border bg-surface max-h-[80%] flex flex-col"
             onClick={(e) => e.stopPropagation()}

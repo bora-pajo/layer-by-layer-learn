@@ -1,45 +1,47 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Moon, Sun } from "lucide-react";
 import { ReactNode } from "react";
+import { useTheme } from "@/hooks/useTheme";
 
 interface Props {
   title?: string;
   eyebrow?: string;
   back?: boolean;
   right?: ReactNode;
+  showThemeToggle?: boolean;
+  showLogo?: boolean;
 }
 
 /**
- * Compact mobile header with optional back button + eyebrow.
+ * Compact, clean mobile header. RORO logo on left when not back. Optional theme toggle.
  */
-export function MobileHeader({ title, eyebrow, back = false, right }: Props) {
+export function MobileHeader({ title, eyebrow, back = false, right, showThemeToggle = true, showLogo = true }: Props) {
   const navigate = useNavigate();
+  const { theme, toggle } = useTheme();
+
   return (
     <header
-      className="sticky top-0 z-30 glass border-b border-border"
+      className="sticky top-0 z-30 glass"
       style={{ paddingTop: "env(safe-area-inset-top)" }}
     >
-      <div className="flex items-center gap-2 px-4 py-3">
+      <div className="flex items-center gap-2 px-5 py-3">
         {back ? (
           <button
             onClick={() => navigate(-1)}
             aria-label="Go back"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-2 text-ink active:scale-95 transition-transform"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
-        ) : (
-          <Link to="/" className="flex items-center gap-2" aria-label="RORO home">
-            <div className="h-8 w-8 rounded-xl bg-accent flex items-center justify-center">
-              <span className="font-display text-sm font-bold text-accent-foreground">R</span>
-            </div>
-            <span className="font-display text-base font-semibold tracking-wide text-ink">RORO</span>
+        ) : showLogo ? (
+          <Link to="/" className="flex items-center" aria-label="RORO home">
+            <span className="font-display text-lg font-semibold tracking-tight text-ink">RORO</span>
           </Link>
-        )}
+        ) : null}
 
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 px-1">
           {eyebrow && (
-            <div className="font-mono text-[9px] tracking-[0.2em] text-ink-muted uppercase truncate">
+            <div className="font-mono text-[10px] tracking-[0.18em] text-ink-muted uppercase truncate">
               {eyebrow}
             </div>
           )}
@@ -48,7 +50,18 @@ export function MobileHeader({ title, eyebrow, back = false, right }: Props) {
           )}
         </div>
 
-        {right}
+        <div className="flex items-center gap-2">
+          {showThemeToggle && (
+            <button
+              onClick={toggle}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-2 text-ink active:scale-95 transition-transform"
+            >
+              {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+            </button>
+          )}
+          {right}
+        </div>
       </div>
     </header>
   );

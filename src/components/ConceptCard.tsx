@@ -1,46 +1,45 @@
 import { Link } from "react-router-dom";
 import { ConceptVisual } from "./ConceptVisual";
 import { type Concept } from "@/content/chapter1";
+import { ArrowRight } from "lucide-react";
 
 interface Props {
   concept: Concept & { hue?: number };
   hue: number;
   visited?: boolean;
+  category?: string;
   variant?: "snap" | "stack";
 }
 
-export function ConceptCard({ concept, hue, visited, variant = "stack" }: Props) {
-  const isSnap = variant === "snap";
+/**
+ * ConceptCard — clean horizontal row matching the reference design.
+ * Pastel tile on left, number + category + title on right, subtle arrow.
+ */
+export function ConceptCard({ concept, hue, visited, category = "epistemology" }: Props) {
   return (
     <Link
       to={`/c/${concept.id}`}
-      className={`group lift block rounded-3xl border border-border bg-surface p-3 shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-        isSnap ? "min-w-[78%] snap-center" : ""
-      }`}
-      style={{ scrollSnapAlign: isSnap ? "center" : undefined }}
+      className="group lift block rounded-[28px] bg-surface px-3 py-3 shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
       aria-label={`Open concept: ${concept.title}`}
     >
-      <ConceptVisual kind={concept.visual} hue={hue} />
-      <div className="mt-3 flex items-center justify-between px-1">
-        <div className="flex items-center gap-2">
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ background: `hsl(${hue} 90% 65%)` }}
-          />
-          <span className="font-mono text-[10px] tracking-widest text-ink-muted">
-            {concept.number}
-          </span>
+      <div className="flex items-center gap-3">
+        <ConceptVisual kind={concept.visual} hue={hue} />
+        <div className="min-w-0 flex-1 pr-1">
+          <div className="flex items-center gap-2">
+            <span
+              className="font-mono text-[12px] font-semibold tracking-wide"
+              style={{ color: `hsl(${hue} 60% 45%)` }}
+            >
+              {concept.number.replace(".", "").padStart(2, "0").slice(0, 2)}
+            </span>
+            <span className="text-[12px] text-ink-muted">{category}</span>
+          </div>
+          <h3 className="mt-0.5 font-display text-[19px] leading-[1.15] text-ink text-balance line-clamp-2">
+            {concept.title}.
+          </h3>
         </div>
-        {visited && (
-          <span className="font-mono text-[9px] tracking-widest text-accent">SEEN</span>
-        )}
+        <ArrowRight className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" />
       </div>
-      <h3 className="mt-1.5 px-1 font-display text-lg leading-tight text-ink text-balance">
-        {concept.title}
-      </h3>
-      <p className="mt-1 mb-2 px-1 text-[13px] leading-snug text-ink-muted text-pretty line-clamp-2">
-        {concept.glance}
-      </p>
     </Link>
   );
 }

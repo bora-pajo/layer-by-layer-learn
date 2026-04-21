@@ -5,20 +5,92 @@
 @tailwind utilities;
 
 /* ============================================================
-   The Atlas — Phone-first dark editorial system
-   Deep ink canvas · electric lime hero · soft violet accent
+   RORO — Phone-first editorial system
+   Light: warm cream paper · soft tile pastels
+   Dark: deep ink canvas · same accent system
    ============================================================ */
 
 @layer base {
   :root {
-    /* Surfaces */
+    /* LIGHT (default) — cream paper, soft tiles, ink type */
+    --background: 38 35% 95%;
+    --foreground: 240 15% 10%;
+
+    --paper: 38 35% 95%;
+    --paper-deep: 38 30% 90%;
+    --surface: 0 0% 100%;
+    --surface-2: 38 28% 92%;
+
+    --ink: 240 15% 10%;
+    --ink-soft: 240 10% 28%;
+    --ink-muted: 240 6% 50%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 15% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 15% 10%;
+
+    /* Primary — ink black for CTAs on cream */
+    --primary: 240 15% 10%;
+    --primary-foreground: 38 35% 96%;
+
+    /* Accent — soft violet (matches reference) */
+    --accent: 258 90% 66%;
+    --accent-foreground: 0 0% 100%;
+    --accent-soft: 258 80% 94%;
+
+    --secondary: 258 80% 94%;
+    --secondary-foreground: 240 15% 10%;
+
+    --muted: 38 22% 90%;
+    --muted-foreground: 240 6% 45%;
+
+    --destructive: 0 70% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 38 18% 86%;
+    --input: 38 18% 86%;
+    --ring: 258 90% 66%;
+
+    --radius: 1.25rem;
+
+    /* Concept-region hues — softer for light mode */
+    --hue-foundation: 195;
+    --hue-knowledge: 45;
+    --hue-popper: 12;
+    --hue-kuhn: 280;
+    --hue-methods: 160;
+    --hue-ai: 220;
+    --hue-ethics: 340;
+    --hue-bias: 30;
+
+    --gradient-canvas: none;
+
+    --shadow-soft: 0 1px 2px hsl(240 15% 10% / 0.04), 0 8px 24px hsl(240 15% 10% / 0.05);
+    --shadow-lift: 0 2px 6px hsl(240 15% 10% / 0.06), 0 16px 40px hsl(240 15% 10% / 0.08);
+    --shadow-glow: 0 0 0 1px hsl(var(--accent) / 0.2), 0 8px 30px hsl(var(--accent) / 0.15);
+
+    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+
+    --sidebar-background: 38 35% 95%;
+    --sidebar-foreground: 240 15% 10%;
+    --sidebar-primary: 258 90% 66%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 38 22% 90%;
+    --sidebar-accent-foreground: 240 15% 10%;
+    --sidebar-border: 38 18% 86%;
+    --sidebar-ring: 258 90% 66%;
+  }
+
+  .dark {
     --background: 240 12% 6%;
     --foreground: 40 25% 96%;
 
     --paper: 240 12% 6%;
     --paper-deep: 240 14% 4%;
     --surface: 240 10% 10%;
-    --surface-2: 240 9% 13%;
+    --surface-2: 240 9% 14%;
 
     --ink: 40 25% 96%;
     --ink-soft: 40 14% 82%;
@@ -30,68 +102,35 @@
     --popover: 240 12% 8%;
     --popover-foreground: 40 25% 96%;
 
-    /* Primary — bright paper-white for CTAs on dark */
     --primary: 40 25% 96%;
     --primary-foreground: 240 12% 6%;
 
-    /* Accent — electric lime (the signature pop) */
-    --accent: 78 95% 62%;
+    --accent: 258 90% 70%;
     --accent-foreground: 240 14% 6%;
-    --accent-soft: 78 60% 18%;
+    --accent-soft: 258 60% 22%;
 
-    /* Secondary — soft violet (supporting energy) */
-    --secondary: 260 90% 70%;
-    --secondary-foreground: 240 14% 6%;
+    --secondary: 258 60% 22%;
+    --secondary-foreground: 40 25% 96%;
 
     --muted: 240 8% 16%;
     --muted-foreground: 240 6% 62%;
 
-    --destructive: 0 78% 60%;
-    --destructive-foreground: 40 25% 96%;
-
     --border: 240 8% 18%;
     --input: 240 8% 18%;
-    --ring: 78 95% 62%;
+    --ring: 258 90% 70%;
 
-    --radius: 1.25rem;
-
-    /* Concept-region hues — punchy, modern */
-    --hue-foundation: 195;  /* cyan */
-    --hue-knowledge: 45;    /* amber */
-    --hue-popper: 12;       /* coral */
-    --hue-kuhn: 280;        /* violet */
-    --hue-methods: 160;     /* mint */
-    --hue-ai: 220;          /* electric blue */
-    --hue-ethics: 340;      /* magenta */
-    --hue-bias: 30;         /* tangerine */
-
-    /* Gradients */
-    --gradient-canvas: radial-gradient(120% 80% at 50% 0%, hsl(78 50% 18% / 0.35) 0%, hsl(240 12% 6%) 55%);
-    --gradient-hero: linear-gradient(135deg, hsl(78 95% 62%) 0%, hsl(160 90% 60%) 100%);
-    --gradient-violet: linear-gradient(135deg, hsl(260 90% 70%) 0%, hsl(290 85% 65%) 100%);
-    --gradient-ember: linear-gradient(135deg, hsl(12 90% 62%) 0%, hsl(340 85% 60%) 100%);
-
-    /* Shadows — glowy on dark */
     --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.4), 0 12px 30px hsl(0 0% 0% / 0.35);
     --shadow-lift: 0 4px 8px hsl(0 0% 0% / 0.4), 0 24px 60px hsl(0 0% 0% / 0.45);
-    --shadow-glow: 0 0 0 1px hsl(78 95% 62% / 0.35), 0 12px 40px hsl(78 95% 62% / 0.18);
-
-    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+    --shadow-glow: 0 0 0 1px hsl(var(--accent) / 0.35), 0 12px 40px hsl(var(--accent) / 0.18);
 
     --sidebar-background: 240 12% 6%;
     --sidebar-foreground: 40 25% 96%;
-    --sidebar-primary: 78 95% 62%;
+    --sidebar-primary: 258 90% 70%;
     --sidebar-primary-foreground: 240 14% 6%;
     --sidebar-accent: 240 8% 16%;
     --sidebar-accent-foreground: 40 25% 96%;
     --sidebar-border: 240 8% 18%;
-    --sidebar-ring: 78 95% 62%;
-  }
-
-  .dark {
-    /* Same as :root — app is dark by default */
-    --background: 240 12% 6%;
-    --foreground: 40 25% 96%;
+    --sidebar-ring: 258 90% 70%;
   }
 }
 
@@ -104,9 +143,8 @@
     -webkit-tap-highlight-color: transparent;
     overscroll-behavior-y: none;
   }
-  ::selection { background: hsl(var(--accent) / 0.35); color: hsl(var(--ink)); }
+  ::selection { background: hsl(var(--accent) / 0.25); color: hsl(var(--ink)); }
 
-  /* Hide scrollbars on horizontal scrollers but stay scrollable */
   .scroll-x {
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -123,7 +161,6 @@
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
 
-  /* Mobile shell — phone-shaped frame on larger screens, full-bleed on phones */
   .phone-shell {
     margin-inline: auto;
     width: 100%;
@@ -143,13 +180,13 @@
       box-shadow: var(--shadow-lift);
       overflow: hidden;
     }
-    body { background: hsl(240 14% 4%); }
+    body { background: hsl(var(--paper-deep)); }
   }
 
   .canvas-glow { background: var(--gradient-canvas); }
 
   .glass {
-    background: hsl(240 12% 6% / 0.78);
+    background: hsl(var(--background) / 0.82);
     backdrop-filter: blur(16px) saturate(140%);
     -webkit-backdrop-filter: blur(16px) saturate(140%);
   }
@@ -165,7 +202,6 @@
 
   .reading-column { max-width: 60ch; }
 
-  /* Safe area for bottom tab bar on iOS */
   .pb-safe { padding-bottom: calc(96px + env(safe-area-inset-bottom)); }
   .pt-safe { padding-top: calc(env(safe-area-inset-top)); }
 }
