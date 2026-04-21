@@ -133,7 +133,7 @@ const Layer2Page = () => {
                 tabbed ? "rotate-[-3deg]" : "rotate-[-8deg] opacity-60 group-hover:opacity-100 group-hover:rotate-[-3deg]"
               }`}
               style={{
-                background: tabbed ? accent : `hsl(${concept.hue} 50% 75%)`,
+                background: tabbed ? accent : tabIdle,
               }}
             />
             <div className="flex-1">
