@@ -86,6 +86,9 @@ export const chapter = {
             "There is logic, rationale, reasoning, and often careful observation wrapped into traditional knowledge. Just because it is traditional does not mean it is irrational; it simply means this is how the knowledge was passed down.",
           ],
           visual: "lineage",
+        },
+        {
+          id: "authoritative",
           number: "2.2",
           title: "Authoritative knowledge",
           glance: "We trust it because of who said it.",
@@ -95,7 +98,7 @@ export const chapter = {
             "Authoritative knowledge is based on the source — someone we believe to be especially qualified on a subject. The key point is not that we fully understand all of it ourselves, but that the person or institution delivering it carries authority.",
             "This type of knowledge is authoritative because of the social and institutional credibility granted to it — not necessarily because every recipient has deep understanding of it.",
           ],
-          visual: "sources",
+          visual: "pillar",
         },
         {
           id: "experiential",
@@ -108,10 +111,7 @@ export const chapter = {
             "Differently from any other kind of knowledge, experiential knowledge comes from doing something. Authoritative and traditional knowledge are often taught in the abstract first; experiential knowledge starts with the practical application.",
             "Children touch something hot and they know not to put their hands there anymore. It hurts. Experiential knowledge comes from experience, from feeling, from doing, from living through something.",
           ],
-          visual: "sources",
-        },
-        {
-          id: "scientific",
+          visual: "hand",
           number: "2.4",
           title: "Scientific knowledge",
           glance: "Systematic. Testable. Repeatable.",
