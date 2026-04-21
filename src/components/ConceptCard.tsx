@@ -3,30 +3,44 @@ import { ConceptVisual } from "./ConceptVisual";
 import { type Concept } from "@/content/chapter1";
 
 interface Props {
-  concept: Concept;
+  concept: Concept & { hue?: number };
   hue: number;
-  groupId: string;
+  visited?: boolean;
+  variant?: "snap" | "stack";
 }
 
-export function ConceptCard({ concept, hue, groupId }: Props) {
+export function ConceptCard({ concept, hue, visited, variant = "stack" }: Props) {
+  const isSnap = variant === "snap";
   return (
     <Link
       to={`/c/${concept.id}`}
-      className="group block lift rounded-2xl border border-border bg-card p-5 shadow-paper focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className={`group lift block rounded-3xl border border-border bg-surface p-3 shadow-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+        isSnap ? "min-w-[78%] snap-center" : ""
+      }`}
+      style={{ scrollSnapAlign: isSnap ? "center" : undefined }}
       aria-label={`Open concept: ${concept.title}`}
     >
       <ConceptVisual kind={concept.visual} hue={hue} />
-      <div className="mt-4 flex items-baseline gap-3">
-        <span className="font-mono text-[10px] tracking-widest text-ink-muted">{concept.number}</span>
-        <span
-          className="h-px flex-1"
-          style={{ background: `hsl(${hue} 65% 52% / 0.4)` }}
-        />
+      <div className="mt-3 flex items-center justify-between px-1">
+        <div className="flex items-center gap-2">
+          <span
+            className="h-1.5 w-1.5 rounded-full"
+            style={{ background: `hsl(${hue} 90% 65%)` }}
+          />
+          <span className="font-mono text-[10px] tracking-widest text-ink-muted">
+            {concept.number}
+          </span>
+        </div>
+        {visited && (
+          <span className="font-mono text-[9px] tracking-widest text-accent">SEEN</span>
+        )}
       </div>
-      <h3 className="mt-2 font-display text-xl leading-snug text-ink text-balance group-hover:text-accent transition-colors">
+      <h3 className="mt-1.5 px-1 font-display text-lg leading-tight text-ink text-balance">
         {concept.title}
       </h3>
-      <p className="mt-2 text-sm text-ink-muted text-pretty">{concept.glance}</p>
+      <p className="mt-1 mb-2 px-1 text-[13px] leading-snug text-ink-muted text-pretty line-clamp-2">
+        {concept.glance}
+      </p>
     </Link>
   );
 }
