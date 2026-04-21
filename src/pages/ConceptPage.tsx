@@ -5,7 +5,8 @@ import { BottomNav } from "@/components/BottomNav";
 import { ConceptVisual } from "@/components/ConceptVisual";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
-import { ArrowRight, ChevronDown, BookOpen, List, X, Bookmark, BookmarkCheck, NotebookPen } from "lucide-react";
+import { useTabs } from "@/hooks/useTabs";
+import { ArrowRight, ChevronDown, BookOpen, List, X, NotebookPen, StickyNote } from "lucide-react";
 
 type Layer = 1 | 2 | 3;
 
@@ -14,19 +15,24 @@ const ConceptPage = () => {
   const navigate = useNavigate();
   const concept = getConcept(id);
   const { markVisited } = useProgress();
+  const { tabs, isTabbed, toggleTab, setNote: persistNote, getNote, remove } = useTabs();
   const [layer, setLayer] = useState<Layer>(1);
   const [showJump, setShowJump] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [showTabs, setShowTabs] = useState(false);
   const [showNotes, setShowNotes] = useState(false);
-  const [note, setNote] = useState("");
+  const [note, setNoteState] = useState("");
+
+  const tabbed = concept ? isTabbed(concept.id) : false;
 
   useEffect(() => {
     setLayer(1);
     setShowJump(false);
+    setShowTabs(false);
     setShowNotes(false);
-    setNote("");
-    setSaved(false);
-    if (concept) markVisited(concept.id);
+    if (concept) {
+      markVisited(concept.id);
+      setNoteState(getNote(concept.id));
+    }
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -65,13 +71,27 @@ const ConceptPage = () => {
         back
         eyebrow={`${group.title} · ${concept.number}`}
         right={
-          <button
-            onClick={() => setShowJump(true)}
-            aria-label="Jump to concept"
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
-          >
-            <List className="h-4 w-4" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowTabs(true)}
+              aria-label="Your tabbed pages"
+              className="relative flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
+            >
+              <StickyNote className="h-4 w-4" />
+              {tabs.length > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-accent px-1 text-[9px] font-mono font-bold text-accent-foreground">
+                  {tabs.length}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={() => setShowJump(true)}
+              aria-label="Jump to concept"
+              className="flex h-9 w-9 items-center justify-center rounded-full border border-border bg-surface text-ink active:scale-95 transition-transform"
+            >
+              <List className="h-4 w-4" />
+            </button>
+          </div>
         }
       />
 
@@ -169,60 +189,165 @@ const ConceptPage = () => {
         </section>
       )}
 
-      {/* Save & Notes (visual preview — account features coming soon) */}
-      <section className="px-5 pt-6">
-        <div className="grid grid-cols-2 gap-2">
+      {/* Tab this page (post-it style) + Notes */}
+      <section className="px-5 pt-8">
+        <div className="relative">
+          {/* Sticky-tab button — looks like a thin post-it sticking out of the page edge */}
           <button
-            onClick={() => setSaved((s) => !s)}
-            aria-pressed={saved}
-            className={`flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 transition-colors ${
-              saved
-                ? "border-accent bg-accent/15 text-ink"
-                : "border-border bg-surface text-ink-soft hover:text-ink"
-            }`}
+            onClick={() => concept && toggleTab(concept.id)}
+            aria-pressed={tabbed}
+            className="group relative flex w-full items-center gap-3 overflow-hidden rounded-2xl border border-border bg-surface px-4 py-4 text-left transition-colors active:scale-[0.99]"
+            style={{ paddingLeft: "2.25rem" }}
           >
-            {saved ? <BookmarkCheck className="h-4 w-4 text-accent" /> : <Bookmark className="h-4 w-4" />}
-            <span className="font-display text-sm">{saved ? "Saved" : "Save"}</span>
+            {/* The "post-it tab" sticking out from the left edge */}
+            <span
+              aria-hidden
+              className={`absolute left-[-6px] top-1/2 -translate-y-1/2 h-12 w-7 rounded-sm shadow-[2px_2px_0_rgba(0,0,0,0.25)] transition-all ${
+                tabbed ? "rotate-[-3deg]" : "rotate-[-8deg] opacity-60 group-hover:opacity-100 group-hover:rotate-[-3deg]"
+              }`}
+              style={{
+                background: tabbed
+                  ? `hsl(${concept.hue} 90% 65%)`
+                  : `hsl(${concept.hue} 40% 35%)`,
+              }}
+            />
+            <div className="flex-1">
+              <div className="font-mono text-[10px] tracking-[0.2em] text-ink-muted">
+                {tabbed ? "TABBED" : "MARK THIS PAGE"}
+              </div>
+              <div className="mt-0.5 font-display text-[15px] text-ink">
+                {tabbed ? "This page is tabbed" : "Stick a tab on this page"}
+              </div>
+            </div>
+            <span className="font-mono text-[10px] tracking-widest text-ink-muted">
+              {tabbed ? "REMOVE" : "ADD"}
+            </span>
           </button>
+
+          {/* Notes toggle */}
           <button
             onClick={() => setShowNotes((s) => !s)}
             aria-expanded={showNotes}
-            className={`flex items-center justify-center gap-2 rounded-2xl border px-4 py-3 transition-colors ${
+            className={`mt-2 flex w-full items-center justify-center gap-2 rounded-2xl border px-4 py-3 transition-colors ${
               showNotes
                 ? "border-accent bg-accent/15 text-ink"
                 : "border-border bg-surface text-ink-soft hover:text-ink"
             }`}
           >
             <NotebookPen className="h-4 w-4" />
-            <span className="font-display text-sm">Add note</span>
+            <span className="font-display text-sm">
+              {note ? "Edit your note" : "Add a margin note"}
+            </span>
           </button>
         </div>
 
         {showNotes && (
           <div className="mt-3 rounded-2xl border border-border bg-surface p-4 animate-fade-up">
             <div className="flex items-center justify-between">
-              <div className="font-mono text-[10px] tracking-[0.2em] text-ink-muted">YOUR NOTES</div>
-              <span className="font-mono text-[9px] tracking-widest text-ink-muted">PREVIEW</span>
+              <div className="font-mono text-[10px] tracking-[0.2em] text-ink-muted">MARGIN NOTE</div>
+              <span className="font-mono text-[9px] tracking-widest text-ink-muted">SAVED LOCALLY</span>
             </div>
             <textarea
               value={note}
-              onChange={(e) => setNote(e.target.value)}
+              onChange={(e) => {
+                setNoteState(e.target.value);
+                if (concept) persistNote(concept.id, e.target.value);
+              }}
               placeholder="Write what this concept sparks for you…"
               rows={4}
               className="mt-2 w-full resize-none rounded-xl border border-border bg-surface-2 px-3 py-2 font-display text-[15px] leading-relaxed text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/40"
             />
             <div className="mt-2 flex items-center justify-between">
-              <span className="text-[11px] text-ink-muted">Sign in to sync your notes across devices.</span>
-              <button
-                disabled
-                className="rounded-full bg-accent/40 px-3 py-1.5 text-[11px] font-mono tracking-widest text-accent-foreground/70 cursor-not-allowed"
-              >
-                SAVE NOTE
-              </button>
+              <span className="text-[11px] text-ink-muted">Sign in (coming soon) to sync across devices.</span>
             </div>
           </div>
         )}
       </section>
+
+      {/* Tabs side drawer — list of all tabbed pages */}
+      {showTabs && (
+        <div
+          className="absolute inset-0 z-50 animate-fade-in"
+          onClick={() => setShowTabs(false)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <div className="absolute inset-0 bg-paper-deep/80" />
+          <div
+            className="absolute right-0 top-0 bottom-0 w-[88%] max-w-sm border-l border-border bg-surface flex flex-col animate-fade-in"
+            onClick={(e) => e.stopPropagation()}
+            style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+          >
+            <div className="flex items-center justify-between px-5 py-4 border-b border-border">
+              <div>
+                <div className="font-mono text-[10px] tracking-[0.2em] text-ink-muted">YOUR</div>
+                <div className="font-display text-lg text-ink">Tabbed pages</div>
+              </div>
+              <button
+                onClick={() => setShowTabs(false)}
+                aria-label="Close"
+                className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-2 text-ink"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            {tabs.length === 0 ? (
+              <div className="flex flex-1 flex-col items-center justify-center px-8 text-center">
+                <StickyNote className="h-8 w-8 text-ink-muted" />
+                <p className="mt-3 font-display text-base text-ink">No tabs yet</p>
+                <p className="mt-1 text-[13px] text-ink-soft">
+                  Tap the sticky tab on any page to mark it. Your tabs will live here for quick return.
+                </p>
+              </div>
+            ) : (
+              <ul className="flex-1 overflow-y-auto px-3 py-3">
+                {tabs
+                  .slice()
+                  .sort((a, b) => b.tabbedAt - a.tabbedAt)
+                  .map((t) => {
+                    const c = allConcepts.find((x) => x.id === t.id);
+                    if (!c) return null;
+                    return (
+                      <li key={t.id} className="mb-2">
+                        <div className="relative rounded-xl border border-border bg-surface-2 p-3 pl-5">
+                          <span
+                            aria-hidden
+                            className="absolute left-[-4px] top-3 h-8 w-3 rounded-sm rotate-[-6deg] shadow-[1px_1px_0_rgba(0,0,0,0.25)]"
+                            style={{ background: `hsl(${c.hue} 90% 65%)` }}
+                          />
+                          <Link
+                            to={`/c/${c.id}`}
+                            onClick={() => setShowTabs(false)}
+                            className="block"
+                          >
+                            <div className="font-mono text-[10px] tracking-widest text-ink-muted">
+                              {c.number}
+                            </div>
+                            <div className="mt-0.5 font-display text-[15px] text-ink line-clamp-2">
+                              {c.title}
+                            </div>
+                            {t.note && (
+                              <div className="mt-1.5 line-clamp-2 text-[12px] italic text-ink-soft">
+                                “{t.note}”
+                              </div>
+                            )}
+                          </Link>
+                          <button
+                            onClick={() => remove(t.id)}
+                            aria-label="Remove tab"
+                            className="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full text-ink-muted hover:text-ink"
+                          >
+                            <X className="h-3.5 w-3.5" />
+                          </button>
+                        </div>
+                      </li>
+                    );
+                  })}
+              </ul>
+            )}
+          </div>
+        </div>
+      )}
 
 
       {/* Footer nav */}

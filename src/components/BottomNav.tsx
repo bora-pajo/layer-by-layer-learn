@@ -10,7 +10,7 @@ export function BottomNav() {
   const tabs = [
     { to: "/", label: "Atlas", icon: Compass, active: pathname === "/" || pathname.startsWith("/c/") },
     { to: "/read", label: "Read", icon: BookOpen, active: pathname.startsWith("/read") },
-    { to: "/saved", label: "Trail", icon: Sparkles, active: pathname.startsWith("/saved") },
+    { to: "/saved", label: "Tabs", icon: Sparkles, active: pathname.startsWith("/saved") },
   ];
 
   return (
