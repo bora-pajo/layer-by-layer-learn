@@ -16,6 +16,9 @@ const ConceptPage = () => {
   const { markVisited } = useProgress();
   const [layer, setLayer] = useState<Layer>(1);
   const [showJump, setShowJump] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [showNotes, setShowNotes] = useState(false);
+  const [note, setNote] = useState("");
 
   useEffect(() => {
     setLayer(1);
