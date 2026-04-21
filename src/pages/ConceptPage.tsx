@@ -95,12 +95,48 @@ const ConceptPage = () => {
         }
       />
 
-      {/* Position pill */}
+      {/* Progress — chapter position + layer depth */}
       <div className="px-5 pt-4">
         <div className="flex items-center gap-2 font-mono text-[10px] tracking-widest text-ink-muted">
           <span style={{ color: `hsl(${concept.hue} 90% 65%)` }}>●</span>
-          <span>LAYER {layer} OF 3</span>
+          <span>{group.title.toUpperCase()}</span>
           <span className="ml-auto">{String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}</span>
+        </div>
+        {/* Chapter progress bar */}
+        <div
+          className="mt-2 h-1 w-full overflow-hidden rounded-full bg-surface-2"
+          role="progressbar"
+          aria-valuenow={index + 1}
+          aria-valuemin={1}
+          aria-valuemax={total}
+          aria-label="Chapter progress"
+        >
+          <div
+            className="h-full transition-all duration-500"
+            style={{
+              width: `${((index + 1) / total) * 100}%`,
+              background: `hsl(${concept.hue} 90% 65%)`,
+            }}
+          />
+        </div>
+        {/* Layer depth dots */}
+        <div className="mt-2 flex items-center gap-2">
+          <span className="font-mono text-[9px] tracking-widest text-ink-muted">DEPTH</span>
+          <div className="flex items-center gap-1">
+            {[1, 2, 3].map((n) => (
+              <button
+                key={n}
+                onClick={() => setLayer(n as Layer)}
+                aria-label={`Go to layer ${n}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  n <= layer ? "w-6 bg-accent" : "w-3 bg-surface-2 hover:bg-border"
+                }`}
+              />
+            ))}
+          </div>
+          <span className="ml-1 font-mono text-[9px] tracking-widest text-ink-muted">
+            L{layer}/3
+          </span>
         </div>
       </div>
 
