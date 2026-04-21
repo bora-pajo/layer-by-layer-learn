@@ -20,7 +20,7 @@ export function ConceptVisual({ kind, hue = 78, className = "", large = false }:
   const surface = "hsl(var(--surface-2))";
   const lime = "hsl(78 95% 62%)";
 
-  const size = large ? "h-64 sm:h-80" : "h-36";
+  const size = large ? "h-48 sm:h-64" : "h-32";
 
   return (
     <div className={`relative w-full ${size} overflow-hidden rounded-2xl ${className}`}>
@@ -225,6 +225,57 @@ function render(
           <line x1="200" y1="60" x2="200" y2="180" stroke={c.ink} strokeWidth="1" strokeDasharray="2 4" opacity="0.3" />
           <text x="110" y="125" textAnchor="middle" fill={c.ink} fontSize="14" fontFamily="Fraunces, serif" fontStyle="italic">A</text>
           <text x="290" y="125" textAnchor="middle" fill="hsl(240 14% 6%)" fontSize="14" fontFamily="Fraunces, serif" fontStyle="italic">B</text>
+        </g>
+      );
+
+    case "versus":
+      // Kuhn vs Popper — left: a tree being carefully pruned (gradual correction)
+      // right: a sudden burst/explosion replacing the old (paradigm shift)
+      return (
+        <g>
+          {/* divider */}
+          <line x1="200" y1="30" x2="200" y2="210" stroke={c.ink} strokeWidth="1" strokeDasharray="3 5" opacity="0.35" />
+
+          {/* LEFT — Popper: pruned tree */}
+          <g>
+            {/* trunk */}
+            <path d="M100 200 L100 130" stroke={c.ink} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
+            {/* main branches */}
+            <path d="M100 150 L70 120" stroke={c.ink} strokeWidth="2" strokeLinecap="round" opacity="0.85" />
+            <path d="M100 140 L130 110" stroke={c.ink} strokeWidth="2" strokeLinecap="round" opacity="0.85" />
+            <path d="M100 130 L100 90" stroke={c.ink} strokeWidth="2" strokeLinecap="round" opacity="0.85" />
+            {/* healthy leaves */}
+            <circle cx="70" cy="115" r="10" fill={c.accent} opacity="0.9" />
+            <circle cx="130" cy="105" r="10" fill={c.accent} opacity="0.9" />
+            <circle cx="100" cy="82" r="11" fill={c.accent} opacity="0.95" />
+            {/* pruned (cut) branch — small stump with X */}
+            <path d="M100 160 L75 165" stroke={c.inkMuted} strokeWidth="1.5" opacity="0.6" />
+            <line x1="72" y1="161" x2="80" y2="169" stroke={c.accent} strokeWidth="1.4" />
+            <line x1="80" y1="161" x2="72" y2="169" stroke={c.accent} strokeWidth="1.4" />
+            {/* label */}
+            <text x="100" y="225" textAnchor="middle" fill={c.inkMuted} fontSize="9" fontFamily="JetBrains Mono" letterSpacing="2">POPPER</text>
+          </g>
+
+          {/* RIGHT — Kuhn: burst / paradigm shift */}
+          <g>
+            {/* faded old paradigm circle */}
+            <circle cx="300" cy="120" r="34" fill="none" stroke={c.inkMuted} strokeWidth="1" strokeDasharray="3 3" opacity="0.5" />
+            {/* explosion rays */}
+            {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => {
+              const rad = (deg * Math.PI) / 180;
+              const inner = 26;
+              const outer = deg % 60 === 0 ? 64 : 50;
+              const x1 = 300 + Math.cos(rad) * inner;
+              const y1 = 120 + Math.sin(rad) * inner;
+              const x2 = 300 + Math.cos(rad) * outer;
+              const y2 = 120 + Math.sin(rad) * outer;
+              return <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} stroke={c.accent} strokeWidth="1.6" strokeLinecap="round" />;
+            })}
+            {/* new paradigm core */}
+            <circle cx="300" cy="120" r="20" fill={c.accent} />
+            <circle cx="300" cy="120" r="20" fill="none" stroke={c.accent} strokeWidth="1" opacity="0.4" />
+            <text x="300" y="225" textAnchor="middle" fill={c.inkMuted} fontSize="9" fontFamily="JetBrains Mono" letterSpacing="2">KUHN</text>
+          </g>
         </g>
       );
 
