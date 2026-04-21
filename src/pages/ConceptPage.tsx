@@ -23,6 +23,9 @@ const ConceptPage = () => {
   useEffect(() => {
     setLayer(1);
     setShowJump(false);
+    setShowNotes(false);
+    setNote("");
+    setSaved(false);
     if (concept) markVisited(concept.id);
     window.scrollTo({ top: 0, behavior: "instant" as ScrollBehavior });
     // eslint-disable-next-line react-hooks/exhaustive-deps
