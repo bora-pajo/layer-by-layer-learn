@@ -8,369 +8,210 @@ interface Props {
 }
 
 /**
- * ConceptVisual — abstract dark-mode illustrations.
- * SVG-based, themed via the concept group hue with the lime accent.
+ * ConceptVisual — soft pastel tile with a white inner card holding a minimal SVG mark.
+ * Matches the reference: rounded squircle, pastel tinted background, clean line-art inside.
  */
-export function ConceptVisual({ kind, hue = 78, className = "", large = false }: Props) {
-  const accent = `hsl(${hue} 90% 65%)`;
-  const accentSoft = `hsl(${hue} 90% 65% / 0.18)`;
-  const accentGlow = `hsl(${hue} 90% 65% / 0.35)`;
-  const ink = "hsl(var(--ink))";
-  const inkMuted = "hsl(var(--ink-muted))";
-  const surface = "hsl(var(--surface-2))";
-  const lime = "hsl(78 95% 62%)";
+export function ConceptVisual({ kind, hue = 258, className = "", large = false }: Props) {
+  const tileBg = `hsl(${hue} 75% 94%)`;
+  const stroke = `hsl(${hue} 60% 45%)`;
+  const strokeSoft = `hsl(${hue} 55% 70%)`;
+  const fill = `hsl(${hue} 70% 55%)`;
 
-  const size = large ? "h-48 sm:h-64" : "h-32";
+  const wrap = large
+    ? "aspect-square w-full max-w-[300px] mx-auto"
+    : "aspect-square w-[88px] sm:w-[100px]";
 
   return (
-    <div className={`relative w-full ${size} overflow-hidden rounded-2xl ${className}`}>
-      <svg viewBox="0 0 400 240" className="absolute inset-0 h-full w-full" preserveAspectRatio="xMidYMid slice">
-        <defs>
-          <radialGradient id={`glow-${kind}-${hue}`} cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor={accent} stopOpacity="0.5" />
-            <stop offset="100%" stopColor={accent} stopOpacity="0" />
-          </radialGradient>
-        </defs>
-        <rect width="400" height="240" fill={surface} />
-        <rect width="400" height="240" fill={`url(#glow-${kind}-${hue})`} />
-        {render(kind, { accent, accentSoft, accentGlow, ink, inkMuted, lime })}
-      </svg>
+    <div
+      className={`${wrap} rounded-[28px] flex items-center justify-center ${className}`}
+      style={{ background: tileBg }}
+    >
+      <div
+        className={`${large ? "w-[78%] h-[78%]" : "w-[72%] h-[72%]"} rounded-2xl bg-surface flex items-center justify-center`}
+        style={{ boxShadow: "0 1px 2px hsl(240 15% 10% / 0.04)" }}
+      >
+        <svg viewBox="0 0 100 100" className="w-[80%] h-[80%]" fill="none">
+          {render(kind, { stroke, strokeSoft, fill })}
+        </svg>
+      </div>
     </div>
   );
 }
 
-function render(
-  kind: VisualKind,
-  c: { accent: string; accentSoft: string; accentGlow: string; ink: string; inkMuted: string; lime: string },
-) {
+type C = { stroke: string; strokeSoft: string; fill: string };
+
+function render(kind: VisualKind, c: C) {
   switch (kind) {
-    case "mountain":
-      return (
-        <g>
-          <path d="M0 180 L60 130 L120 160 L180 110 L240 150 L320 100 L400 140 L400 240 L0 240 Z" fill={c.accentSoft} />
-          <path d="M0 220 L80 150 L140 190 L220 90 L300 170 L400 130 L400 240 L0 240 Z" fill="hsl(240 14% 4%)" opacity="0.95" />
-          <circle cx="220" cy="90" r="5" fill={c.accent} className="animate-pulse-soft" />
-          <line x1="220" y1="90" x2="370" y2="50" stroke={c.accent} strokeWidth="1" strokeDasharray="2 4" opacity="0.7" />
-          <line x1="220" y1="90" x2="60" y2="60" stroke={c.accent} strokeWidth="1" strokeDasharray="2 4" opacity="0.7" />
-          <circle cx="320" cy="50" r="16" fill={c.accent} opacity="0.9" />
-        </g>
-      );
-
-    case "sources":
-      return (
-        <g>
-          {[80, 160, 240, 320].map((x, i) => (
-            <g key={i}>
-              <circle cx={x} cy="120" r="32" fill="none" stroke={c.ink} strokeWidth="1" opacity={0.4} />
-              <circle cx={x} cy="120" r={6 + i * 3} fill={c.accent} opacity={0.5 + i * 0.15} />
-              <line x1={x} y1="160" x2={x} y2="200" stroke={c.ink} strokeWidth="1" opacity="0.25" />
-            </g>
-          ))}
-          <line x1="40" y1="200" x2="360" y2="200" stroke={c.ink} strokeWidth="1" opacity="0.2" />
-        </g>
-      );
-
     case "lineage":
-      // Traditional knowledge — a chain of figures passing a glow hand to hand across generations
+      // Traditional knowledge — stacked horizon lines, one accented (oral tradition: layered, continuous)
       return (
-        <g>
-          <line x1="40" y1="160" x2="360" y2="160" stroke={c.ink} strokeWidth="1" strokeDasharray="2 5" opacity="0.3" />
-          {[70, 150, 230, 310].map((x, i) => (
-            <g key={i} opacity={0.55 + i * 0.12}>
-              {/* head */}
-              <circle cx={x} cy="105" r="10" fill="none" stroke={c.ink} strokeWidth="1.4" />
-              {/* body */}
-              <path d={`M${x - 14} 160 Q${x} 125 ${x + 14} 160`} fill="none" stroke={c.ink} strokeWidth="1.4" />
-              {/* glow held forward */}
-              <circle cx={x + 22} cy="138" r={i === 3 ? 7 : 4} fill={c.accent} opacity={0.7 + i * 0.1} />
-            </g>
-          ))}
-          {/* passing arcs */}
-          {[110, 190, 270].map((x, i) => (
-            <path
-              key={i}
-              d={`M${x} 138 Q${x + 20} 110 ${x + 40} 138`}
-              fill="none"
-              stroke={c.accent}
-              strokeWidth="1.2"
-              strokeDasharray="2 3"
-              opacity="0.7"
-            />
-          ))}
+        <g strokeLinecap="round">
+          <path d="M15 30 Q50 26 85 30" stroke={c.strokeSoft} strokeWidth="1" />
+          <path d="M15 42 Q50 38 85 42" stroke={c.strokeSoft} strokeWidth="1" />
+          <path d="M15 54 Q50 48 85 54" stroke={c.stroke} strokeWidth="2" />
+          <circle cx="50" cy="51" r="2.5" fill={c.fill} />
+          <path d="M15 66 Q50 62 85 66" stroke={c.strokeSoft} strokeWidth="1" />
+          <path d="M15 78 Q50 74 85 78" stroke={c.strokeSoft} strokeWidth="1" />
         </g>
       );
 
     case "pillar":
-      // Authoritative knowledge — a single tall classical pillar with a seal/crest above
+      // Authoritative — central "A" with concentric authority rings
       return (
         <g>
-          {/* light beam from above */}
-          <path d="M200 20 L150 220 L250 220 Z" fill={c.accentSoft} opacity="0.6" />
-          {/* seal */}
-          <circle cx="200" cy="48" r="18" fill={c.accent} />
-          <circle cx="200" cy="48" r="11" fill="none" stroke="hsl(240 14% 6%)" strokeWidth="1.2" />
-          {/* capital */}
-          <rect x="160" y="78" width="80" height="12" fill={c.ink} opacity="0.85" rx="2" />
-          {/* shaft with flutes */}
-          <rect x="172" y="92" width="56" height="110" fill={c.ink} opacity="0.85" />
-          {[0, 1, 2, 3].map((i) => (
-            <line
-              key={i}
-              x1={184 + i * 11}
-              y1="94"
-              x2={184 + i * 11}
-              y2="200"
-              stroke="hsl(240 14% 4%)"
-              strokeWidth="1"
-              opacity="0.7"
-            />
-          ))}
-          {/* base */}
-          <rect x="156" y="202" width="88" height="14" fill={c.ink} opacity="0.9" rx="2" />
-          {/* small figures looking up */}
-          <circle cx="90" cy="210" r="4" fill={c.inkMuted} />
-          <circle cx="310" cy="210" r="4" fill={c.inkMuted} />
+          <circle cx="50" cy="50" r="32" stroke={c.strokeSoft} strokeWidth="1" strokeDasharray="2 3" />
+          <circle cx="50" cy="50" r="20" stroke={c.stroke} strokeWidth="1.5" />
+          <text x="50" y="56" textAnchor="middle" fontSize="14" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.stroke}>A</text>
         </g>
       );
 
     case "hand":
-      // Experiential knowledge — a hand touching a flame; the spark of direct experience
+      // Experiential — spiral inward (knowing through doing, recursive)
       return (
-        <g>
-          {/* flame */}
-          <path
-            d="M250 70 Q235 105 250 130 Q265 110 270 90 Q278 110 268 135 Q255 160 240 145 Q225 130 240 105 Q243 88 250 70 Z"
-            fill={c.accent}
-            opacity="0.9"
-          />
-          <path
-            d="M250 95 Q244 115 252 130 Q260 118 258 105 Q255 95 250 95 Z"
-            fill="hsl(240 14% 6%)"
-            opacity="0.6"
-          />
-          {/* spark rays */}
-          {[-30, -15, 0, 15, 30].map((deg, i) => {
-            const rad = ((deg - 90) * Math.PI) / 180;
-            const x1 = 252 + Math.cos(rad) * 55;
-            const y1 = 110 + Math.sin(rad) * 55;
-            const x2 = 252 + Math.cos(rad) * 75;
-            const y2 = 110 + Math.sin(rad) * 75;
-            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={c.accent} strokeWidth="1.2" opacity="0.6" />;
-          })}
-          {/* hand reaching from left */}
-          <path
-            d="M40 200 L130 175 L150 165 L165 158 L175 162 L168 175 L155 180 L148 188 L160 192 L150 200 L135 198 L40 215 Z"
-            fill="none"
-            stroke={c.ink}
-            strokeWidth="1.6"
-            strokeLinejoin="round"
-          />
-          {/* fingertip glow at flame contact */}
-          <circle cx="178" cy="160" r="6" fill={c.accent} opacity="0.8" />
+        <g fill="none" stroke={c.stroke} strokeWidth="1.4" strokeLinecap="round">
+          <path d="M50 50 m 0 -22 a 22 22 0 1 1 -0.1 0 m 4 4 a 18 18 0 1 0 0.1 0 m -4 4 a 14 14 0 1 1 -0.1 0 m 4 4 a 10 10 0 1 0 0.1 0 m -4 4 a 6 6 0 1 1 -0.1 0" />
+          <circle cx="50" cy="50" r="2" fill={c.fill} stroke="none" />
         </g>
       );
 
-
-    case "challenge":
+    case "sources":
+      // Scientific — scattered data points on a grid (empirical, plotted)
       return (
         <g>
-          <circle cx="200" cy="120" r="60" fill="none" stroke={c.ink} strokeWidth="1.5" opacity="0.6" />
-          <circle cx="200" cy="120" r="40" fill={c.accentSoft} stroke={c.accent} strokeWidth="1" />
-          <text x="200" y="125" textAnchor="middle" fill={c.ink} fontSize="11" fontFamily="Fraunces, serif" fontStyle="italic">
-            theory
-          </text>
-          {[0, 60, 120, 180, 240, 300].map((a) => {
-            const rad = (a * Math.PI) / 180;
-            const x1 = 200 + Math.cos(rad) * 110;
-            const y1 = 120 + Math.sin(rad) * 110;
-            const x2 = 200 + Math.cos(rad) * 70;
-            const y2 = 120 + Math.sin(rad) * 70;
-            return (
-              <line key={a} x1={x1} y1={y1} x2={x2} y2={y2} stroke={c.accent} strokeWidth="1.5" markerEnd="url(#arrow-d)" />
-            );
-          })}
-          <defs>
-            <marker id="arrow-d" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-              <path d="M0 0 L10 5 L0 10 z" fill={c.accent} />
-            </marker>
-          </defs>
+          <rect x="18" y="18" width="64" height="64" rx="4" stroke={c.strokeSoft} strokeWidth="1" fill="none" />
+          {Array.from({ length: 4 }).map((_, i) => (
+            <line key={`h${i}`} x1="18" y1={34 + i * 16} x2="82" y2={34 + i * 16} stroke={c.strokeSoft} strokeWidth="0.5" opacity="0.5" />
+          ))}
+          {Array.from({ length: 4 }).map((_, i) => (
+            <line key={`v${i}`} x1={34 + i * 16} y1="18" x2={34 + i * 16} y2="82" stroke={c.strokeSoft} strokeWidth="0.5" opacity="0.5" />
+          ))}
+          {[[32, 62], [44, 50], [56, 56], [68, 42], [40, 70], [62, 68]].map(([x, y], i) => (
+            <circle key={i} cx={x} cy={y} r="2" fill={c.fill} />
+          ))}
+        </g>
+      );
+
+    case "mountain":
+      // Reality vs knowledge — wave with point on it, dashed beneath (the map is not the territory)
+      return (
+        <g fill="none" strokeLinecap="round">
+          <path d="M15 55 Q35 35 50 55 T85 55" stroke={c.stroke} strokeWidth="2" />
+          <path d="M15 62 Q35 42 50 62 T85 62" stroke={c.strokeSoft} strokeWidth="1" strokeDasharray="2 3" />
+          <circle cx="55" cy="55" r="2.5" fill={c.fill} />
+          <circle cx="51" cy="61" r="1.5" fill={c.strokeSoft} />
+        </g>
+      );
+
+    case "challenge":
+      // Falsifiability — heartbeat / signal that could spike out (testable signal)
+      return (
+        <g fill="none" stroke={c.stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="18" y="30" width="64" height="40" rx="4" stroke={c.strokeSoft} strokeWidth="1" />
+          <path d="M22 50 L36 50 L42 38 L48 62 L54 44 L60 56 L66 50 L78 50" />
         </g>
       );
 
     case "cycle":
+      // Normal science — atom / orbital structure (Kuhn's normal puzzle-solving)
+      return (
+        <g fill="none" stroke={c.stroke} strokeWidth="1.4">
+          <ellipse cx="50" cy="50" rx="30" ry="12" />
+          <ellipse cx="50" cy="50" rx="30" ry="12" transform="rotate(60 50 50)" />
+          <ellipse cx="50" cy="50" rx="30" ry="12" transform="rotate(-60 50 50)" />
+          <circle cx="50" cy="50" r="3" fill={c.fill} stroke="none" />
+          <circle cx="22" cy="50" r="2" fill={c.stroke} stroke="none" />
+          <circle cx="78" cy="50" r="2" fill={c.stroke} stroke="none" />
+        </g>
+      );
+
+    case "compare":
+      // Information vs knowledge — two squares, one filled
       return (
         <g>
-          <circle cx="200" cy="120" r="80" fill="none" stroke={c.ink} strokeWidth="1" strokeDasharray="3 4" opacity="0.3" />
-          {["normal", "anomaly", "crisis", "shift"].map((label, i) => {
-            const a = (i * 90 - 90) * (Math.PI / 180);
-            const x = 200 + Math.cos(a) * 80;
-            const y = 120 + Math.sin(a) * 80;
+          <rect x="20" y="32" width="26" height="36" rx="3" fill="none" stroke={c.stroke} strokeWidth="1.5" />
+          <rect x="54" y="32" width="26" height="36" rx="3" fill={c.fill} />
+          <text x="33" y="55" textAnchor="middle" fontSize="11" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.stroke}>i</text>
+          <text x="67" y="55" textAnchor="middle" fontSize="11" fontFamily="Fraunces, serif" fontStyle="italic" fill="white">k</text>
+        </g>
+      );
+
+    case "versus":
+      // Kuhn vs Popper — split square: left fine pruning lines, right concentric burst
+      return (
+        <g fill="none" strokeLinecap="round">
+          {/* Popper side — branching prune */}
+          <line x1="28" y1="70" x2="28" y2="40" stroke={c.stroke} strokeWidth="1.5" />
+          <line x1="28" y1="50" x2="20" y2="42" stroke={c.stroke} strokeWidth="1.2" />
+          <line x1="28" y1="46" x2="36" y2="38" stroke={c.stroke} strokeWidth="1.2" />
+          <circle cx="28" cy="38" r="2.5" fill={c.fill} stroke="none" />
+          {/* divider */}
+          <line x1="50" y1="22" x2="50" y2="78" stroke={c.strokeSoft} strokeWidth="0.8" strokeDasharray="2 3" />
+          {/* Kuhn side — concentric rings (paradigm) */}
+          <circle cx="72" cy="50" r="14" stroke={c.strokeSoft} strokeWidth="1" />
+          <circle cx="72" cy="50" r="9" stroke={c.stroke} strokeWidth="1.4" />
+          <circle cx="72" cy="50" r="3" fill={c.fill} stroke="none" />
+        </g>
+      );
+
+    case "spectrum":
+      // Quantitative — ascending bars
+      return (
+        <g>
+          {[0, 1, 2, 3, 4, 5].map((i) => (
+            <rect key={i} x={20 + i * 11} y={70 - i * 8} width="7" height={10 + i * 8} rx="1.5" fill={c.fill} opacity={0.5 + i * 0.08} />
+          ))}
+          <line x1="16" y1="74" x2="84" y2="74" stroke={c.stroke} strokeWidth="1" />
+        </g>
+      );
+
+    case "lens":
+      // Qualitative — magnifying glass
+      return (
+        <g fill="none" stroke={c.stroke} strokeWidth="2" strokeLinecap="round">
+          <circle cx="42" cy="42" r="20" />
+          <line x1="58" y1="58" x2="74" y2="74" />
+          <circle cx="42" cy="42" r="10" stroke={c.strokeSoft} strokeWidth="1" />
+        </g>
+      );
+
+    case "shield":
+      return (
+        <g fill="none" stroke={c.stroke} strokeWidth="1.6" strokeLinejoin="round">
+          <path d="M50 18 L75 28 V50 Q75 70 50 82 Q25 70 25 50 V28 Z" fill={c.strokeSoft} fillOpacity="0.3" />
+          <path d="M40 50 L48 58 L62 42" strokeWidth="2" />
+        </g>
+      );
+
+    case "mirror":
+      return (
+        <g fill="none" stroke={c.stroke} strokeWidth="1.5">
+          <ellipse cx="50" cy="50" rx="20" ry="28" />
+          <circle cx="44" cy="46" r="1.5" fill={c.stroke} />
+          <circle cx="56" cy="46" r="1.5" fill={c.stroke} />
+          <path d="M44 58 Q50 62 56 58" strokeLinecap="round" />
+        </g>
+      );
+
+    case "circuit":
+      return (
+        <g fill="none" stroke={c.stroke} strokeWidth="1.4">
+          <circle cx="50" cy="50" r="10" fill={c.fill} stroke="none" />
+          <text x="50" y="54" textAnchor="middle" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600" fill="white">AI</text>
+          {[0, 90, 180, 270].map((deg) => {
+            const r = (deg * Math.PI) / 180;
+            const x = 50 + Math.cos(r) * 28;
+            const y = 50 + Math.sin(r) * 28;
             return (
-              <g key={label}>
-                <circle cx={x} cy={y} r={i === 3 ? 11 : 7} fill={i === 3 ? c.accent : c.ink} opacity={i === 3 ? 1 : 0.7} />
-                <text x={x} y={y + 28} textAnchor="middle" fill={c.inkMuted} fontSize="10" fontFamily="Inter">
-                  {label}
-                </text>
+              <g key={deg}>
+                <line x1={50 + Math.cos(r) * 12} y1={50 + Math.sin(r) * 12} x2={x} y2={y} stroke={c.strokeSoft} strokeWidth="1" />
+                <circle cx={x} cy={y} r="2.5" fill={c.stroke} />
               </g>
             );
           })}
         </g>
       );
 
-    case "compare":
-      return (
-        <g>
-          <rect x="40" y="50" width="140" height="140" fill="none" stroke={c.ink} strokeWidth="1.5" rx="12" opacity="0.7" />
-          <rect x="220" y="50" width="140" height="140" fill={c.accent} rx="12" />
-          <line x1="200" y1="60" x2="200" y2="180" stroke={c.ink} strokeWidth="1" strokeDasharray="2 4" opacity="0.3" />
-          <text x="110" y="125" textAnchor="middle" fill={c.ink} fontSize="14" fontFamily="Fraunces, serif" fontStyle="italic">A</text>
-          <text x="290" y="125" textAnchor="middle" fill="hsl(240 14% 6%)" fontSize="14" fontFamily="Fraunces, serif" fontStyle="italic">B</text>
-        </g>
-      );
-
-    case "versus":
-      // Kuhn vs Popper — left: a tree being carefully pruned (gradual correction)
-      // right: a sudden burst/explosion replacing the old (paradigm shift)
-      return (
-        <g>
-          {/* divider */}
-          <line x1="200" y1="30" x2="200" y2="210" stroke={c.ink} strokeWidth="1" strokeDasharray="3 5" opacity="0.35" />
-
-          {/* LEFT — Popper: pruned tree */}
-          <g>
-            {/* trunk */}
-            <path d="M100 200 L100 130" stroke={c.ink} strokeWidth="3" strokeLinecap="round" opacity="0.85" />
-            {/* main branches */}
-            <path d="M100 150 L70 120" stroke={c.ink} strokeWidth="2" strokeLinecap="round" opacity="0.85" />
-            <path d="M100 140 L130 110" stroke={c.ink} strokeWidth="2" strokeLinecap="round" opacity="0.85" />
-            <path d="M100 130 L100 90" stroke={c.ink} strokeWidth="2" strokeLinecap="round" opacity="0.85" />
-            {/* healthy leaves */}
-            <circle cx="70" cy="115" r="10" fill={c.accent} opacity="0.9" />
-            <circle cx="130" cy="105" r="10" fill={c.accent} opacity="0.9" />
-            <circle cx="100" cy="82" r="11" fill={c.accent} opacity="0.95" />
-            {/* pruned (cut) branch — small stump with X */}
-            <path d="M100 160 L75 165" stroke={c.inkMuted} strokeWidth="1.5" opacity="0.6" />
-            <line x1="72" y1="161" x2="80" y2="169" stroke={c.accent} strokeWidth="1.4" />
-            <line x1="80" y1="161" x2="72" y2="169" stroke={c.accent} strokeWidth="1.4" />
-            {/* label */}
-            <text x="100" y="225" textAnchor="middle" fill={c.inkMuted} fontSize="9" fontFamily="JetBrains Mono" letterSpacing="2">POPPER</text>
-          </g>
-
-          {/* RIGHT — Kuhn: burst / paradigm shift */}
-          <g>
-            {/* faded old paradigm circle */}
-            <circle cx="300" cy="120" r="34" fill="none" stroke={c.inkMuted} strokeWidth="1" strokeDasharray="3 3" opacity="0.5" />
-            {/* explosion rays */}
-            {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => {
-              const rad = (deg * Math.PI) / 180;
-              const inner = 26;
-              const outer = deg % 60 === 0 ? 64 : 50;
-              const x1 = 300 + Math.cos(rad) * inner;
-              const y1 = 120 + Math.sin(rad) * inner;
-              const x2 = 300 + Math.cos(rad) * outer;
-              const y2 = 120 + Math.sin(rad) * outer;
-              return <line key={deg} x1={x1} y1={y1} x2={x2} y2={y2} stroke={c.accent} strokeWidth="1.6" strokeLinecap="round" />;
-            })}
-            {/* new paradigm core */}
-            <circle cx="300" cy="120" r="20" fill={c.accent} />
-            <circle cx="300" cy="120" r="20" fill="none" stroke={c.accent} strokeWidth="1" opacity="0.4" />
-            <text x="300" y="225" textAnchor="middle" fill={c.inkMuted} fontSize="9" fontFamily="JetBrains Mono" letterSpacing="2">KUHN</text>
-          </g>
-        </g>
-      );
-
-    case "spectrum":
-      return (
-        <g>
-          {Array.from({ length: 24 }).map((_, i) => (
-            <rect
-              key={i}
-              x={40 + i * 13.5}
-              y={120 - i * 4}
-              width="8"
-              height={20 + i * 4}
-              fill={c.accent}
-              opacity={0.35 + i * 0.025}
-              rx="2"
-            />
-          ))}
-          <line x1="30" y1="200" x2="370" y2="200" stroke={c.ink} strokeWidth="1" opacity="0.3" />
-        </g>
-      );
-
-    case "lens":
-      return (
-        <g>
-          <circle cx="160" cy="120" r="60" fill="none" stroke={c.ink} strokeWidth="2" opacity="0.7" />
-          <circle cx="160" cy="120" r="60" fill={c.accentSoft} />
-          <line x1="208" y1="160" x2="280" y2="220" stroke={c.ink} strokeWidth="6" strokeLinecap="round" opacity="0.8" />
-          {[0, 1, 2, 3].map((i) => (
-            <circle key={i} cx={130 + i * 20} cy={120} r={2 + i} fill={c.accent} opacity={0.7 + i * 0.08} />
-          ))}
-          <circle cx="160" cy="120" r="28" fill="none" stroke={c.accent} strokeWidth="0.6" opacity="0.5" />
-        </g>
-      );
-
-    case "shield":
-      return (
-        <g>
-          <path
-            d="M200 40 L280 70 L280 140 Q280 190 200 215 Q120 190 120 140 L120 70 Z"
-            fill={c.accentSoft}
-            stroke={c.accent}
-            strokeWidth="1.5"
-          />
-          <path
-            d="M165 125 L190 150 L240 100"
-            fill="none"
-            stroke={c.accent}
-            strokeWidth="3.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </g>
-      );
-
-    case "mirror":
-      return (
-        <g>
-          <ellipse cx="200" cy="120" rx="70" ry="90" fill="none" stroke={c.ink} strokeWidth="1.5" opacity="0.6" />
-          <ellipse cx="200" cy="120" rx="58" ry="78" fill={c.accentSoft} />
-          <circle cx="180" cy="105" r="3" fill={c.ink} />
-          <circle cx="220" cy="105" r="3" fill={c.ink} />
-          <path d="M180 145 Q200 155 220 145" stroke={c.ink} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-          <line x1="120" y1="60" x2="100" y2="40" stroke={c.accent} strokeWidth="1.5" />
-          <line x1="280" y1="60" x2="300" y2="40" stroke={c.accent} strokeWidth="1.5" />
-          <line x1="120" y1="180" x2="100" y2="200" stroke={c.accent} strokeWidth="1.5" />
-          <line x1="280" y1="180" x2="300" y2="200" stroke={c.accent} strokeWidth="1.5" />
-        </g>
-      );
-
-    case "circuit":
-      return (
-        <g>
-          {[60, 120, 180, 240, 300, 340].map((x, i) => (
-            <g key={i}>
-              <circle cx={x} cy={60 + (i % 2) * 120} r="5" fill={c.accent} />
-              <line
-                x1={x}
-                y1={60 + (i % 2) * 120}
-                x2={x + 30}
-                y2={120}
-                stroke={c.ink}
-                strokeWidth="1"
-                opacity="0.35"
-              />
-            </g>
-          ))}
-          <circle cx="200" cy="120" r="24" fill={c.accent} />
-          <text x="200" y="125" textAnchor="middle" fill="hsl(240 14% 6%)" fontSize="11" fontFamily="JetBrains Mono" fontWeight="600">
-            AI
-          </text>
-        </g>
-      );
-
     default:
-      return <circle cx="200" cy="120" r="50" fill={c.accent} opacity="0.85" />;
+      return <circle cx="50" cy="50" r="18" fill={c.fill} />;
   }
 }
