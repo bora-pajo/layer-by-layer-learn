@@ -1,4 +1,5 @@
 import { type VisualKind } from "@/content/chapter1";
+import { useTheme } from "@/hooks/useTheme";
 
 interface Props {
   kind: VisualKind;
@@ -8,14 +9,18 @@ interface Props {
 }
 
 /**
- * ConceptVisual — soft pastel tile with a white inner card holding a minimal SVG mark.
- * Matches the reference: rounded squircle, pastel tinted background, clean line-art inside.
+ * ConceptVisual — soft pastel tile with an inner card holding a minimal SVG mark.
+ * Theme-aware: light mode uses pastel + white; dark mode uses deep tinted + dark inner card.
  */
 export function ConceptVisual({ kind, hue = 258, className = "", large = false }: Props) {
-  const tileBg = `hsl(${hue} 75% 94%)`;
-  const stroke = `hsl(${hue} 60% 45%)`;
-  const strokeSoft = `hsl(${hue} 55% 70%)`;
-  const fill = `hsl(${hue} 70% 55%)`;
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+
+  const tileBg = isDark ? `hsl(${hue} 35% 18%)` : `hsl(${hue} 75% 94%)`;
+  const innerBg = isDark ? `hsl(${hue} 22% 11%)` : `hsl(0 0% 100%)`;
+  const stroke = isDark ? `hsl(${hue} 75% 80%)` : `hsl(${hue} 60% 45%)`;
+  const strokeSoft = isDark ? `hsl(${hue} 45% 55%)` : `hsl(${hue} 55% 70%)`;
+  const fill = isDark ? `hsl(${hue} 80% 72%)` : `hsl(${hue} 70% 55%)`;
 
   const wrap = large
     ? "aspect-square w-full max-w-[300px] mx-auto"
@@ -27,8 +32,13 @@ export function ConceptVisual({ kind, hue = 258, className = "", large = false }
       style={{ background: tileBg }}
     >
       <div
-        className={`${large ? "w-[78%] h-[78%]" : "w-[72%] h-[72%]"} rounded-2xl bg-surface flex items-center justify-center`}
-        style={{ boxShadow: "0 1px 2px hsl(240 15% 10% / 0.04)" }}
+        className={`${large ? "w-[78%] h-[78%]" : "w-[72%] h-[72%]"} rounded-2xl flex items-center justify-center`}
+        style={{
+          background: innerBg,
+          boxShadow: isDark
+            ? "0 1px 2px hsl(0 0% 0% / 0.3)"
+            : "0 1px 2px hsl(240 15% 10% / 0.04)",
+        }}
       >
         <svg viewBox="0 0 100 100" className="w-[80%] h-[80%]" fill="none">
           {render(kind, { stroke, strokeSoft, fill })}

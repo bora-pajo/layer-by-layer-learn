@@ -6,6 +6,7 @@ import { LayerFooter } from "@/components/LayerFooter";
 import { JumpDrawer } from "@/components/JumpDrawer";
 import { chapter, getAdjacent, getConcept } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
+import { useTheme } from "@/hooks/useTheme";
 
 /**
  * Layer 1 — Visual poster. Tinted full-bleed background, white visual card,
@@ -51,8 +52,9 @@ const Layer1Page = () => {
   const { prev, next, index, total } = getAdjacent(concept.id);
   const group = chapter.groups.find((g) => g.id === concept.groupId)!;
 
-  // Soft tinted background using the concept hue
-  const tint = `hsl(${concept.hue} 75% 92%)`;
+  // Soft tinted background using the concept hue (theme-aware)
+  const { theme } = useTheme();
+  const tint = theme === "dark" ? `hsl(${concept.hue} 30% 12%)` : `hsl(${concept.hue} 75% 92%)`;
 
   return (
     <div

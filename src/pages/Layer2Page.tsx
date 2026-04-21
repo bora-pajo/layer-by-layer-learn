@@ -5,6 +5,7 @@ import { LayerHeader } from "@/components/LayerHeader";
 import { JumpDrawer } from "@/components/JumpDrawer";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
 import { useTabs } from "@/hooks/useTabs";
+import { useTheme } from "@/hooks/useTheme";
 
 /**
  * Layer 2 — "A little more" sheet. Cream paper, eyebrow, title, brief,
@@ -47,7 +48,12 @@ const Layer2Page = () => {
     group.concepts.find((c) => c.id !== concept.id) ??
     allConcepts.find((c) => c.id !== concept.id);
 
-  const accent = `hsl(${concept.hue} 60% 50%)`;
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
+  const accent = isDark ? `hsl(${concept.hue} 75% 75%)` : `hsl(${concept.hue} 60% 50%)`;
+  const chipBg = isDark ? `hsl(${concept.hue} 35% 22%)` : `hsl(${concept.hue} 80% 94%)`;
+  const chipFg = isDark ? `hsl(${concept.hue} 80% 85%)` : `hsl(${concept.hue} 60% 40%)`;
+  const tabIdle = isDark ? `hsl(${concept.hue} 35% 35%)` : `hsl(${concept.hue} 50% 75%)`;
 
   return (
     <div className="phone-shell relative animate-fade-in" style={{ minHeight: "100dvh" }}>
@@ -84,10 +90,7 @@ const Layer2Page = () => {
               <span
                 key={t}
                 className="rounded-full px-3 py-1 text-[12px] font-display"
-                style={{
-                  background: `hsl(${concept.hue} 80% 94%)`,
-                  color: accent,
-                }}
+                style={{ background: chipBg, color: chipFg }}
               >
                 {t}
               </span>
@@ -130,7 +133,7 @@ const Layer2Page = () => {
                 tabbed ? "rotate-[-3deg]" : "rotate-[-8deg] opacity-60 group-hover:opacity-100 group-hover:rotate-[-3deg]"
               }`}
               style={{
-                background: tabbed ? accent : `hsl(${concept.hue} 50% 75%)`,
+                background: tabbed ? accent : tabIdle,
               }}
             />
             <div className="flex-1">
