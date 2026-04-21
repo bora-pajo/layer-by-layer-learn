@@ -5,6 +5,9 @@
 export type VisualKind =
   | "mountain"
   | "sources"
+  | "lineage"
+  | "pillar"
+  | "hand"
   | "challenge"
   | "cycle"
   | "compare"
@@ -82,7 +85,7 @@ export const chapter = {
             "Traditional knowledge — as the title suggests — comes from tradition. It is passed down across generations, shared with our community, culture, and close family. Think of the farming practices of Amish communities or the fishing practices of Indigenous groups.",
             "There is logic, rationale, reasoning, and often careful observation wrapped into traditional knowledge. Just because it is traditional does not mean it is irrational; it simply means this is how the knowledge was passed down.",
           ],
-          visual: "sources",
+          visual: "lineage",
         },
         {
           id: "authoritative",
@@ -95,7 +98,7 @@ export const chapter = {
             "Authoritative knowledge is based on the source — someone we believe to be especially qualified on a subject. The key point is not that we fully understand all of it ourselves, but that the person or institution delivering it carries authority.",
             "This type of knowledge is authoritative because of the social and institutional credibility granted to it — not necessarily because every recipient has deep understanding of it.",
           ],
-          visual: "sources",
+          visual: "pillar",
         },
         {
           id: "experiential",
@@ -108,7 +111,7 @@ export const chapter = {
             "Differently from any other kind of knowledge, experiential knowledge comes from doing something. Authoritative and traditional knowledge are often taught in the abstract first; experiential knowledge starts with the practical application.",
             "Children touch something hot and they know not to put their hands there anymore. It hurts. Experiential knowledge comes from experience, from feeling, from doing, from living through something.",
           ],
-          visual: "sources",
+          visual: "hand",
         },
         {
           id: "scientific",

@@ -70,6 +70,107 @@ function render(
         </g>
       );
 
+    case "lineage":
+      // Traditional knowledge — a chain of figures passing a glow hand to hand across generations
+      return (
+        <g>
+          <line x1="40" y1="160" x2="360" y2="160" stroke={c.ink} strokeWidth="1" strokeDasharray="2 5" opacity="0.3" />
+          {[70, 150, 230, 310].map((x, i) => (
+            <g key={i} opacity={0.55 + i * 0.12}>
+              {/* head */}
+              <circle cx={x} cy="105" r="10" fill="none" stroke={c.ink} strokeWidth="1.4" />
+              {/* body */}
+              <path d={`M${x - 14} 160 Q${x} 125 ${x + 14} 160`} fill="none" stroke={c.ink} strokeWidth="1.4" />
+              {/* glow held forward */}
+              <circle cx={x + 22} cy="138" r={i === 3 ? 7 : 4} fill={c.accent} opacity={0.7 + i * 0.1} />
+            </g>
+          ))}
+          {/* passing arcs */}
+          {[110, 190, 270].map((x, i) => (
+            <path
+              key={i}
+              d={`M${x} 138 Q${x + 20} 110 ${x + 40} 138`}
+              fill="none"
+              stroke={c.accent}
+              strokeWidth="1.2"
+              strokeDasharray="2 3"
+              opacity="0.7"
+            />
+          ))}
+        </g>
+      );
+
+    case "pillar":
+      // Authoritative knowledge — a single tall classical pillar with a seal/crest above
+      return (
+        <g>
+          {/* light beam from above */}
+          <path d="M200 20 L150 220 L250 220 Z" fill={c.accentSoft} opacity="0.6" />
+          {/* seal */}
+          <circle cx="200" cy="48" r="18" fill={c.accent} />
+          <circle cx="200" cy="48" r="11" fill="none" stroke="hsl(240 14% 6%)" strokeWidth="1.2" />
+          {/* capital */}
+          <rect x="160" y="78" width="80" height="12" fill={c.ink} opacity="0.85" rx="2" />
+          {/* shaft with flutes */}
+          <rect x="172" y="92" width="56" height="110" fill={c.ink} opacity="0.85" />
+          {[0, 1, 2, 3].map((i) => (
+            <line
+              key={i}
+              x1={184 + i * 11}
+              y1="94"
+              x2={184 + i * 11}
+              y2="200"
+              stroke="hsl(240 14% 4%)"
+              strokeWidth="1"
+              opacity="0.7"
+            />
+          ))}
+          {/* base */}
+          <rect x="156" y="202" width="88" height="14" fill={c.ink} opacity="0.9" rx="2" />
+          {/* small figures looking up */}
+          <circle cx="90" cy="210" r="4" fill={c.inkMuted} />
+          <circle cx="310" cy="210" r="4" fill={c.inkMuted} />
+        </g>
+      );
+
+    case "hand":
+      // Experiential knowledge — a hand touching a flame; the spark of direct experience
+      return (
+        <g>
+          {/* flame */}
+          <path
+            d="M250 70 Q235 105 250 130 Q265 110 270 90 Q278 110 268 135 Q255 160 240 145 Q225 130 240 105 Q243 88 250 70 Z"
+            fill={c.accent}
+            opacity="0.9"
+          />
+          <path
+            d="M250 95 Q244 115 252 130 Q260 118 258 105 Q255 95 250 95 Z"
+            fill="hsl(240 14% 6%)"
+            opacity="0.6"
+          />
+          {/* spark rays */}
+          {[-30, -15, 0, 15, 30].map((deg, i) => {
+            const rad = ((deg - 90) * Math.PI) / 180;
+            const x1 = 252 + Math.cos(rad) * 55;
+            const y1 = 110 + Math.sin(rad) * 55;
+            const x2 = 252 + Math.cos(rad) * 75;
+            const y2 = 110 + Math.sin(rad) * 75;
+            return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke={c.accent} strokeWidth="1.2" opacity="0.6" />;
+          })}
+          {/* hand reaching from left */}
+          <path
+            d="M40 200 L130 175 L150 165 L165 158 L175 162 L168 175 L155 180 L148 188 L160 192 L150 200 L135 198 L40 215 Z"
+            fill="none"
+            stroke={c.ink}
+            strokeWidth="1.6"
+            strokeLinejoin="round"
+          />
+          {/* fingertip glow at flame contact */}
+          <circle cx="178" cy="160" r="6" fill={c.accent} opacity="0.8" />
+        </g>
+      );
+
+
     case "challenge":
       return (
         <g>

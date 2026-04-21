@@ -102,15 +102,22 @@ const ConceptPage = () => {
             <ChevronDown className="h-5 w-5" />
           </button>
         )}
-        {layer >= 2 && (
+        {layer === 2 && (
           <button
-            onClick={() => setLayer(layer === 2 ? 3 : 2)}
+            onClick={() => setLayer(3)}
+            className="group flex w-full items-center justify-between rounded-2xl bg-accent px-5 py-4 text-accent-foreground active:scale-[0.99] transition-transform"
+          >
+            <span className="font-display text-base font-medium">Go deeper · read full text</span>
+            <BookOpen className="h-5 w-5" />
+          </button>
+        )}
+        {layer === 3 && (
+          <button
+            onClick={() => setLayer(2)}
             className="flex w-full items-center justify-between rounded-2xl border border-border bg-surface px-5 py-4 text-ink active:scale-[0.99] transition-transform"
           >
-            <span className="font-display text-base">
-              {layer === 2 ? "Read full text" : "Collapse to brief"}
-            </span>
-            <BookOpen className="h-5 w-5" />
+            <span className="font-display text-base">Collapse to brief</span>
+            <ChevronDown className="h-5 w-5 rotate-180" />
           </button>
         )}
       </section>
