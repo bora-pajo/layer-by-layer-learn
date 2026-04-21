@@ -5,6 +5,9 @@
 export type VisualKind =
   | "mountain"
   | "sources"
+  | "lineage"
+  | "pillar"
+  | "hand"
   | "challenge"
   | "cycle"
   | "compare"
@@ -82,10 +85,7 @@ export const chapter = {
             "Traditional knowledge — as the title suggests — comes from tradition. It is passed down across generations, shared with our community, culture, and close family. Think of the farming practices of Amish communities or the fishing practices of Indigenous groups.",
             "There is logic, rationale, reasoning, and often careful observation wrapped into traditional knowledge. Just because it is traditional does not mean it is irrational; it simply means this is how the knowledge was passed down.",
           ],
-          visual: "sources",
-        },
-        {
-          id: "authoritative",
+          visual: "lineage",
           number: "2.2",
           title: "Authoritative knowledge",
           glance: "We trust it because of who said it.",
