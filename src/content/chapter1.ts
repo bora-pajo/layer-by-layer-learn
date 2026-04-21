@@ -11,6 +11,7 @@ export type VisualKind =
   | "challenge"
   | "cycle"
   | "compare"
+  | "versus"
   | "spectrum"
   | "lens"
   | "shield"
@@ -269,12 +270,7 @@ export const chapter = {
             "Kuhn was less interested in a single rule for science and more interested in how scientific communities actually work. For him, science is built around shared paradigms, with long periods of normal work interrupted by major disruptions.",
             "Where does this leave us? Many contemporary scholars say both thinkers help us understand something important. Knowledge can advance through careful testing and revision, but it can also change through larger shifts in how an entire field understands its central problems.",
           ],
-          visual: "compare",
-        },
-      ],
-    },
-    {
-      id: "qualitative",
+          visual: "versus",
       number: "06",
       title: "Qualitative Research",
       tagline: "Insight, depth, and the texture of experience.",
