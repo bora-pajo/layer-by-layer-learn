@@ -112,6 +112,9 @@ export const chapter = {
             "Children touch something hot and they know not to put their hands there anymore. It hurts. Experiential knowledge comes from experience, from feeling, from doing, from living through something.",
           ],
           visual: "hand",
+        },
+        {
+          id: "scientific",
           number: "2.4",
           title: "Scientific knowledge",
           glance: "Systematic. Testable. Repeatable.",
