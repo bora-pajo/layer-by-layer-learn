@@ -12,23 +12,38 @@ interface Props {
  * Matches the reference: rounded squircle, pastel tinted background, clean line-art inside.
  */
 export function ConceptVisual({ kind, hue = 258, className = "", large = false }: Props) {
-  const tileBg = `hsl(${hue} 75% 94%)`;
-  const stroke = `hsl(${hue} 60% 45%)`;
-  const strokeSoft = `hsl(${hue} 55% 70%)`;
-  const fill = `hsl(${hue} 70% 55%)`;
-
   const wrap = large
     ? "aspect-square w-full max-w-[300px] mx-auto"
     : "aspect-square w-[88px] sm:w-[100px]";
 
+  // Theme-aware colors via CSS custom properties so dark mode reads correctly
+  const styleVars = {
+    // Outer pastel tile
+    ["--tile-bg" as string]: `hsl(${hue} 75% 94%)`,
+    ["--tile-bg-dark" as string]: `hsl(${hue} 35% 22%)`,
+    // Inner card (the "white" square that holds the SVG)
+    ["--inner" as string]: `hsl(0 0% 100%)`,
+    ["--inner-dark" as string]: `hsl(${hue} 25% 14%)`,
+    // Strokes / fills used by the SVG
+    ["--vstroke" as string]: `hsl(${hue} 60% 45%)`,
+    ["--vstroke-dark" as string]: `hsl(${hue} 75% 78%)`,
+    ["--vstroke-soft" as string]: `hsl(${hue} 55% 70%)`,
+    ["--vstroke-soft-dark" as string]: `hsl(${hue} 40% 50%)`,
+    ["--vfill" as string]: `hsl(${hue} 70% 55%)`,
+    ["--vfill-dark" as string]: `hsl(${hue} 80% 70%)`,
+  } as React.CSSProperties;
+
+  const stroke = "var(--v-stroke)";
+  const strokeSoft = "var(--v-stroke-soft)";
+  const fill = "var(--v-fill)";
+
   return (
     <div
-      className={`${wrap} rounded-[28px] flex items-center justify-center ${className}`}
-      style={{ background: tileBg }}
+      className={`concept-visual ${wrap} rounded-[28px] flex items-center justify-center ${className}`}
+      style={styleVars}
     >
       <div
-        className={`${large ? "w-[78%] h-[78%]" : "w-[72%] h-[72%]"} rounded-2xl bg-surface flex items-center justify-center`}
-        style={{ boxShadow: "0 1px 2px hsl(240 15% 10% / 0.04)" }}
+        className={`${large ? "w-[78%] h-[78%]" : "w-[72%] h-[72%]"} concept-visual-inner rounded-2xl flex items-center justify-center`}
       >
         <svg viewBox="0 0 100 100" className="w-[80%] h-[80%]" fill="none">
           {render(kind, { stroke, strokeSoft, fill })}
