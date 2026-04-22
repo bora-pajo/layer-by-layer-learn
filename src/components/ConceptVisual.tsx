@@ -88,12 +88,22 @@ function render(kind: VisualKind, c: C, animate: boolean) {
       );
 
     case "pillar":
-      // Authoritative — central "A" with concentric authority rings
+      // Authoritative — outer ring slowly rotates; "A" gently breathes.
       return (
         <g>
-          <circle cx="50" cy="50" r="32" stroke={c.strokeSoft} strokeWidth="1" strokeDasharray="2 3" />
-          <circle cx="50" cy="50" r="20" stroke={c.stroke} strokeWidth="1.5" />
-          <text x="50" y="56" textAnchor="middle" fontSize="14" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.stroke}>A</text>
+          <motion.circle
+            cx="50" cy="50" r="32" stroke={c.strokeSoft} strokeWidth="1" strokeDasharray="2 3" fill="none"
+            style={{ transformOrigin: "50px 50px" }}
+            animate={animate ? { rotate: 360 } : undefined}
+            transition={animate ? { duration: 30, repeat: Infinity, ease: "linear" } : undefined}
+          />
+          <circle cx="50" cy="50" r="20" stroke={c.stroke} strokeWidth="1.5" fill="none" />
+          <motion.text
+            x="50" y="56" textAnchor="middle" fontSize="14" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.stroke}
+            style={{ transformOrigin: "50px 50px" }}
+            animate={animate ? { scale: [1, 1.08, 1] } : undefined}
+            transition={animate ? { duration: 3.5, repeat: Infinity, ease: "easeInOut" } : undefined}
+          >A</motion.text>
         </g>
       );
 
@@ -138,12 +148,25 @@ function render(kind: VisualKind, c: C, animate: boolean) {
       );
 
     case "mountain":
-      // Reality vs knowledge — wave with point on it, dashed beneath (the map is not the territory)
+      // Reality vs knowledge — waves drift; the dot tries to stay on the surface.
       return (
         <g fill="none" strokeLinecap="round">
-          <path d="M15 55 Q35 35 50 55 T85 55" stroke={c.stroke} strokeWidth="2" />
-          <path d="M15 62 Q35 42 50 62 T85 62" stroke={c.strokeSoft} strokeWidth="1" strokeDasharray="2 3" />
-          <circle cx="55" cy="55" r="2.5" fill={c.fill} />
+          <motion.path
+            d="M15 55 Q35 35 50 55 T85 55" stroke={c.stroke} strokeWidth="2"
+            animate={animate ? { y: [0, -1.5, 0, 1.5, 0] } : undefined}
+            transition={animate ? { duration: 5, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
+          <motion.path
+            d="M15 62 Q35 42 50 62 T85 62" stroke={c.strokeSoft} strokeWidth="1" strokeDasharray="2 3"
+            animate={animate ? { y: [0, 1.5, 0, -1.5, 0] } : undefined}
+            transition={animate ? { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.4 } : undefined}
+          />
+          <motion.circle
+            r="2.5" fill={c.fill}
+            animate={animate ? { cx: [25, 75, 25], cy: [50, 56, 50] } : undefined}
+            transition={animate ? { duration: 8, repeat: Infinity, ease: "easeInOut" } : undefined}
+            {...(!animate && { cx: 55, cy: 55 })}
+          />
           <circle cx="51" cy="61" r="1.5" fill={c.strokeSoft} />
         </g>
       );
@@ -162,108 +185,190 @@ function render(kind: VisualKind, c: C, animate: boolean) {
       );
 
     case "cycle":
-      // Normal science — atom / orbital structure (Kuhn's normal puzzle-solving)
+      // Normal science — orbital ellipses rotate around the nucleus.
       return (
         <g fill="none" stroke={c.stroke} strokeWidth="1.4">
-          <ellipse cx="50" cy="50" rx="30" ry="12" />
-          <ellipse cx="50" cy="50" rx="30" ry="12" transform="rotate(60 50 50)" />
-          <ellipse cx="50" cy="50" rx="30" ry="12" transform="rotate(-60 50 50)" />
-          <circle cx="50" cy="50" r="3" fill={c.fill} stroke="none" />
+          {[0, 60, -60].map((deg, i) => (
+            <motion.ellipse
+              key={deg} cx="50" cy="50" rx="30" ry="12"
+              style={{ transformOrigin: "50px 50px" }}
+              animate={animate ? { rotate: [deg, deg + 360] } : undefined}
+              transition={animate ? { duration: 12 + i * 2, repeat: Infinity, ease: "linear" } : undefined}
+              transform={!animate ? `rotate(${deg} 50 50)` : undefined}
+            />
+          ))}
+          <motion.circle
+            cx="50" cy="50" r="3" fill={c.fill} stroke="none"
+            style={{ transformOrigin: "50px 50px" }}
+            animate={animate ? { scale: [1, 1.3, 1] } : undefined}
+            transition={animate ? { duration: 2.5, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
           <circle cx="22" cy="50" r="2" fill={c.stroke} stroke="none" />
           <circle cx="78" cy="50" r="2" fill={c.stroke} stroke="none" />
         </g>
       );
 
     case "compare":
-      // Information vs knowledge — bold # divider between i and k
+      // Information vs knowledge — i and k swap emphasis around a steady #.
       return (
         <g>
           <text
-            x="50"
-            y="64"
-            textAnchor="middle"
-            fontSize="58"
-            fontFamily="Fraunces, serif"
-            fontWeight="700"
-            fill={c.stroke}
-          >
-            #
-          </text>
-          <text x="22" y="46" textAnchor="middle" fontSize="13" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.strokeSoft}>i</text>
-          <text x="78" y="62" textAnchor="middle" fontSize="13" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.fill}>k</text>
+            x="50" y="64" textAnchor="middle" fontSize="58"
+            fontFamily="Fraunces, serif" fontWeight="700" fill={c.stroke}
+          >#</text>
+          <motion.text
+            x="22" y="46" textAnchor="middle" fontSize="13" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.strokeSoft}
+            animate={animate ? { opacity: [0.5, 1, 0.5], y: [46, 44, 46] } : undefined}
+            transition={animate ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : undefined}
+          >i</motion.text>
+          <motion.text
+            x="78" y="62" textAnchor="middle" fontSize="13" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.fill}
+            animate={animate ? { opacity: [1, 0.5, 1], y: [62, 64, 62] } : undefined}
+            transition={animate ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : undefined}
+          >k</motion.text>
         </g>
       );
 
     case "versus":
-      // Kuhn vs Popper — split square: left fine pruning lines, right concentric burst
+      // Kuhn vs Popper — Popper branches prune; Kuhn's paradigm rings pulse.
       return (
         <g fill="none" strokeLinecap="round">
-          {/* Popper side — branching prune */}
           <line x1="28" y1="70" x2="28" y2="40" stroke={c.stroke} strokeWidth="1.5" />
-          <line x1="28" y1="50" x2="20" y2="42" stroke={c.stroke} strokeWidth="1.2" />
-          <line x1="28" y1="46" x2="36" y2="38" stroke={c.stroke} strokeWidth="1.2" />
+          <motion.line
+            x1="28" y1="50" x2="20" y2="42" stroke={c.stroke} strokeWidth="1.2"
+            animate={animate ? { opacity: [1, 0.2, 1] } : undefined}
+            transition={animate ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
+          <motion.line
+            x1="28" y1="46" x2="36" y2="38" stroke={c.stroke} strokeWidth="1.2"
+            animate={animate ? { opacity: [0.2, 1, 0.2] } : undefined}
+            transition={animate ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
           <circle cx="28" cy="38" r="2.5" fill={c.fill} stroke="none" />
-          {/* divider */}
           <line x1="50" y1="22" x2="50" y2="78" stroke={c.strokeSoft} strokeWidth="0.8" strokeDasharray="2 3" />
-          {/* Kuhn side — concentric rings (paradigm) */}
-          <circle cx="72" cy="50" r="14" stroke={c.strokeSoft} strokeWidth="1" />
-          <circle cx="72" cy="50" r="9" stroke={c.stroke} strokeWidth="1.4" />
+          <motion.circle
+            cx="72" cy="50" r="14" stroke={c.strokeSoft} strokeWidth="1" fill="none"
+            style={{ transformOrigin: "72px 50px" }}
+            animate={animate ? { scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] } : undefined}
+            transition={animate ? { duration: 3.5, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
+          <motion.circle
+            cx="72" cy="50" r="9" stroke={c.stroke} strokeWidth="1.4" fill="none"
+            style={{ transformOrigin: "72px 50px" }}
+            animate={animate ? { scale: [1, 1.12, 1] } : undefined}
+            transition={animate ? { duration: 3.5, repeat: Infinity, ease: "easeInOut", delay: 0.3 } : undefined}
+          />
           <circle cx="72" cy="50" r="3" fill={c.fill} stroke="none" />
         </g>
       );
 
     case "spectrum":
-      // Quantitative — ascending bars
+      // Quantitative — bars rise in sequence (data accumulating).
       return (
         <g>
-          {[0, 1, 2, 3, 4, 5].map((i) => (
-            <rect key={i} x={20 + i * 11} y={70 - i * 8} width="7" height={10 + i * 8} rx="1.5" fill={c.fill} opacity={0.5 + i * 0.08} />
-          ))}
+          {[0, 1, 2, 3, 4, 5].map((i) => {
+            const fullH = 10 + i * 8;
+            const baseY = 70 - i * 8;
+            return (
+              <motion.rect
+                key={i} x={20 + i * 11} width="7" rx="1.5" fill={c.fill} opacity={0.5 + i * 0.08}
+                animate={animate ? { height: [0, fullH], y: [74, baseY] } : undefined}
+                transition={animate ? { duration: 0.6, delay: 0.15 + i * 0.18, ease: "easeOut", repeat: Infinity, repeatType: "reverse", repeatDelay: 2.5 } : undefined}
+                {...(!animate && { y: baseY, height: fullH })}
+              />
+            );
+          })}
           <line x1="16" y1="74" x2="84" y2="74" stroke={c.stroke} strokeWidth="1" />
         </g>
       );
 
     case "lens":
-      // Qualitative — magnifying glass
+      // Qualitative — magnifier drifts, inner circle subtly breathes (focusing).
       return (
-        <g fill="none" stroke={c.stroke} strokeWidth="2" strokeLinecap="round">
+        <motion.g
+          fill="none" stroke={c.stroke} strokeWidth="2" strokeLinecap="round"
+          animate={animate ? { x: [-3, 3, -3], y: [-2, 2, -2] } : undefined}
+          transition={animate ? { duration: 6, repeat: Infinity, ease: "easeInOut" } : undefined}
+        >
           <circle cx="42" cy="42" r="20" />
           <line x1="58" y1="58" x2="74" y2="74" />
-          <circle cx="42" cy="42" r="10" stroke={c.strokeSoft} strokeWidth="1" />
-        </g>
+          <motion.circle
+            cx="42" cy="42" r="10" stroke={c.strokeSoft} strokeWidth="1"
+            style={{ transformOrigin: "42px 42px" }}
+            animate={animate ? { scale: [1, 0.85, 1] } : undefined}
+            transition={animate ? { duration: 3, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
+        </motion.g>
       );
 
     case "shield":
+      // Ethics — checkmark draws itself, shield gently breathes.
       return (
         <g fill="none" stroke={c.stroke} strokeWidth="1.6" strokeLinejoin="round">
-          <path d="M50 18 L75 28 V50 Q75 70 50 82 Q25 70 25 50 V28 Z" fill={c.strokeSoft} fillOpacity="0.3" />
-          <path d="M40 50 L48 58 L62 42" strokeWidth="2" />
+          <motion.path
+            d="M50 18 L75 28 V50 Q75 70 50 82 Q25 70 25 50 V28 Z"
+            fill={c.strokeSoft} fillOpacity="0.3"
+            style={{ transformOrigin: "50px 50px" }}
+            animate={animate ? { scale: [1, 1.04, 1] } : undefined}
+            transition={animate ? { duration: 3.5, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
+          <motion.path
+            d="M40 50 L48 58 L62 42" strokeWidth="2"
+            animate={animate ? { pathLength: [0, 1, 1, 0] } : undefined}
+            transition={animate ? { duration: 4, repeat: Infinity, ease: "easeInOut", times: [0, 0.4, 0.85, 1] } : undefined}
+          />
         </g>
       );
 
     case "mirror":
+      // Reflexivity — face blinks softly, smile breathes.
       return (
         <g fill="none" stroke={c.stroke} strokeWidth="1.5">
           <ellipse cx="50" cy="50" rx="20" ry="28" />
-          <circle cx="44" cy="46" r="1.5" fill={c.stroke} />
-          <circle cx="56" cy="46" r="1.5" fill={c.stroke} />
-          <path d="M44 58 Q50 62 56 58" strokeLinecap="round" />
+          <motion.circle
+            cx="44" cy="46" r="1.5" fill={c.stroke}
+            style={{ transformOrigin: "44px 46px" }}
+            animate={animate ? { scaleY: [1, 0.1, 1, 1, 1] } : undefined}
+            transition={animate ? { duration: 5, repeat: Infinity, ease: "easeInOut", times: [0, 0.05, 0.1, 0.5, 1] } : undefined}
+          />
+          <motion.circle
+            cx="56" cy="46" r="1.5" fill={c.stroke}
+            style={{ transformOrigin: "56px 46px" }}
+            animate={animate ? { scaleY: [1, 0.1, 1, 1, 1] } : undefined}
+            transition={animate ? { duration: 5, repeat: Infinity, ease: "easeInOut", times: [0, 0.05, 0.1, 0.5, 1] } : undefined}
+          />
+          <motion.path
+            d="M44 58 Q50 62 56 58" strokeLinecap="round"
+            animate={animate ? { d: ["M44 58 Q50 62 56 58", "M44 58 Q50 64 56 58", "M44 58 Q50 62 56 58"] } : undefined}
+            transition={animate ? { duration: 4, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
         </g>
       );
 
     case "circuit":
+      // AI — nodes pulse around the central core in sequence.
       return (
         <g fill="none" stroke={c.stroke} strokeWidth="1.4">
-          <circle cx="50" cy="50" r="10" fill={c.fill} stroke="none" />
+          <motion.circle
+            cx="50" cy="50" r="10" fill={c.fill} stroke="none"
+            style={{ transformOrigin: "50px 50px" }}
+            animate={animate ? { scale: [1, 1.12, 1] } : undefined}
+            transition={animate ? { duration: 2.4, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
           <text x="50" y="54" textAnchor="middle" fontSize="8" fontFamily="JetBrains Mono" fontWeight="600" fill="white">AI</text>
-          {[0, 90, 180, 270].map((deg) => {
+          {[0, 90, 180, 270].map((deg, i) => {
             const r = (deg * Math.PI) / 180;
             const x = 50 + Math.cos(r) * 28;
             const y = 50 + Math.sin(r) * 28;
             return (
               <g key={deg}>
                 <line x1={50 + Math.cos(r) * 12} y1={50 + Math.sin(r) * 12} x2={x} y2={y} stroke={c.strokeSoft} strokeWidth="1" />
-                <circle cx={x} cy={y} r="2.5" fill={c.stroke} />
+                <motion.circle
+                  cx={x} cy={y} r="2.5" fill={c.stroke}
+                  style={{ transformOrigin: `${x}px ${y}px` }}
+                  animate={animate ? { scale: [1, 1.8, 1], opacity: [0.6, 1, 0.6] } : undefined}
+                  transition={animate ? { duration: 2, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 } : undefined}
+                />
               </g>
             );
           })}
