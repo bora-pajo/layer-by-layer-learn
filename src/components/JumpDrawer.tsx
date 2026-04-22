@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { X } from "lucide-react";
-import { chapter } from "@/content/chapter1";
+import { chapters } from "@/content/chapter1";
 
 interface Props {
   open: boolean;
@@ -9,7 +9,7 @@ interface Props {
 }
 
 /**
- * JumpDrawer — bottom sheet listing all groups + concepts for quick navigation.
+ * JumpDrawer — bottom sheet listing all chapters, groups, and concepts.
  */
 export function JumpDrawer({ open, onClose, currentId }: Props) {
   if (!open) return null;
@@ -37,28 +37,37 @@ export function JumpDrawer({ open, onClose, currentId }: Props) {
           </button>
         </div>
         <ul className="overflow-y-auto px-2 py-2">
-          {chapter.groups.map((g) => (
-            <li key={g.id} className="mb-3">
-              <div className="px-3 pt-2 pb-1 flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full" style={{ background: `hsl(${g.hue} 70% 55%)` }} />
-                <span className="font-mono text-[10px] tracking-widest text-ink-muted">{g.number} · {g.title}</span>
+          {chapters.map((ch) => (
+            <li key={ch.number} className="mb-4">
+              <div className="px-3 pt-3 pb-2 font-mono text-[10px] tracking-[0.22em] uppercase text-ink">
+                Chapter {ch.number} · {ch.title}
               </div>
-              <ul>
-                {g.concepts.map((c) => (
-                  <li key={c.id}>
-                    <Link
-                      to={`/c/${c.id}`}
-                      onClick={onClose}
-                      className={`flex items-center gap-3 rounded-xl px-3 py-2.5 ${
-                        c.id === currentId ? "bg-accent-soft text-ink" : "text-ink-soft"
-                      }`}
-                    >
-                      <span className="font-mono text-[10px] text-ink-muted w-10">{c.number}</span>
-                      <span className="font-display text-sm">{c.title}</span>
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+              {ch.groups.map((g) => (
+                <div key={g.id} className="mb-2">
+                  <div className="px-3 pt-2 pb-1 flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full" style={{ background: `hsl(${g.hue} 70% 55%)` }} />
+                    <span className="font-mono text-[10px] tracking-widest text-ink-muted">
+                      {ch.number}.{g.number} · {g.title}
+                    </span>
+                  </div>
+                  <ul>
+                    {g.concepts.map((c) => (
+                      <li key={c.id}>
+                        <Link
+                          to={`/c/${c.id}`}
+                          onClick={onClose}
+                          className={`flex items-center gap-3 rounded-xl px-3 py-2.5 ${
+                            c.id === currentId ? "bg-accent-soft text-ink" : "text-ink-soft"
+                          }`}
+                        >
+                          <span className="font-mono text-[10px] text-ink-muted w-10">{c.number}</span>
+                          <span className="font-display text-sm">{c.title}</span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
             </li>
           ))}
         </ul>
