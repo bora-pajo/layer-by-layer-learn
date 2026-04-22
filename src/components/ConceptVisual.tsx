@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { type VisualKind } from "@/content/chapter1";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -6,13 +7,16 @@ interface Props {
   hue?: number;
   className?: string;
   large?: boolean;
+  /** Enable subtle motion. Default true on `large` (Layer 1), off on small tiles. */
+  animated?: boolean;
 }
 
 /**
  * ConceptVisual — soft pastel tile with an inner card holding a minimal SVG mark.
  * Theme-aware: light mode uses pastel + white; dark mode uses deep tinted + dark inner card.
  */
-export function ConceptVisual({ kind, hue = 258, className = "", large = false }: Props) {
+export function ConceptVisual({ kind, hue = 258, className = "", large = false, animated }: Props) {
+  const motionOn = animated ?? large;
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
@@ -41,7 +45,7 @@ export function ConceptVisual({ kind, hue = 258, className = "", large = false }
         }}
       >
         <svg viewBox="0 0 100 100" className="w-[80%] h-[80%]" fill="none">
-          {render(kind, { stroke, strokeSoft, fill })}
+          {render(kind, { stroke, strokeSoft, fill }, motionOn)}
         </svg>
       </div>
     </div>
@@ -50,18 +54,36 @@ export function ConceptVisual({ kind, hue = 258, className = "", large = false }
 
 type C = { stroke: string; strokeSoft: string; fill: string };
 
-function render(kind: VisualKind, c: C) {
+function render(kind: VisualKind, c: C, animate: boolean) {
   switch (kind) {
     case "lineage":
-      // Traditional knowledge — stacked horizon lines, one accented (oral tradition: layered, continuous)
+      // Traditional knowledge — horizon lines drift gently; the accented line carries a traveling dot.
       return (
         <g strokeLinecap="round">
-          <path d="M15 30 Q50 26 85 30" stroke={c.strokeSoft} strokeWidth="1" />
-          <path d="M15 42 Q50 38 85 42" stroke={c.strokeSoft} strokeWidth="1" />
-          <path d="M15 54 Q50 48 85 54" stroke={c.stroke} strokeWidth="2" />
-          <circle cx="50" cy="51" r="2.5" fill={c.fill} />
-          <path d="M15 66 Q50 62 85 66" stroke={c.strokeSoft} strokeWidth="1" />
-          <path d="M15 78 Q50 74 85 78" stroke={c.strokeSoft} strokeWidth="1" />
+          {[30, 42, 66, 78].map((y, i) => (
+            <motion.path
+              key={y}
+              d={`M15 ${y} Q50 ${y - 4} 85 ${y}`}
+              stroke={c.strokeSoft}
+              strokeWidth="1"
+              animate={animate ? { y: [0, -1.2, 0, 1.2, 0] } : undefined}
+              transition={animate ? { duration: 6 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.3 } : undefined}
+            />
+          ))}
+          <motion.path
+            d="M15 54 Q50 48 85 54"
+            stroke={c.stroke}
+            strokeWidth="2"
+            animate={animate ? { y: [0, -0.8, 0, 0.8, 0] } : undefined}
+            transition={animate ? { duration: 5, repeat: Infinity, ease: "easeInOut" } : undefined}
+          />
+          <motion.circle
+            r="2.5"
+            fill={c.fill}
+            animate={animate ? { cx: [20, 80, 20], cy: [52, 50, 52] } : { cx: 50, cy: 51 } as any}
+            transition={animate ? { duration: 7, repeat: Infinity, ease: "easeInOut" } : undefined}
+            {...(!animate && { cx: 50, cy: 51 })}
+          />
         </g>
       );
 
@@ -76,16 +98,25 @@ function render(kind: VisualKind, c: C) {
       );
 
     case "hand":
-      // Experiential — spiral inward (knowing through doing, recursive)
+      // Experiential — spiral slowly draws itself, then a dot pulses at center.
       return (
         <g fill="none" stroke={c.stroke} strokeWidth="1.4" strokeLinecap="round">
-          <path d="M50 50 m 0 -22 a 22 22 0 1 1 -0.1 0 m 4 4 a 18 18 0 1 0 0.1 0 m -4 4 a 14 14 0 1 1 -0.1 0 m 4 4 a 10 10 0 1 0 0.1 0 m -4 4 a 6 6 0 1 1 -0.1 0" />
-          <circle cx="50" cy="50" r="2" fill={c.fill} stroke="none" />
+          <motion.path
+            d="M50 50 m 0 -22 a 22 22 0 1 1 -0.1 0 m 4 4 a 18 18 0 1 0 0.1 0 m -4 4 a 14 14 0 1 1 -0.1 0 m 4 4 a 10 10 0 1 0 0.1 0 m -4 4 a 6 6 0 1 1 -0.1 0"
+            animate={animate ? { pathLength: [0, 1], opacity: [0.4, 1] } : undefined}
+            transition={animate ? { duration: 4, repeat: Infinity, repeatType: "reverse", ease: "easeInOut" } : undefined}
+          />
+          <motion.circle
+            cx="50" cy="50" r="2" fill={c.fill} stroke="none"
+            animate={animate ? { scale: [1, 1.6, 1], opacity: [1, 0.6, 1] } : undefined}
+            transition={animate ? { duration: 2.2, repeat: Infinity, ease: "easeInOut" } : undefined}
+            style={{ transformOrigin: "50px 50px" }}
+          />
         </g>
       );
 
     case "sources":
-      // Scientific — scattered data points on a grid (empirical, plotted)
+      // Scientific — data points pop in one by one, then loop.
       return (
         <g>
           <rect x="18" y="18" width="64" height="64" rx="4" stroke={c.strokeSoft} strokeWidth="1" fill="none" />
@@ -96,7 +127,12 @@ function render(kind: VisualKind, c: C) {
             <line key={`v${i}`} x1={34 + i * 16} y1="18" x2={34 + i * 16} y2="82" stroke={c.strokeSoft} strokeWidth="0.5" opacity="0.5" />
           ))}
           {[[32, 62], [44, 50], [56, 56], [68, 42], [40, 70], [62, 68]].map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r="2" fill={c.fill} />
+            <motion.circle
+              key={i} cx={x} cy={y} r="2" fill={c.fill}
+              style={{ transformOrigin: `${x}px ${y}px` }}
+              animate={animate ? { scale: [0, 1.3, 1, 1, 0], opacity: [0, 1, 1, 1, 0] } : undefined}
+              transition={animate ? { duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: i * 0.3, times: [0, 0.15, 0.3, 0.85, 1] } : undefined}
+            />
           ))}
         </g>
       );
@@ -113,11 +149,15 @@ function render(kind: VisualKind, c: C) {
       );
 
     case "challenge":
-      // Falsifiability — heartbeat / signal that could spike out (testable signal)
+      // Falsifiability — heartbeat traces left-to-right on loop.
       return (
         <g fill="none" stroke={c.stroke} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <rect x="18" y="30" width="64" height="40" rx="4" stroke={c.strokeSoft} strokeWidth="1" />
-          <path d="M22 50 L36 50 L42 38 L48 62 L54 44 L60 56 L66 50 L78 50" />
+          <rect x="18" y="30" width="64" height="40" rx="4" stroke={c.strokeSoft} strokeWidth="1" fill="none" />
+          <motion.path
+            d="M22 50 L36 50 L42 38 L48 62 L54 44 L60 56 L66 50 L78 50"
+            animate={animate ? { pathLength: [0, 1, 1], opacity: [0.3, 1, 0.3] } : undefined}
+            transition={animate ? { duration: 2.4, repeat: Infinity, ease: "easeInOut", times: [0, 0.7, 1] } : undefined}
+          />
         </g>
       );
 
