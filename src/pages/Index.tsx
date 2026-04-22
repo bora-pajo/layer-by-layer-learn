@@ -207,6 +207,7 @@ const Index = () => {
                           concept={c}
                           hue={group.hue}
                           visited={visited.has(c.id)}
+                          layerProgress={store[c.id]?.layers}
                           category={group.tagline.split(".")[0].split(",")[0].toLowerCase().slice(0, 16) || "epistemology"}
                         />
                       ))}
