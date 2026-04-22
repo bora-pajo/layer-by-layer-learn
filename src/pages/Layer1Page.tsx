@@ -85,6 +85,10 @@ const Layer1Page = () => {
           {concept.title}.
         </h1>
 
+        <p className="mt-4 text-center font-serif text-[15px] leading-[1.45] text-ink-soft text-balance max-w-[320px]">
+          {concept.glance}
+        </p>
+
         <button
           onClick={() => navigate(`/c/${concept.id}/more`)}
           className="mt-6 rounded-full bg-surface px-5 py-2 font-mono text-[10px] tracking-[0.22em] text-ink-soft shadow-soft active:scale-95 transition-transform"
