@@ -89,12 +89,22 @@ const Layer1Page = () => {
           {concept.glance}
         </p>
 
-        <button
-          onClick={() => navigate(`/c/${concept.id}/more`)}
-          className="mt-6 rounded-full bg-surface px-5 py-2 font-mono text-[10px] tracking-[0.22em] text-ink-soft shadow-soft active:scale-95 transition-transform"
-        >
-          TAP FOR MORE
-        </button>
+        <div className="mt-6 flex items-center gap-2">
+          <button
+            onClick={() => navigate(`/c/${concept.id}/more`)}
+            className="rounded-full bg-surface px-5 py-2 font-mono text-[10px] tracking-[0.22em] text-ink-soft shadow-soft active:scale-95 transition-transform"
+          >
+            TAP FOR MORE
+          </button>
+          {concept.example && (
+            <button
+              onClick={() => navigate(`/c/${concept.id}/example`)}
+              className="rounded-full bg-ink px-5 py-2 font-mono text-[10px] tracking-[0.22em] text-background shadow-soft active:scale-95 transition-transform"
+            >
+              SEE EXAMPLE
+            </button>
+          )}
+        </div>
       </section>
 
       <LayerFooter
