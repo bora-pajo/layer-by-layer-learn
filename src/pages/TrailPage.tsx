@@ -1,13 +1,26 @@
 import { Link } from "react-router-dom";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
-import { allConcepts, chapter } from "@/content/chapter1";
-import { useProgress } from "@/hooks/useProgress";
+import { allConcepts } from "@/content/chapter1";
+import { useProgress, LAYERS, type Layer } from "@/hooks/useProgress";
 import { useTabs } from "@/hooks/useTabs";
-import { Sparkles, RotateCcw, StickyNote, X } from "lucide-react";
+import { RotateCcw, StickyNote, X, Play, Footprints } from "lucide-react";
+
+const LAYER_PATH: Record<Layer, string> = {
+  glance: "",
+  brief: "/more",
+  example: "/example",
+  full: "/read",
+};
+const LAYER_LABEL: Record<Layer, string> = {
+  glance: "Glance",
+  brief: "Brief",
+  example: "Example",
+  full: "Full text",
+};
 
 const TrailPage = () => {
-  const { visited, reset } = useProgress();
+  const { visited, store, reset } = useProgress();
   const { tabs, remove } = useTabs();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
 
@@ -17,34 +30,141 @@ const TrailPage = () => {
     .map((t) => ({ tab: t, concept: allConcepts.find((c) => c.id === t.id) }))
     .filter((x) => !!x.concept);
 
+  // Trail entries — concepts you've explored, ordered by most recent.
+  const trail = Object.entries(store)
+    .map(([id, p]) => ({ concept: allConcepts.find((c) => c.id === id), progress: p }))
+    .filter((x) => !!x.concept)
+    .sort((a, b) => b.progress.lastVisited - a.progress.lastVisited);
+
+  const completedCount = trail.filter(
+    (t) => LAYERS.every((l) => t.progress.layers[l]),
+  ).length;
+
   return (
     <div className="phone-shell pb-safe">
-      <MobileHeader eyebrow="Your tabs" title="Tabbed pages" />
+      <MobileHeader eyebrow="Your trail" title="Where you've been" />
 
+      {/* Trail summary */}
       <section className="px-5 pt-6">
         <div className="rounded-3xl border border-border bg-surface p-5">
           <div className="flex items-center gap-2">
-            <StickyNote className="h-4 w-4 text-accent" />
-            <span className="font-mono text-[10px] tracking-widest text-ink-muted">YOUR TABS</span>
+            <Footprints className="h-4 w-4 text-accent" />
+            <span className="font-mono text-[10px] tracking-widest text-ink-muted">YOUR TRAIL</span>
           </div>
           <div className="mt-3 flex items-baseline gap-2">
-            <span className="font-display text-5xl text-ink">{tabs.length}</span>
-            <span className="font-display text-base text-ink-muted">pages tabbed</span>
+            <span className="font-display text-5xl text-ink">{visited.size}</span>
+            <span className="font-display text-base text-ink-muted">
+              / {allConcepts.length} concepts opened
+            </span>
           </div>
-          <p className="mt-2 text-[12px] text-ink-soft">
-            Like sticky notes on a real book — quick markers to return to the ideas you want to keep close.
-          </p>
+          <div className="mt-1 font-mono text-[11px] text-ink-muted">
+            {completedCount} fully explored across all layers
+          </div>
+          <div className="mt-3 h-2 overflow-hidden rounded-full bg-surface-2">
+            <div
+              className="h-full bg-accent transition-all duration-700"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+          {visited.size > 0 && (
+            <button
+              onClick={reset}
+              className="mt-3 inline-flex items-center gap-1.5 text-[11px] text-ink-muted hover:text-ink"
+            >
+              <RotateCcw className="h-3 w-3" /> Reset trail
+            </button>
+          )}
         </div>
       </section>
 
-      <section className="px-5 pt-6">
-        <h2 className="font-display text-xl text-ink mb-3">Your tabbed pages</h2>
+      {/* Trail list — concepts with per-layer dots and resume buttons */}
+      <section className="px-5 pt-8">
+        <h2 className="font-display text-xl text-ink mb-3">Recently explored</h2>
+        {trail.length === 0 ? (
+          <div className="rounded-2xl border border-dashed border-border bg-surface p-6 text-center">
+            <Footprints className="mx-auto h-6 w-6 text-ink-muted" />
+            <p className="mt-2 font-display text-base text-ink">No trail yet</p>
+            <p className="mt-1 text-[12px] text-ink-soft">
+              Open any concept and the layers you visit will show up here.
+            </p>
+          </div>
+        ) : (
+          <ul className="space-y-2">
+            {trail.map(({ concept, progress }) => {
+              const c = concept!;
+              const accent = `hsl(${c.hue} 60% 50%)`;
+              const completed = LAYERS.filter((l) => progress.layers[l]).length;
+              const isComplete = completed === LAYERS.length;
+              return (
+                <li key={c.id}>
+                  <div className="rounded-2xl border border-border bg-surface p-3">
+                    <Link to={`/c/${c.id}`} className="block">
+                      <div className="flex items-center gap-2">
+                        <span
+                          className="h-2 w-2 rounded-full"
+                          style={{ background: accent }}
+                        />
+                        <span className="font-mono text-[10px] tracking-widest text-ink-muted">
+                          {c.number}
+                        </span>
+                        <span className="ml-auto font-mono text-[10px] text-ink-muted">
+                          {isComplete ? "complete" : `${completed}/${LAYERS.length} layers`}
+                        </span>
+                      </div>
+                      <div className="mt-1 font-display text-[16px] text-ink line-clamp-2">
+                        {c.title}
+                      </div>
+                    </Link>
+
+                    <div className="mt-2.5 flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5" aria-hidden>
+                        {LAYERS.map((l) => {
+                          const done = !!progress.layers[l];
+                          return (
+                            <span
+                              key={l}
+                              title={`${LAYER_LABEL[l]}${done ? " · explored" : ""}`}
+                              className="h-1.5 w-1.5 rounded-full"
+                              style={{
+                                background: done ? accent : "hsl(var(--surface-2))",
+                                boxShadow: done ? "none" : "inset 0 0 0 1px hsl(var(--border))",
+                              }}
+                            />
+                          );
+                        })}
+                      </div>
+                      <Link
+                        to={`/c/${c.id}${LAYER_PATH[progress.lastLayer]}`}
+                        className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1 text-background active:scale-95 transition-transform"
+                      >
+                        <Play className="h-3 w-3 fill-background" />
+                        <span className="font-mono text-[10px] tracking-widest uppercase">
+                          Resume {LAYER_LABEL[progress.lastLayer]}
+                        </span>
+                      </Link>
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </section>
+
+      {/* Tabs section */}
+      <section className="px-5 pt-8 pb-4">
+        <div className="flex items-center gap-2 mb-3">
+          <StickyNote className="h-4 w-4 text-accent" />
+          <h2 className="font-display text-xl text-ink">Your tabs</h2>
+          <span className="ml-auto font-mono text-[10px] tracking-widest text-ink-muted">
+            {tabs.length}
+          </span>
+        </div>
         {tabbedConcepts.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-border bg-surface p-6 text-center">
-            <StickyNote className="mx-auto h-6 w-6 text-ink-muted" />
-            <p className="mt-2 font-display text-base text-ink">No tabs yet</p>
+            <p className="font-display text-base text-ink">No tabs yet</p>
             <p className="mt-1 text-[12px] text-ink-soft">
-              Open any concept and tap the sticky tab on the page to mark it.
+              Open any concept and tap the bookmark icon to mark it.
             </p>
           </div>
         ) : (
@@ -81,26 +201,6 @@ const TrailPage = () => {
               </li>
             ))}
           </ul>
-        )}
-      </section>
-
-      <section className="px-5 pt-8 pb-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="font-display text-xl text-ink">Your trail</h2>
-          <span className="font-mono text-[10px] tracking-widest text-ink-muted">
-            {visited.size} / {allConcepts.length}
-          </span>
-        </div>
-        <div className="h-2 overflow-hidden rounded-full bg-surface-2">
-          <div className="h-full bg-accent transition-all duration-700" style={{ width: `${pct}%` }} />
-        </div>
-        {visited.size > 0 && (
-          <button
-            onClick={reset}
-            className="mt-3 inline-flex items-center gap-1.5 text-[11px] text-ink-muted hover:text-ink"
-          >
-            <RotateCcw className="h-3 w-3" /> Reset trail
-          </button>
         )}
       </section>
 
