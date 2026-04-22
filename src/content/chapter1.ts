@@ -28,6 +28,10 @@ export interface Concept {
   full: string[];       // paragraphs — paste real text here
   visual: VisualKind;
   keyTerms?: string[];
+  example?: {
+    title: string;      // short headline for the applied example
+    body: string[];     // 1–3 paragraphs of an applied, real-world scenario
+  };
 }
 
 export interface ConceptGroup {
