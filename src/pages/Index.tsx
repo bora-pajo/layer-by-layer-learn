@@ -42,7 +42,7 @@ const Index = () => {
           An atlas of research
         </div>
         <h1 className="mt-3 font-display text-[44px] leading-[1.02] text-ink text-balance">
-          How we come to <em className="italic font-display">know.</em>
+          Research <em className="italic font-display">Methods.</em>
         </h1>
 
         {/* Progress + toggle row */}
