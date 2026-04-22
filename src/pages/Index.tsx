@@ -38,10 +38,7 @@ const Index = () => {
 
       {/* Hero — clean, generous */}
       <section className="px-6 pt-4 pb-2 animate-fade-up">
-        <div className="font-mono text-[11px] tracking-[0.22em] text-ink-muted uppercase">
-          An atlas of research
-        </div>
-        <h1 className="mt-3 font-display text-[44px] leading-[1.02] text-ink text-balance">
+        <h1 className="font-display text-[44px] leading-[1.02] text-ink text-balance">
           Research <em className="italic font-display">Methods.</em>
         </h1>
 
