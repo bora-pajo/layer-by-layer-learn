@@ -708,7 +708,8 @@ export type Chapter = typeof chapter;
 
 // Multi-chapter registry. Add new chapters here.
 import { chapter2 } from "./chapter2";
-export const chapters = [chapter, chapter2];
+import { chapter3 } from "./chapter3";
+export const chapters = [chapter, chapter2, chapter3];
 
 // Flatten for navigation across all chapters
 export const allConcepts: Array<
