@@ -1,6 +1,6 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ArrowRight, NotebookPen } from "lucide-react";
+import { ArrowRight, NotebookPen, Sparkles } from "lucide-react";
 import { LayerHeader } from "@/components/LayerHeader";
 import { JumpDrawer } from "@/components/JumpDrawer";
 import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
@@ -96,6 +96,35 @@ const Layer2Page = () => {
               </span>
             ))}
           </div>
+        )}
+
+        {concept.example && (
+          <button
+            onClick={() => navigate(`/c/${concept.id}/example`)}
+            className="mt-6 group flex w-full items-center justify-between gap-3 rounded-2xl border-2 border-dashed p-4 text-left active:scale-[0.99] transition-all hover:border-solid"
+            style={{ borderColor: accent, background: chipBg }}
+          >
+            <div className="flex items-center gap-3 min-w-0">
+              <span
+                className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+                style={{ background: accent }}
+              >
+                <Sparkles className="h-4 w-4 text-background" />
+              </span>
+              <div className="min-w-0">
+                <div
+                  className="font-mono text-[10px] tracking-[0.22em] uppercase"
+                  style={{ color: chipFg }}
+                >
+                  See it in practice
+                </div>
+                <div className="mt-0.5 font-display text-[16px] text-ink leading-tight">
+                  Example of how this applies
+                </div>
+              </div>
+            </div>
+            <ArrowRight className="h-4 w-4 shrink-0" style={{ color: accent }} />
+          </button>
         )}
 
         {related && (
