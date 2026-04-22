@@ -3,7 +3,7 @@ import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
 import { ExploreReadToggle } from "@/components/ExploreReadToggle";
-import { chapter, allConcepts } from "@/content/chapter1";
+import { chapters, allConcepts } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
 
 const Index = () => {
@@ -12,16 +12,17 @@ const Index = () => {
 
   return (
     <div className="phone-shell pb-safe">
-      <MobileHeader eyebrow={`CH · ${chapter.number} / ${String(allConcepts.length).padStart(2, "0")}`} />
+      <MobileHeader
+        eyebrow={`${chapters.length} CHAPTERS · ${String(allConcepts.length).padStart(2, "0")} CONCEPTS`}
+      />
 
       {/* Hero — clean, generous */}
       <section className="px-6 pt-4 pb-2 animate-fade-up">
         <div className="font-mono text-[11px] tracking-[0.22em] text-ink-muted uppercase">
-          Chapter {chapter.number === "01" ? "One" : chapter.number}
+          An atlas of research
         </div>
         <h1 className="mt-3 font-display text-[44px] leading-[1.02] text-ink text-balance">
-          {chapter.title.split(" ").slice(0, -1).join(" ")}{" "}
-          <em className="italic font-display">{chapter.title.split(" ").slice(-1)}.</em>
+          How we come to <em className="italic font-display">know.</em>
         </h1>
 
         {/* Progress + toggle row */}
@@ -39,41 +40,60 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Regions */}
+      {/* Chapters */}
       <section className="pt-8">
-        <div className="space-y-8 pb-10">
-          {chapter.groups.map((group) => (
-            <article key={group.id} id={group.id} className="scroll-mt-20">
-              <header className="flex items-center gap-2 px-6 pb-3">
-                <span
-                  className="h-2 w-2 rounded-full"
-                  style={{ background: `hsl(${group.hue} 70% 55%)` }}
-                />
-                <span className="font-mono text-[11px] font-semibold tracking-wide text-ink">
-                  {group.number}
-                </span>
-                <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-ink-muted">
-                  · {group.title}
-                </span>
-              </header>
+        <div className="space-y-12 pb-10">
+          {chapters.map((chapter) => (
+            <div key={chapter.number}>
+              {/* Chapter heading */}
+              <div className="px-6 pb-4">
+                <div className="font-mono text-[11px] tracking-[0.22em] text-ink-muted uppercase">
+                  Chapter {chapter.number}
+                </div>
+                <h2 className="mt-2 font-display text-[26px] leading-[1.1] text-ink text-balance">
+                  {chapter.title}.
+                </h2>
+                <p className="mt-2 font-display text-[14px] italic text-ink-soft text-pretty">
+                  {chapter.subtitle}
+                </p>
+              </div>
 
-              <div className="space-y-2 px-3">
-                {group.concepts.map((c) => (
-                  <ConceptCard
-                    key={c.id}
-                    concept={c}
-                    hue={group.hue}
-                    visited={visited.has(c.id)}
-                    category={group.tagline.split(".")[0].split(",")[0].toLowerCase().slice(0, 16) || "epistemology"}
-                  />
+              <div className="space-y-8">
+                {chapter.groups.map((group) => (
+                  <article key={group.id} id={group.id} className="scroll-mt-20">
+                    <header className="flex items-center gap-2 px-6 pb-3">
+                      <span
+                        className="h-2 w-2 rounded-full"
+                        style={{ background: `hsl(${group.hue} 70% 55%)` }}
+                      />
+                      <span className="font-mono text-[11px] font-semibold tracking-wide text-ink">
+                        {chapter.number}.{group.number}
+                      </span>
+                      <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-ink-muted">
+                        · {group.title}
+                      </span>
+                    </header>
+
+                    <div className="space-y-2 px-3">
+                      {group.concepts.map((c) => (
+                        <ConceptCard
+                          key={c.id}
+                          concept={c}
+                          hue={group.hue}
+                          visited={visited.has(c.id)}
+                          category={group.tagline.split(".")[0].split(",")[0].toLowerCase().slice(0, 16) || "epistemology"}
+                        />
+                      ))}
+                    </div>
+                  </article>
                 ))}
               </div>
-            </article>
+            </div>
           ))}
         </div>
 
         <div className="mx-6 mb-6 rounded-2xl border border-dashed border-border p-5 text-center">
-          <div className="font-display text-base text-ink">End of Chapter 01</div>
+          <div className="font-display text-base text-ink">End of available chapters</div>
           <div className="mt-1 text-xs text-ink-muted">
             More chapters coming soon.
           </div>
