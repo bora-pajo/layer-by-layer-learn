@@ -4,6 +4,7 @@ import { ChevronLeft, ChevronRight, Bookmark, BookmarkCheck, Type } from "lucide
 import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTabs } from "@/hooks/useTabs";
 import { useProgress } from "@/hooks/useProgress";
+import ListenPlayer from "@/components/ListenPlayer";
 
 type FontSize = "sm" | "md" | "lg";
 const SIZE_KEY = "roro:reader-size";
@@ -124,6 +125,12 @@ const Layer3Page = () => {
             {concept.brief}
           </p>
         </div>
+
+        {/* Listen player (Web Speech API) */}
+        <ListenPlayer
+          text={`${concept.title}. ${concept.brief} ${concept.full.join(" ")}`}
+          accent={accent}
+        />
 
         {/* Body — drop cap on first paragraph */}
         {first && (
