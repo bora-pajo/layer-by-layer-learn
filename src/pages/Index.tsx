@@ -11,7 +11,7 @@ const Index = () => {
   const { visited } = useProgress();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
 
-  const handleJump = (chapterNumber: number) => {
+  const handleJump = (chapterNumber: string | number) => {
     const el = document.getElementById(`chapter-${chapterNumber}`);
     if (el) {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
