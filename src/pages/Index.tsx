@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ChevronDown, BookOpen } from "lucide-react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
@@ -19,33 +19,14 @@ const Index = () => {
   const pct = Math.round((visited.size / allConcepts.length) * 100);
   const [activeChapter, setActiveChapter] = useState(chapters[0]?.number);
 
-  const handleJump = (chapterNumber: string | number) => {
-    const el = document.getElementById(`chapter-${chapterNumber}`);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
-  // Track which chapter is currently in view
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) {
-          const num = visible.target.id.replace("chapter-", "");
-          setActiveChapter(num as typeof activeChapter);
-        }
-      },
-      { rootMargin: "-20% 0px -60% 0px", threshold: [0, 0.25, 0.5, 1] }
-    );
-    chapters.forEach((ch) => {
-      const el = document.getElementById(`chapter-${ch.number}`);
-      if (el) observer.observe(el);
+  const handleSelectChapter = (chapterNumber: string | number) => {
+    setActiveChapter(chapterNumber as typeof activeChapter);
+    // Scroll back up to the chapter heading so the new material is in view
+    requestAnimationFrame(() => {
+      const el = document.getElementById(`chapter-${chapterNumber}`);
+      if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-    return () => observer.disconnect();
-  }, []);
+  };
 
   const activeChapterData = chapters.find((c) => c.number === activeChapter) ?? chapters[0];
 
@@ -108,7 +89,7 @@ const Index = () => {
                 return (
                   <DropdownMenuItem
                     key={ch.number}
-                    onSelect={() => handleJump(ch.number)}
+                    onSelect={() => handleSelectChapter(ch.number)}
                     className={`flex items-start gap-3 px-3 py-2.5 cursor-pointer ${
                       isActive ? "bg-accent-soft" : ""
                     }`}
@@ -132,10 +113,10 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Chapters */}
+      {/* Chapters — only the selected chapter is shown */}
       <section className="pt-6">
-        <div className="space-y-12 pb-10">
-          {chapters.map((chapter) => (
+        <div key={activeChapterData.number} className="space-y-12 pb-10 animate-fade-up">
+          {[activeChapterData].map((chapter) => (
             <div key={chapter.number} id={`chapter-${chapter.number}`} className="scroll-mt-24">
               {/* Chapter heading */}
               <div className="px-6 pb-4">
