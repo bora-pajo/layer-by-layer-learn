@@ -5,6 +5,7 @@ import { LayerHeader } from "@/components/LayerHeader";
 import { JumpDrawer } from "@/components/JumpDrawer";
 import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTheme } from "@/hooks/useTheme";
+import { useProgress } from "@/hooks/useProgress";
 
 /**
  * Layer 2.5 — "Example of how this applies".
@@ -15,9 +16,12 @@ const ExamplePage = () => {
   const navigate = useNavigate();
   const concept = getConcept(id);
   const [showJump, setShowJump] = useState(false);
+  const { markLayer } = useProgress();
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (concept) markLayer(concept.id, "example");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {

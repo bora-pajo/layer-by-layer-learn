@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { ChevronDown, BookOpen } from "lucide-react";
+import { ChevronDown, BookOpen, Play } from "lucide-react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
@@ -12,12 +12,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { chapters, allConcepts } from "@/content/chapter1";
-import { useProgress } from "@/hooks/useProgress";
+import { useProgress, LAYERS, type Layer } from "@/hooks/useProgress";
+
+const LAYER_PATH: Record<Layer, string> = {
+  glance: "",
+  brief: "/more",
+  example: "/example",
+  full: "/read",
+};
+const LAYER_LABEL: Record<Layer, string> = {
+  glance: "Glance",
+  brief: "Brief",
+  example: "Example",
+  full: "Full text",
+};
 
 const Index = () => {
-  const { visited } = useProgress();
+  const { visited, store, lastVisitedConcept } = useProgress();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
   const [activeChapter, setActiveChapter] = useState(chapters[0]?.number);
+
+  const resume = lastVisitedConcept();
+  const resumeConcept = resume ? allConcepts.find((c) => c.id === resume.id) : null;
 
   const handleSelectChapter = (chapterNumber: string | number) => {
     setActiveChapter(chapterNumber as typeof activeChapter);
@@ -55,6 +71,46 @@ const Index = () => {
           </div>
           <ExploreReadToggle />
         </div>
+
+        {/* Resume card — appears when a trail exists */}
+        {resume && resumeConcept && (
+          <Link
+            to={`/c/${resumeConcept.id}${LAYER_PATH[resume.layer]}`}
+            className="mt-5 group flex items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3 shadow-soft active:scale-[0.99] transition-transform hover:bg-surface-2"
+          >
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+              style={{ background: `hsl(${resumeConcept.hue} 60% 50%)` }}
+            >
+              <Play className="h-3.5 w-3.5 text-background fill-background" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+                Resume · {LAYER_LABEL[resume.layer]}
+              </div>
+              <div className="mt-0.5 font-display text-[15px] text-ink truncate">
+                {resumeConcept.title}
+              </div>
+            </div>
+            <div className="flex items-center gap-1 shrink-0" aria-hidden>
+              {LAYERS.map((l) => {
+                const done = !!store[resumeConcept.id]?.layers[l];
+                return (
+                  <span
+                    key={l}
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{
+                      background: done
+                        ? `hsl(${resumeConcept.hue} 60% 50%)`
+                        : "hsl(var(--surface-2))",
+                      boxShadow: done ? "none" : "inset 0 0 0 1px hsl(var(--border))",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </Link>
+        )}
       </section>
 
       {/* Chapter selector — sticky dropdown that scales to many chapters */}
@@ -151,6 +207,7 @@ const Index = () => {
                           concept={c}
                           hue={group.hue}
                           visited={visited.has(c.id)}
+                          layerProgress={store[c.id]?.layers}
                           category={group.tagline.split(".")[0].split(",")[0].toLowerCase().slice(0, 16) || "epistemology"}
                         />
                       ))}

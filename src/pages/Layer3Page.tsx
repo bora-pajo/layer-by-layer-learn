@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Bookmark, BookmarkCheck, Type } from "lucide-react";
 import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTabs } from "@/hooks/useTabs";
+import { useProgress } from "@/hooks/useProgress";
 
 type FontSize = "sm" | "md" | "lg";
 const SIZE_KEY = "roro:reader-size";
@@ -17,6 +18,7 @@ const Layer3Page = () => {
   const navigate = useNavigate();
   const concept = getConcept(id);
   const { isTabbed, toggleTab } = useTabs();
+  const { markLayer } = useProgress();
   const [size, setSize] = useState<FontSize>(() => {
     if (typeof window === "undefined") return "md";
     return (localStorage.getItem(SIZE_KEY) as FontSize) || "md";
@@ -24,6 +26,8 @@ const Layer3Page = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (concept) markLayer(concept.id, "full");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   useEffect(() => {

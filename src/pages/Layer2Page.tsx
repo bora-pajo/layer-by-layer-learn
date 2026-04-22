@@ -6,6 +6,7 @@ import { JumpDrawer } from "@/components/JumpDrawer";
 import { allConcepts, getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTabs } from "@/hooks/useTabs";
 import { useTheme } from "@/hooks/useTheme";
+import { useProgress } from "@/hooks/useProgress";
 
 /**
  * Layer 2 — "A little more" sheet. Cream paper, eyebrow, title, brief,
@@ -18,13 +19,17 @@ const Layer2Page = () => {
   const concept = getConcept(id);
   const [showJump, setShowJump] = useState(false);
   const { isTabbed, toggleTab, getNote, setNote: persistNote } = useTabs();
+  const { markLayer } = useProgress();
   const [showNotes, setShowNotes] = useState(false);
   const [note, setNoteState] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
     setShowNotes(false);
-    if (concept) setNoteState(getNote(concept.id));
+    if (concept) {
+      setNoteState(getNote(concept.id));
+      markLayer(concept.id, "brief");
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
