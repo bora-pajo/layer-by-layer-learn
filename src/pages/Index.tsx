@@ -113,10 +113,10 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Chapters */}
+      {/* Chapters — only the selected chapter is shown */}
       <section className="pt-6">
-        <div className="space-y-12 pb-10">
-          {chapters.map((chapter) => (
+        <div key={activeChapterData.number} className="space-y-12 pb-10 animate-fade-up">
+          {[activeChapterData].map((chapter) => (
             <div key={chapter.number} id={`chapter-${chapter.number}`} className="scroll-mt-24">
               {/* Chapter heading */}
               <div className="px-6 pb-4">
