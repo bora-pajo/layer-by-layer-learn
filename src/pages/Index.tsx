@@ -71,6 +71,46 @@ const Index = () => {
           </div>
           <ExploreReadToggle />
         </div>
+
+        {/* Resume card — appears when a trail exists */}
+        {resume && resumeConcept && (
+          <Link
+            to={`/c/${resumeConcept.id}${LAYER_PATH[resume.layer]}`}
+            className="mt-5 group flex items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3 shadow-soft active:scale-[0.99] transition-transform hover:bg-surface-2"
+          >
+            <span
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full"
+              style={{ background: `hsl(${resumeConcept.hue} 60% 50%)` }}
+            >
+              <Play className="h-3.5 w-3.5 text-background fill-background" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+                Resume · {LAYER_LABEL[resume.layer]}
+              </div>
+              <div className="mt-0.5 font-display text-[15px] text-ink truncate">
+                {resumeConcept.title}
+              </div>
+            </div>
+            <div className="flex items-center gap-1 shrink-0" aria-hidden>
+              {LAYERS.map((l) => {
+                const done = !!store[resumeConcept.id]?.layers[l];
+                return (
+                  <span
+                    key={l}
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{
+                      background: done
+                        ? `hsl(${resumeConcept.hue} 60% 50%)`
+                        : "hsl(var(--surface-2))",
+                      boxShadow: done ? "none" : "inset 0 0 0 1px hsl(var(--border))",
+                    }}
+                  />
+                );
+              })}
+            </div>
+          </Link>
+        )}
       </section>
 
       {/* Chapter selector — sticky dropdown that scales to many chapters */}
