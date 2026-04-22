@@ -55,7 +55,7 @@ export const chapter = {
           id: "info-vs-knowledge",
           number: "1.1",
           title: "Information is not knowledge",
-          glance: "Information tells. Knowledge understands.",
+          glance: "Information is fast and unprocessed. Knowledge takes time and understanding.",
           brief:
             "We swim in information all day, but information alone is not knowledge. Knowledge is what happens when we make sense of information — interpret it, use it, and understand why it matters.",
           full: [
