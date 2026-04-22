@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
@@ -9,6 +10,13 @@ import { useProgress } from "@/hooks/useProgress";
 const Index = () => {
   const { visited } = useProgress();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
+
+  const handleJump = (chapterNumber: string | number) => {
+    const el = document.getElementById(`chapter-${chapterNumber}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <div className="phone-shell pb-safe">
@@ -40,11 +48,30 @@ const Index = () => {
         </div>
       </section>
 
+      {/* Chapter tabs — sticky so users can jump between chapters */}
+      <div className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-border">
+        <div className="px-6 py-3 flex items-center gap-2 overflow-x-auto no-scrollbar">
+          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted shrink-0 mr-1">
+            Chapters
+          </span>
+          {chapters.map((ch) => (
+            <button
+              key={ch.number}
+              onClick={() => handleJump(ch.number)}
+              className="shrink-0 rounded-full border border-border bg-surface px-3 py-1.5 font-mono text-[11px] tracking-wide text-ink hover:bg-surface-2 transition-colors"
+            >
+              <span className="text-ink-muted mr-1.5">0{ch.number}</span>
+              {ch.title}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Chapters */}
-      <section className="pt-8">
+      <section className="pt-6">
         <div className="space-y-12 pb-10">
           {chapters.map((chapter) => (
-            <div key={chapter.number}>
+            <div key={chapter.number} id={`chapter-${chapter.number}`} className="scroll-mt-24">
               {/* Chapter heading */}
               <div className="px-6 pb-4">
                 <div className="font-mono text-[11px] tracking-[0.22em] text-ink-muted uppercase">
