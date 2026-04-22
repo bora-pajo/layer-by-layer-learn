@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight, NotebookPen, Sparkles } from "lucide-react";
 import { LayerHeader } from "@/components/LayerHeader";
 import { JumpDrawer } from "@/components/JumpDrawer";
-import { allConcepts, chapter, getAdjacent, getConcept } from "@/content/chapter1";
+import { allConcepts, getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTabs } from "@/hooks/useTabs";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -40,7 +40,7 @@ const Layer2Page = () => {
   if (!concept) return null;
 
   const { next } = getAdjacent(concept.id);
-  const group = chapter.groups.find((g) => g.id === concept.groupId)!;
+  const group = getGroup(concept.groupId)!;
   const tabbed = isTabbed(concept.id);
 
   // Pick a "if you like this, see…" — next concept in same group, or next overall

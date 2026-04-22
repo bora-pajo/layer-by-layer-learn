@@ -706,14 +706,35 @@ export const chapter = {
 
 export type Chapter = typeof chapter;
 
-// Flatten for navigation
-export const allConcepts: Array<Concept & { groupId: string; groupTitle: string; hue: number }> =
-  chapter.groups.flatMap((g) =>
-    g.concepts.map((c) => ({ ...c, groupId: g.id, groupTitle: g.title, hue: g.hue })),
-  );
+// Multi-chapter registry. Add new chapters here.
+import { chapter2 } from "./chapter2";
+export const chapters = [chapter, chapter2];
+
+// Flatten for navigation across all chapters
+export const allConcepts: Array<
+  Concept & { groupId: string; groupTitle: string; hue: number; chapterNumber: string }
+> = chapters.flatMap((ch) =>
+  ch.groups.flatMap((g) =>
+    g.concepts.map((c) => ({
+      ...c,
+      groupId: g.id,
+      groupTitle: g.title,
+      hue: g.hue,
+      chapterNumber: ch.number,
+    })),
+  ),
+);
 
 export function getConcept(id: string) {
   return allConcepts.find((c) => c.id === id);
+}
+
+export function getGroup(groupId: string) {
+  for (const ch of chapters) {
+    const g = ch.groups.find((g) => g.id === groupId);
+    if (g) return g;
+  }
+  return undefined;
 }
 
 export function getAdjacent(id: string) {
@@ -725,3 +746,4 @@ export function getAdjacent(id: string) {
     total: allConcepts.length,
   };
 }
+

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
 import { LayerHeader } from "@/components/LayerHeader";
 import { JumpDrawer } from "@/components/JumpDrawer";
-import { chapter, getAdjacent, getConcept } from "@/content/chapter1";
+import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTheme } from "@/hooks/useTheme";
 
 /**
@@ -32,7 +32,7 @@ const ExamplePage = () => {
   if (!concept) return null;
 
   const { next } = getAdjacent(concept.id);
-  const group = chapter.groups.find((g) => g.id === concept.groupId)!;
+  const group = getGroup(concept.groupId)!;
 
   const { theme } = useTheme();
   const isDark = theme === "dark";
