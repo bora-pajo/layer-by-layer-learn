@@ -96,7 +96,7 @@ const Layer1Page = () => {
       <LayerFooter
         prevId={prev?.id}
         nextId={next?.id}
-        centerLabel="Learn more"
+        centerLabel="Go deeper"
         centerIcon="plus"
         onCenter={() => navigate(`/c/${concept.id}/more`)}
         onMenu={() => setShowJump(true)}

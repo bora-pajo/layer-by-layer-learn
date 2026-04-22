@@ -135,13 +135,22 @@ function render(kind: VisualKind, c: C) {
       );
 
     case "compare":
-      // Information vs knowledge — two squares, one filled
+      // Information vs knowledge — bold # divider between i and k
       return (
         <g>
-          <rect x="20" y="32" width="26" height="36" rx="3" fill="none" stroke={c.stroke} strokeWidth="1.5" />
-          <rect x="54" y="32" width="26" height="36" rx="3" fill={c.fill} />
-          <text x="33" y="55" textAnchor="middle" fontSize="11" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.stroke}>i</text>
-          <text x="67" y="55" textAnchor="middle" fontSize="11" fontFamily="Fraunces, serif" fontStyle="italic" fill="white">k</text>
+          <text
+            x="50"
+            y="64"
+            textAnchor="middle"
+            fontSize="58"
+            fontFamily="Fraunces, serif"
+            fontWeight="700"
+            fill={c.stroke}
+          >
+            #
+          </text>
+          <text x="22" y="46" textAnchor="middle" fontSize="13" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.strokeSoft}>i</text>
+          <text x="78" y="62" textAnchor="middle" fontSize="13" fontFamily="Fraunces, serif" fontStyle="italic" fill={c.fill}>k</text>
         </g>
       );
 
