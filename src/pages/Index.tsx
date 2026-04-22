@@ -17,6 +17,7 @@ import { useProgress } from "@/hooks/useProgress";
 const Index = () => {
   const { visited } = useProgress();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
+  const [activeChapter, setActiveChapter] = useState(chapters[0]?.number);
 
   const handleJump = (chapterNumber: string | number) => {
     const el = document.getElementById(`chapter-${chapterNumber}`);
@@ -24,6 +25,29 @@ const Index = () => {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+
+  // Track which chapter is currently in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) {
+          const num = visible.target.id.replace("chapter-", "");
+          setActiveChapter(num as typeof activeChapter);
+        }
+      },
+      { rootMargin: "-20% 0px -60% 0px", threshold: [0, 0.25, 0.5, 1] }
+    );
+    chapters.forEach((ch) => {
+      const el = document.getElementById(`chapter-${ch.number}`);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const activeChapterData = chapters.find((c) => c.number === activeChapter) ?? chapters[0];
 
   return (
     <div className="phone-shell pb-safe">
