@@ -1,7 +1,7 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight, Bookmark, BookmarkCheck, Type } from "lucide-react";
-import { chapter, getAdjacent, getConcept } from "@/content/chapter1";
+import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTabs } from "@/hooks/useTabs";
 
 type FontSize = "sm" | "md" | "lg";
