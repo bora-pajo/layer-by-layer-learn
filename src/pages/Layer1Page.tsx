@@ -16,11 +16,11 @@ const Layer1Page = () => {
   const { id = "" } = useParams();
   const navigate = useNavigate();
   const concept = getConcept(id);
-  const { markVisited } = useProgress();
+  const { markLayer } = useProgress();
   const [showJump, setShowJump] = useState(false);
 
   useEffect(() => {
-    if (concept) markVisited(concept.id);
+    if (concept) markLayer(concept.id, "glance");
     window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
