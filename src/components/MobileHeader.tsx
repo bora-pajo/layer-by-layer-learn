@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ChevronLeft, Moon, Sun } from "lucide-react";
 import { ReactNode } from "react";
 import { useTheme } from "@/hooks/useTheme";
+import tokoroLogo from "@/assets/tokoro-logo.png";
 
 interface Props {
   title?: string;
@@ -34,8 +35,8 @@ export function MobileHeader({ title, eyebrow, back = false, right, showThemeTog
             <ChevronLeft className="h-5 w-5" />
           </button>
         ) : showLogo ? (
-          <Link to="/" className="flex items-center" aria-label="RORO home">
-            <span className="font-display text-lg font-semibold tracking-tight text-ink">RORO</span>
+          <Link to="/" className="flex items-center" aria-label="Tokoro home">
+            <img src={tokoroLogo} alt="Tokoro" className="h-7 w-auto dark:invert-0 invert" />
           </Link>
         ) : null}
 
