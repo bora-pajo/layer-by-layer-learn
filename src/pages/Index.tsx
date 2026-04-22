@@ -1,9 +1,16 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ChevronDown, BookOpen } from "lucide-react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
 import { ExploreReadToggle } from "@/components/ExploreReadToggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { chapters, allConcepts } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
 
