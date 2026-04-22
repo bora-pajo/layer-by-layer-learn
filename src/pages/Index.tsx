@@ -89,7 +89,7 @@ const Index = () => {
                 return (
                   <DropdownMenuItem
                     key={ch.number}
-                    onSelect={() => handleJump(ch.number)}
+                    onSelect={() => handleSelectChapter(ch.number)}
                     className={`flex items-start gap-3 px-3 py-2.5 cursor-pointer ${
                       isActive ? "bg-accent-soft" : ""
                     }`}
