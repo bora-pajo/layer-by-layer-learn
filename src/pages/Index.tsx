@@ -1,15 +1,23 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { ChevronDown, BookOpen } from "lucide-react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
 import { ExploreReadToggle } from "@/components/ExploreReadToggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { chapters, allConcepts } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
 
 const Index = () => {
   const { visited } = useProgress();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
+  const [activeChapter, setActiveChapter] = useState(chapters[0]?.number);
 
   const handleJump = (chapterNumber: string | number) => {
     const el = document.getElementById(`chapter-${chapterNumber}`);
@@ -17,6 +25,29 @@ const Index = () => {
       el.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   };
+
+  // Track which chapter is currently in view
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) {
+          const num = visible.target.id.replace("chapter-", "");
+          setActiveChapter(num as typeof activeChapter);
+        }
+      },
+      { rootMargin: "-20% 0px -60% 0px", threshold: [0, 0.25, 0.5, 1] }
+    );
+    chapters.forEach((ch) => {
+      const el = document.getElementById(`chapter-${ch.number}`);
+      if (el) observer.observe(el);
+    });
+    return () => observer.disconnect();
+  }, []);
+
+  const activeChapterData = chapters.find((c) => c.number === activeChapter) ?? chapters[0];
 
   return (
     <div className="phone-shell pb-safe">
@@ -48,22 +79,56 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Chapter tabs — sticky so users can jump between chapters */}
+      {/* Chapter selector — sticky dropdown that scales to many chapters */}
       <div className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-border">
-        <div className="px-6 py-3 flex items-center gap-2 overflow-x-auto no-scrollbar">
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted shrink-0 mr-1">
-            Chapters
-          </span>
-          {chapters.map((ch) => (
-            <button
-              key={ch.number}
-              onClick={() => handleJump(ch.number)}
-              className="shrink-0 rounded-full border border-border bg-surface px-3 py-1.5 font-mono text-[11px] tracking-wide text-ink hover:bg-surface-2 transition-colors"
+        <div className="px-6 py-3 flex items-center justify-between gap-3">
+          <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+            Now reading
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="group flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <BookOpen className="h-3.5 w-3.5 text-ink-muted" />
+              <span className="font-mono text-[10px] text-ink-muted">
+                Ch. {String(activeChapterData.number).padStart(2, "0")}
+              </span>
+              <span className="font-display text-[13px] text-ink max-w-[180px] truncate">
+                {activeChapterData.title}
+              </span>
+              <ChevronDown className="h-3.5 w-3.5 text-ink-muted transition-transform group-data-[state=open]:rotate-180" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-[280px] max-h-[70vh] overflow-y-auto bg-surface border-border"
             >
-              <span className="text-ink-muted mr-1.5">0{ch.number}</span>
-              {ch.title}
-            </button>
-          ))}
+              <div className="px-3 pt-2 pb-1 font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+                {chapters.length} chapters
+              </div>
+              {chapters.map((ch) => {
+                const isActive = ch.number === activeChapter;
+                return (
+                  <DropdownMenuItem
+                    key={ch.number}
+                    onSelect={() => handleJump(ch.number)}
+                    className={`flex items-start gap-3 px-3 py-2.5 cursor-pointer ${
+                      isActive ? "bg-accent-soft" : ""
+                    }`}
+                  >
+                    <span className="font-mono text-[11px] text-ink-muted w-7 pt-0.5 shrink-0">
+                      {String(ch.number).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-display text-[14px] leading-tight text-ink text-balance">
+                        {ch.title}
+                      </div>
+                      <div className="mt-0.5 font-mono text-[10px] text-ink-muted">
+                        {ch.groups.reduce((n, g) => n + g.concepts.length, 0)} concepts
+                      </div>
+                    </div>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
