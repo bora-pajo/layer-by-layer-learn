@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import { ChevronDown, BookOpen } from "lucide-react";
+import { ChevronDown, BookOpen, Play } from "lucide-react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
@@ -12,12 +12,28 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { chapters, allConcepts } from "@/content/chapter1";
-import { useProgress } from "@/hooks/useProgress";
+import { useProgress, LAYERS, type Layer } from "@/hooks/useProgress";
+
+const LAYER_PATH: Record<Layer, string> = {
+  glance: "",
+  brief: "/more",
+  example: "/example",
+  full: "/read",
+};
+const LAYER_LABEL: Record<Layer, string> = {
+  glance: "Glance",
+  brief: "Brief",
+  example: "Example",
+  full: "Full text",
+};
 
 const Index = () => {
-  const { visited } = useProgress();
+  const { visited, store, lastVisitedConcept } = useProgress();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
   const [activeChapter, setActiveChapter] = useState(chapters[0]?.number);
+
+  const resume = lastVisitedConcept();
+  const resumeConcept = resume ? allConcepts.find((c) => c.id === resume.id) : null;
 
   const handleSelectChapter = (chapterNumber: string | number) => {
     setActiveChapter(chapterNumber as typeof activeChapter);
