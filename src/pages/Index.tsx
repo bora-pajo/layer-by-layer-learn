@@ -79,22 +79,56 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Chapter tabs — sticky so users can jump between chapters */}
+      {/* Chapter selector — sticky dropdown that scales to many chapters */}
       <div className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-border">
-        <div className="px-6 py-3 flex items-center gap-2 overflow-x-auto no-scrollbar">
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted shrink-0 mr-1">
-            Chapters
-          </span>
-          {chapters.map((ch) => (
-            <button
-              key={ch.number}
-              onClick={() => handleJump(ch.number)}
-              className="shrink-0 rounded-full border border-border bg-surface px-3 py-1.5 font-mono text-[11px] tracking-wide text-ink hover:bg-surface-2 transition-colors"
+        <div className="px-6 py-3 flex items-center justify-between gap-3">
+          <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+            Now reading
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="group flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <BookOpen className="h-3.5 w-3.5 text-ink-muted" />
+              <span className="font-mono text-[10px] text-ink-muted">
+                Ch. {String(activeChapterData.number).padStart(2, "0")}
+              </span>
+              <span className="font-display text-[13px] text-ink max-w-[180px] truncate">
+                {activeChapterData.title}
+              </span>
+              <ChevronDown className="h-3.5 w-3.5 text-ink-muted transition-transform group-data-[state=open]:rotate-180" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="end"
+              className="w-[280px] max-h-[70vh] overflow-y-auto bg-surface border-border"
             >
-              <span className="text-ink-muted mr-1.5">0{ch.number}</span>
-              {ch.title}
-            </button>
-          ))}
+              <div className="px-3 pt-2 pb-1 font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+                {chapters.length} chapters
+              </div>
+              {chapters.map((ch) => {
+                const isActive = ch.number === activeChapter;
+                return (
+                  <DropdownMenuItem
+                    key={ch.number}
+                    onSelect={() => handleJump(ch.number)}
+                    className={`flex items-start gap-3 px-3 py-2.5 cursor-pointer ${
+                      isActive ? "bg-accent-soft" : ""
+                    }`}
+                  >
+                    <span className="font-mono text-[11px] text-ink-muted w-7 pt-0.5 shrink-0">
+                      {String(ch.number).padStart(2, "0")}
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="font-display text-[14px] leading-tight text-ink text-balance">
+                        {ch.title}
+                      </div>
+                      <div className="mt-0.5 font-mono text-[10px] text-ink-muted">
+                        {ch.groups.reduce((n, g) => n + g.concepts.length, 0)} concepts
+                      </div>
+                    </div>
+                  </DropdownMenuItem>
+                );
+              })}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
