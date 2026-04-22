@@ -45,7 +45,7 @@ const Layer3Page = () => {
   if (!concept) return null;
 
   const { prev, next, index, total } = getAdjacent(concept.id);
-  const group = chapter.groups.find((g) => g.id === concept.groupId)!;
+  const group = getGroup(concept.groupId)!;
   const tabbed = isTabbed(concept.id);
 
   // Estimate read time

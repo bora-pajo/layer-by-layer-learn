@@ -4,7 +4,7 @@ import { ConceptVisual } from "@/components/ConceptVisual";
 import { LayerHeader } from "@/components/LayerHeader";
 import { LayerFooter } from "@/components/LayerFooter";
 import { JumpDrawer } from "@/components/JumpDrawer";
-import { chapter, getAdjacent, getConcept } from "@/content/chapter1";
+import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -50,7 +50,7 @@ const Layer1Page = () => {
   }
 
   const { prev, next, index, total } = getAdjacent(concept.id);
-  const group = chapter.groups.find((g) => g.id === concept.groupId)!;
+  const group = getGroup(concept.groupId)!;
 
   // Soft tinted background using the concept hue (theme-aware)
   const { theme } = useTheme();
