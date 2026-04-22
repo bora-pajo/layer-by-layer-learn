@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
@@ -9,6 +10,13 @@ import { useProgress } from "@/hooks/useProgress";
 const Index = () => {
   const { visited } = useProgress();
   const pct = Math.round((visited.size / allConcepts.length) * 100);
+
+  const handleJump = (chapterNumber: number) => {
+    const el = document.getElementById(`chapter-${chapterNumber}`);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
   return (
     <div className="phone-shell pb-safe">
