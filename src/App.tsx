@@ -4,6 +4,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Index from "./pages/Index.tsx";
+import ChapterPage from "./pages/ChapterPage.tsx";
 import Layer1Page from "./pages/Layer1Page.tsx";
 import Layer2Page from "./pages/Layer2Page.tsx";
 import ExamplePage from "./pages/ExamplePage.tsx";
@@ -22,6 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/chapter/:number" element={<ChapterPage />} />
           <Route path="/c/:id" element={<Layer1Page />} />
           <Route path="/c/:id/more" element={<Layer2Page />} />
           <Route path="/c/:id/example" element={<ExamplePage />} />

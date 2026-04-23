@@ -12,126 +12,125 @@
 
 @layer base {
   :root {
-    /* LIGHT — warm off-white, vibrant coral accent, playful pastels */
-    --background: 32 60% 97%;
-    --foreground: 230 25% 12%;
+    /* LIGHT (default) — cream paper, soft tiles, ink type */
+    --background: 38 35% 95%;
+    --foreground: 240 15% 10%;
 
-    --paper: 32 60% 97%;
-    --paper-deep: 30 40% 92%;
+    --paper: 38 35% 95%;
+    --paper-deep: 38 30% 90%;
     --surface: 0 0% 100%;
-    --surface-2: 30 45% 94%;
+    --surface-2: 38 28% 92%;
 
-    --ink: 230 25% 12%;
-    --ink-soft: 230 18% 28%;
-    --ink-muted: 230 10% 50%;
+    --ink: 240 15% 10%;
+    --ink-soft: 240 10% 28%;
+    --ink-muted: 240 6% 50%;
 
     --card: 0 0% 100%;
-    --card-foreground: 230 25% 12%;
+    --card-foreground: 240 15% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 230 25% 12%;
+    --popover-foreground: 240 15% 10%;
 
-    --primary: 230 25% 12%;
-    --primary-foreground: 32 60% 97%;
+    /* Primary — ink black for CTAs on cream */
+    --primary: 240 15% 10%;
+    --primary-foreground: 38 35% 96%;
 
-    /* Accent — electric coral */
-    --accent: 8 92% 62%;
+    /* Accent — soft violet (matches reference) */
+    --accent: 258 90% 66%;
     --accent-foreground: 0 0% 100%;
-    --accent-soft: 8 95% 93%;
+    --accent-soft: 258 80% 94%;
 
-    --secondary: 8 95% 93%;
-    --secondary-foreground: 230 25% 12%;
+    --secondary: 258 80% 94%;
+    --secondary-foreground: 240 15% 10%;
 
-    --muted: 30 30% 92%;
-    --muted-foreground: 230 8% 45%;
+    --muted: 38 22% 90%;
+    --muted-foreground: 240 6% 45%;
 
-    --destructive: 0 75% 58%;
+    --destructive: 0 70% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 25% 88%;
-    --input: 30 25% 88%;
-    --ring: 8 92% 62%;
+    --border: 38 18% 86%;
+    --input: 38 18% 86%;
+    --ring: 258 90% 66%;
 
     --radius: 1.25rem;
 
-    /* Concept-region hues — playful, saturated */
-    --hue-foundation: 190;
-    --hue-knowledge: 42;
-    --hue-popper: 8;
-    --hue-kuhn: 268;
-    --hue-methods: 158;
-    --hue-ai: 215;
-    --hue-ethics: 330;
-    --hue-bias: 28;
+    /* Concept-region hues — softer for light mode */
+    --hue-foundation: 195;
+    --hue-knowledge: 45;
+    --hue-popper: 12;
+    --hue-kuhn: 280;
+    --hue-methods: 160;
+    --hue-ai: 220;
+    --hue-ethics: 340;
+    --hue-bias: 30;
 
     --gradient-canvas: none;
 
-    --shadow-soft: 0 1px 2px hsl(230 25% 12% / 0.04), 0 8px 24px hsl(230 25% 12% / 0.06);
-    --shadow-lift: 0 2px 6px hsl(230 25% 12% / 0.06), 0 16px 40px hsl(230 25% 12% / 0.09);
-    --shadow-glow: 0 0 0 1px hsl(var(--accent) / 0.2), 0 8px 30px hsl(var(--accent) / 0.18);
+    --shadow-soft: 0 1px 2px hsl(240 15% 10% / 0.04), 0 8px 24px hsl(240 15% 10% / 0.05);
+    --shadow-lift: 0 2px 6px hsl(240 15% 10% / 0.06), 0 16px 40px hsl(240 15% 10% / 0.08);
+    --shadow-glow: 0 0 0 1px hsl(var(--accent) / 0.2), 0 8px 30px hsl(var(--accent) / 0.15);
 
     --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
 
-    --sidebar-background: 32 60% 97%;
-    --sidebar-foreground: 230 25% 12%;
-    --sidebar-primary: 8 92% 62%;
+    --sidebar-background: 38 35% 95%;
+    --sidebar-foreground: 240 15% 10%;
+    --sidebar-primary: 258 90% 66%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 30 30% 92%;
-    --sidebar-accent-foreground: 230 25% 12%;
-    --sidebar-border: 30 25% 88%;
-    --sidebar-ring: 8 92% 62%;
+    --sidebar-accent: 38 22% 90%;
+    --sidebar-accent-foreground: 240 15% 10%;
+    --sidebar-border: 38 18% 86%;
+    --sidebar-ring: 258 90% 66%;
   }
 
   .dark {
-    /* DARK — deep midnight indigo with electric mint accent */
-    --background: 234 28% 7%;
-    --foreground: 38 30% 96%;
+    --background: 240 12% 6%;
+    --foreground: 40 25% 96%;
 
-    --paper: 234 28% 7%;
-    --paper-deep: 234 32% 4%;
-    --surface: 234 22% 12%;
-    --surface-2: 234 18% 17%;
+    --paper: 240 12% 6%;
+    --paper-deep: 240 14% 4%;
+    --surface: 240 10% 10%;
+    --surface-2: 240 9% 14%;
 
-    --ink: 38 30% 96%;
-    --ink-soft: 38 18% 84%;
-    --ink-muted: 232 10% 62%;
+    --ink: 40 25% 96%;
+    --ink-soft: 40 14% 82%;
+    --ink-muted: 240 6% 58%;
 
-    --card: 234 22% 12%;
-    --card-foreground: 38 30% 96%;
+    --card: 240 10% 10%;
+    --card-foreground: 40 25% 96%;
 
-    --popover: 234 26% 9%;
-    --popover-foreground: 38 30% 96%;
+    --popover: 240 12% 8%;
+    --popover-foreground: 40 25% 96%;
 
-    --primary: 38 30% 96%;
-    --primary-foreground: 234 28% 7%;
+    --primary: 40 25% 96%;
+    --primary-foreground: 240 12% 6%;
 
-    /* Electric mint accent on midnight */
-    --accent: 158 78% 58%;
-    --accent-foreground: 234 32% 6%;
-    --accent-soft: 158 50% 18%;
+    --accent: 258 90% 70%;
+    --accent-foreground: 240 14% 6%;
+    --accent-soft: 258 60% 22%;
 
-    --secondary: 158 50% 18%;
-    --secondary-foreground: 38 30% 96%;
+    --secondary: 258 60% 22%;
+    --secondary-foreground: 40 25% 96%;
 
-    --muted: 234 16% 18%;
-    --muted-foreground: 232 10% 65%;
+    --muted: 240 8% 16%;
+    --muted-foreground: 240 6% 62%;
 
-    --border: 234 14% 20%;
-    --input: 234 14% 20%;
-    --ring: 158 78% 58%;
+    --border: 240 8% 18%;
+    --input: 240 8% 18%;
+    --ring: 258 90% 70%;
 
-    --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.45), 0 12px 30px hsl(0 0% 0% / 0.4);
-    --shadow-lift: 0 4px 8px hsl(0 0% 0% / 0.45), 0 24px 60px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 0 1px hsl(var(--accent) / 0.4), 0 12px 40px hsl(var(--accent) / 0.22);
+    --shadow-soft: 0 1px 2px hsl(0 0% 0% / 0.4), 0 12px 30px hsl(0 0% 0% / 0.35);
+    --shadow-lift: 0 4px 8px hsl(0 0% 0% / 0.4), 0 24px 60px hsl(0 0% 0% / 0.45);
+    --shadow-glow: 0 0 0 1px hsl(var(--accent) / 0.35), 0 12px 40px hsl(var(--accent) / 0.18);
 
-    --sidebar-background: 234 28% 7%;
-    --sidebar-foreground: 38 30% 96%;
-    --sidebar-primary: 158 78% 58%;
-    --sidebar-primary-foreground: 234 32% 6%;
-    --sidebar-accent: 234 16% 18%;
-    --sidebar-accent-foreground: 38 30% 96%;
-    --sidebar-border: 234 14% 20%;
-    --sidebar-ring: 158 78% 58%;
+    --sidebar-background: 240 12% 6%;
+    --sidebar-foreground: 40 25% 96%;
+    --sidebar-primary: 258 90% 70%;
+    --sidebar-primary-foreground: 240 14% 6%;
+    --sidebar-accent: 240 8% 16%;
+    --sidebar-accent-foreground: 40 25% 96%;
+    --sidebar-border: 240 8% 18%;
+    --sidebar-ring: 258 90% 70%;
   }
 }
 

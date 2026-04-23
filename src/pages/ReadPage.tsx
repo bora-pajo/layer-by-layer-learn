@@ -1,54 +1,13 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
-import { ReaderControls } from "@/components/ReaderControls";
 import { chapters } from "@/content/chapter1";
 import { ArrowUpRight } from "lucide-react";
 
-const PREF_KEY = "reader:prefs:v1";
-
 const ReadPage = () => {
-  const [fontSize, setFontSize] = useState(17);
-  const [lineHeight, setLineHeight] = useState(1.7);
-
-  // Hydrate from localStorage
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem(PREF_KEY);
-      if (raw) {
-        const p = JSON.parse(raw);
-        if (typeof p.fontSize === "number") setFontSize(p.fontSize);
-        if (typeof p.lineHeight === "number") setLineHeight(p.lineHeight);
-      }
-    } catch {
-      /* ignore */
-    }
-  }, []);
-
-  // Persist
-  useEffect(() => {
-    try {
-      localStorage.setItem(PREF_KEY, JSON.stringify({ fontSize, lineHeight }));
-    } catch {
-      /* ignore */
-    }
-  }, [fontSize, lineHeight]);
-
-  // Derived sizing — keep proportional hierarchy
-  const headingScale = fontSize / 17;
-  const paragraphStyle = { fontSize: `${fontSize}px`, lineHeight };
-
   return (
     <div className="phone-shell pb-safe">
       <MobileHeader eyebrow={`Read mode · ${chapters.length} chapters`} title="Full text read" />
-
-      <ReaderControls
-        fontSize={fontSize}
-        lineHeight={lineHeight}
-        onFontSize={setFontSize}
-        onLineHeight={setLineHeight}
-      />
 
       <article className="px-5 pt-6">
         <div className="space-y-16">
@@ -57,12 +16,13 @@ const ReadPage = () => {
               <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
                 Chapter {chapter.number}
               </div>
-              <h1
-                className="mt-2 font-display leading-tight text-ink text-balance"
-                style={{ fontSize: `${1.85 * headingScale}rem` }}
-              >
+              <h1 className="mt-2 font-display text-3xl leading-tight text-ink text-balance">
                 {chapter.title}
               </h1>
+              <p className="mt-3 font-display text-base italic text-ink-soft text-pretty">
+                {chapter.subtitle}
+              </p>
+
               <div className="mt-10 space-y-12">
                 {chapter.groups.map((group) => (
                   <section key={group.id} id={group.id} className="scroll-mt-20">
@@ -75,16 +35,10 @@ const ReadPage = () => {
                         {chapter.number}.{group.number}
                       </span>
                     </div>
-                    <h2
-                      className="mt-2 font-display text-ink text-balance"
-                      style={{ fontSize: `${1.45 * headingScale}rem` }}
-                    >
+                    <h2 className="mt-2 font-display text-2xl text-ink text-balance">
                       {group.title}
                     </h2>
-                    <p
-                      className="mt-1 font-display italic text-ink-soft text-pretty"
-                      style={{ fontSize: `${0.9 * headingScale}rem` }}
-                    >
+                    <p className="mt-1 font-display text-sm italic text-ink-soft text-pretty">
                       {group.tagline}
                     </p>
 
@@ -103,17 +57,11 @@ const ReadPage = () => {
                               open <ArrowUpRight className="h-3 w-3" />
                             </Link>
                           </div>
-                          <h3
-                            className="mt-2 font-display text-ink text-balance"
-                            style={{ fontSize: `${1.2 * headingScale}rem` }}
-                          >
-                            {c.title}
-                          </h3>
+                          <h3 className="mt-2 font-display text-xl text-ink text-balance">{c.title}</h3>
                           {c.full.map((p, i) => (
                             <p
                               key={i}
-                              className="mt-3 font-display text-ink-soft text-pretty"
-                              style={paragraphStyle}
+                              className="mt-3 font-display text-[16px] leading-[1.7] text-ink-soft text-pretty"
                             >
                               {p}
                             </p>
