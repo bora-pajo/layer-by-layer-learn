@@ -56,22 +56,9 @@ const ExamplePage = () => {
       />
 
       <section className="px-6 pt-6 pb-44">
-        <div className="flex items-center gap-2">
-          <span
-            className="h-1.5 w-1.5 rounded-full"
-            style={{ background: accent }}
-          />
-          <span className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
-            Layer 02½ · In practice
-          </span>
-        </div>
-
-        <h1 className="mt-4 font-display text-[28px] leading-[1.1] text-ink text-balance">
+        <h1 className="font-display text-[28px] leading-[1.1] text-ink text-balance">
           {concept.title}.
         </h1>
-        <p className="mt-2 font-mono text-[11px] tracking-[0.2em] uppercase text-ink-muted">
-          Example of how this applies
-        </p>
 
         {example ? (
           <div
@@ -107,16 +94,8 @@ const ExamplePage = () => {
           </p>
         )}
 
-        <Link
-          to={`/c/${concept.id}/more`}
-          className="mt-6 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted hover:text-ink transition-colors"
-        >
-          <ArrowLeft className="h-3.5 w-3.5" />
-          Back
-        </Link>
       </section>
 
-      {/* Bottom action bar */}
       <div
         className="absolute bottom-0 left-0 right-0 z-30 px-5 pt-3 glass border-t border-border"
         style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 1rem)" }}
@@ -124,16 +103,17 @@ const ExamplePage = () => {
         <div className="flex items-center justify-center gap-3">
           <button
             onClick={() => navigate(`/c/${concept.id}/read`)}
-            className="flex h-12 flex-1 max-w-[220px] items-center justify-center gap-2 rounded-full bg-ink px-6 text-background shadow-lift active:scale-[0.98] transition-transform"
+            className="flex h-12 flex-1 max-w-[200px] items-center justify-center gap-2 rounded-full bg-ink px-6 text-background shadow-lift active:scale-[0.98] transition-transform"
           >
-            <span className="font-display text-[15px] font-medium">Read full text</span>
+            <span className="font-display text-[15px] font-medium">Go deeper</span>
             <ArrowRight className="h-4 w-4" />
           </button>
           <button
             onClick={() => (next ? navigate(`/c/${next.id}`) : navigate("/"))}
-            className="flex h-12 items-center gap-2 rounded-full bg-surface px-5 text-ink shadow-soft active:scale-[0.98] transition-transform"
+            disabled={!next}
+            className="flex h-12 flex-1 max-w-[200px] items-center justify-center gap-2 rounded-full bg-surface px-6 text-ink shadow-soft active:scale-[0.98] transition-transform disabled:opacity-40"
           >
-            <span className="font-display text-[15px]">Next</span>
+            <span className="font-display text-[15px]">Next concept</span>
             <ArrowRight className="h-4 w-4" />
           </button>
         </div>
