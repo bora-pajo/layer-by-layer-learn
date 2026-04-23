@@ -114,17 +114,17 @@ const Index = () => {
 
       {/* Chapter selector — sticky dropdown that scales to many chapters */}
       <div className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-border">
-        <div className="px-6 py-3 flex items-center justify-end gap-3">
+        <div className="px-6 py-3">
           <DropdownMenu>
-            <DropdownMenuTrigger className="group flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
-              <BookOpen className="h-3.5 w-3.5 text-ink-muted" />
-              <span className="font-mono text-[10px] text-ink-muted">
+            <DropdownMenuTrigger className="group flex w-full items-center gap-3 rounded-2xl border border-border bg-surface px-4 py-3 shadow-soft hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
+              <BookOpen className="h-4 w-4 shrink-0 text-ink-muted" />
+              <span className="font-mono text-[10px] text-ink-muted shrink-0">
                 Ch. {String(activeChapterData.number).padStart(2, "0")}
               </span>
-              <span className="font-display text-[13px] text-ink max-w-[180px] truncate">
+              <span className="font-display text-[14px] text-ink truncate flex-1 text-left">
                 {activeChapterData.title}
               </span>
-              <ChevronDown className="h-3.5 w-3.5 text-ink-muted transition-transform group-data-[state=open]:rotate-180" />
+              <ChevronDown className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-data-[state=open]:rotate-180" />
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
