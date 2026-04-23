@@ -28,11 +28,9 @@ const ChapterPage = () => {
     );
   }
 
-  const conceptCount = chapter.groups.reduce((n, g) => n + g.concepts.length, 0);
-
   return (
     <div className="phone-shell pb-safe">
-      <MobileHeader eyebrow={`Chapter ${chapter.number}`} />
+      <MobileHeader />
 
       {/* Back link */}
       <div className="px-5 pt-2">
@@ -47,34 +45,15 @@ const ChapterPage = () => {
 
       {/* Chapter heading */}
       <section className="px-6 pt-4 pb-6 animate-fade-up">
-        <div className="font-mono text-[11px] tracking-[0.22em] uppercase text-ink-muted">
-          Chapter {chapter.number}
-        </div>
-        <h1 className="mt-2 font-display text-[34px] leading-[1.05] text-ink text-balance">
-          {chapter.title}.
+        <h1 className="font-display text-[34px] leading-[1.05] text-ink text-balance">
+          {chapter.title}
         </h1>
-        <div className="mt-3 font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
-          {conceptCount} concepts · {chapter.groups.length} sections
-        </div>
       </section>
 
       {/* Groups + concepts */}
       <section className="space-y-8 pb-10">
         {chapter.groups.map((group) => (
           <article key={group.id} id={group.id} className="scroll-mt-20">
-            <header className="flex items-center gap-2 px-6 pb-3">
-              <span
-                className="h-2 w-2 rounded-full"
-                style={{ background: `hsl(${group.hue} 70% 55%)` }}
-              />
-              <span className="font-mono text-[11px] font-semibold tracking-wide text-ink">
-                {chapter.number}.{group.number}
-              </span>
-              <span className="font-mono text-[11px] tracking-[0.18em] uppercase text-ink-muted">
-                · {group.title}
-              </span>
-            </header>
-
             <div className="space-y-2 px-3">
               {group.concepts.map((c) => (
                 <ConceptCard

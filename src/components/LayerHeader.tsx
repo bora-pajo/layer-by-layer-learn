@@ -82,27 +82,6 @@ export function LayerHeader({
         </div>
       </div>
 
-      {/* Dashed segment progress bar */}
-      {typeof index === "number" && typeof total === "number" && (
-        <div className="mt-4 flex items-center gap-1">
-          {Array.from({ length: total }).map((_, i) => (
-            <div
-              key={i}
-              className="h-[3px] flex-1 rounded-full transition-colors"
-              style={{
-                background:
-                  i <= index
-                    ? i === index
-                      ? accent
-                      : `hsl(${hue} 60% 75%)`
-                    : variant === "paper"
-                      ? "hsl(var(--surface-2))"
-                      : "hsl(0 0% 100% / 0.45)",
-              }}
-            />
-          ))}
-        </div>
-      )}
     </header>
   );
 }

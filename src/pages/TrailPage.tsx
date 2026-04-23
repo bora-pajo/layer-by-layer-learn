@@ -60,12 +60,6 @@ const TrailPage = () => {
           <div className="mt-1 font-mono text-[11px] text-ink-muted">
             {completedCount} fully explored across all layers
           </div>
-          <div className="mt-3 h-2 overflow-hidden rounded-full bg-surface-2">
-            <div
-              className="h-full bg-accent transition-all duration-700"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
           {visited.size > 0 && (
             <button
               onClick={reset}
@@ -116,23 +110,7 @@ const TrailPage = () => {
                       </div>
                     </Link>
 
-                    <div className="mt-2.5 flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-1.5" aria-hidden>
-                        {LAYERS.map((l) => {
-                          const done = !!progress.layers[l];
-                          return (
-                            <span
-                              key={l}
-                              title={`${LAYER_LABEL[l]}${done ? " · explored" : ""}`}
-                              className="h-1.5 w-1.5 rounded-full"
-                              style={{
-                                background: done ? accent : "hsl(var(--surface-2))",
-                                boxShadow: done ? "none" : "inset 0 0 0 1px hsl(var(--border))",
-                              }}
-                            />
-                          );
-                        })}
-                      </div>
+                    <div className="mt-2.5 flex items-center justify-end gap-2">
                       <Link
                         to={`/c/${c.id}${LAYER_PATH[progress.lastLayer]}`}
                         className="inline-flex items-center gap-1.5 rounded-full bg-ink px-3 py-1 text-background active:scale-95 transition-transform"

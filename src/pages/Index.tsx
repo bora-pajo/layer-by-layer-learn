@@ -54,23 +54,6 @@ const Index = () => {
                 {resumeConcept.title}
               </div>
             </div>
-            <div className="flex items-center gap-1 shrink-0" aria-hidden>
-              {LAYERS.map((l) => {
-                const done = !!store[resumeConcept.id]?.layers[l];
-                return (
-                  <span
-                    key={l}
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{
-                      background: done
-                        ? `hsl(${resumeConcept.hue} 60% 50%)`
-                        : "hsl(var(--surface-2))",
-                      boxShadow: done ? "none" : "inset 0 0 0 1px hsl(var(--border))",
-                    }}
-                  />
-                );
-              })}
-            </div>
           </Link>
         )}
       </section>
