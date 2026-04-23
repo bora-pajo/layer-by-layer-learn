@@ -12,7 +12,7 @@ export function TopBar() {
           <div className="font-mono text-[10px] tracking-[0.25em] text-ink-muted">CH · 01</div>
           <div className="h-4 w-px bg-border" />
           <div className="font-display text-base text-ink group-hover:text-accent transition-colors">
-            The Atlas
+            Full text read
           </div>
         </Link>
 

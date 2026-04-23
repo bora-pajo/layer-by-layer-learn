@@ -1,12 +1,21 @@
 import { Link, useLocation } from "react-router-dom";
-import { Compass, BookOpen, Bookmark } from "lucide-react";
+import { BookOpen, Bookmark } from "lucide-react";
 
 export function BottomNav() {
   const { pathname } = useLocation();
   const tabs = [
-    { to: "/", label: "Atlas", icon: Compass, active: pathname === "/" || pathname.startsWith("/c/") },
-    { to: "/read", label: "Read", icon: BookOpen, active: pathname.startsWith("/read") },
-    { to: "/saved", label: "Tabs", icon: Bookmark, active: pathname.startsWith("/saved") },
+    {
+      to: "/read",
+      label: "Full text read",
+      icon: BookOpen,
+      active: pathname.startsWith("/read"),
+    },
+    {
+      to: "/saved",
+      label: "Tabs",
+      icon: Bookmark,
+      active: pathname.startsWith("/saved"),
+    },
   ];
 
   return (

@@ -43,7 +43,7 @@ const Layer1Page = () => {
       <div className="phone-shell">
         <div className="px-6 py-20 text-center">
           <h1 className="font-display text-2xl text-ink">Concept not found.</h1>
-          <Link to="/" className="mt-6 inline-block text-accent underline">Back to atlas</Link>
+          <Link to="/" className="mt-6 inline-block text-accent underline">Back to home</Link>
         </div>
       </div>
     );

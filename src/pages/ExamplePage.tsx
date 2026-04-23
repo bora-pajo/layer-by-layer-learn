@@ -113,7 +113,7 @@ const ExamplePage = () => {
           className="mt-6 inline-flex items-center gap-2 font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted hover:text-ink transition-colors"
         >
           <ArrowLeft className="h-3.5 w-3.5" />
-          Back to brief
+          Back
         </Link>
       </section>
 

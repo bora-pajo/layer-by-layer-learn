@@ -4,7 +4,7 @@ import { ChevronDown, BookOpen, Play } from "lucide-react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
 import { ConceptCard } from "@/components/ConceptCard";
-import { ExploreReadToggle } from "@/components/ExploreReadToggle";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,7 +22,7 @@ const LAYER_PATH: Record<Layer, string> = {
 };
 const LAYER_LABEL: Record<Layer, string> = {
   glance: "Glance",
-  brief: "Brief",
+  brief: "More",
   example: "Example",
   full: "Full text",
 };
@@ -69,7 +69,6 @@ const Index = () => {
             </div>
             <span className="font-mono text-[11px] text-ink-muted shrink-0">{pct}%</span>
           </div>
-          <ExploreReadToggle />
         </div>
 
         {/* Resume card — appears when a trail exists */}
@@ -115,10 +114,7 @@ const Index = () => {
 
       {/* Chapter selector — sticky dropdown that scales to many chapters */}
       <div className="sticky top-0 z-30 bg-background/85 backdrop-blur-md border-b border-border">
-        <div className="px-6 py-3 flex items-center justify-between gap-3">
-          <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
-            Now reading
-          </div>
+        <div className="px-6 py-3 flex items-center justify-end gap-3">
           <DropdownMenu>
             <DropdownMenuTrigger className="group flex items-center gap-2 rounded-full border border-border bg-surface px-3.5 py-1.5 hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent">
               <BookOpen className="h-3.5 w-3.5 text-ink-muted" />
