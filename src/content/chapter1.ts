@@ -59,7 +59,7 @@ export const chapter = {
           id: "information-vs-knowledge",
           number: "1.1",
           title: "Information vs. Knowledge",
-          glance: "Your For You Page knows a thousand facts about the world before breakfast.",
+          glance: "Your social media page knows a thousand facts about the world before breakfast.",
           brief: "Let me start with something that happens to every one of you every single morning. You wake up, you reach for your phone, and within about four seconds you have absorbed what I would generously call a firehose of information.",
           full: [
             "Let me start with something that happens to every one of you every single morning. You wake up, you reach for your phone, and within about four seconds you have absorbed what I would generously call a firehose of information. Election results. Someone's dog. A recipe you'll never cook.",
