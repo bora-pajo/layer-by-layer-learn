@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, Play } from "lucide-react";
 import { MobileHeader } from "@/components/MobileHeader";
 import { BottomNav } from "@/components/BottomNav";
-import { chapters } from "@/content/chapter1";
+import { chapters, allConcepts } from "@/content/chapter1";
 import { useProgress, LAYERS, type Layer } from "@/hooks/useProgress";
 
 const LAYER_PATH: Record<Layer, string> = {
