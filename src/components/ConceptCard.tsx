@@ -52,30 +52,6 @@ export function ConceptCard({ concept, hue, visited, category = "epistemology", 
             {concept.title}.
           </h3>
 
-          {/* Layer completion dots */}
-          {visited && (
-            <div className="mt-1.5 flex items-center gap-1.5">
-              <div className="flex items-center gap-1" aria-hidden>
-                {LAYERS.map((l) => {
-                  const done = !!layerProgress?.[l];
-                  return (
-                    <span
-                      key={l}
-                      title={`${LAYER_LABELS[l]}${done ? " · explored" : ""}`}
-                      className="h-1.5 w-1.5 rounded-full transition-colors"
-                      style={{
-                        background: done ? accent : "hsl(var(--surface-2))",
-                        boxShadow: done ? "none" : "inset 0 0 0 1px hsl(var(--border))",
-                      }}
-                    />
-                  );
-                })}
-              </div>
-              <span className="font-mono text-[10px] text-ink-muted">
-                {completed === LAYERS.length ? "complete" : `${completed}/${LAYERS.length}`}
-              </span>
-            </div>
-          )}
         </div>
         <ArrowRight className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" />
       </div>

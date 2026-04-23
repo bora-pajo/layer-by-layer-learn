@@ -54,23 +54,6 @@ const Index = () => {
                 {resumeConcept.title}
               </div>
             </div>
-            <div className="flex items-center gap-1 shrink-0" aria-hidden>
-              {LAYERS.map((l) => {
-                const done = !!store[resumeConcept.id]?.layers[l];
-                return (
-                  <span
-                    key={l}
-                    className="h-1.5 w-1.5 rounded-full"
-                    style={{
-                      background: done
-                        ? `hsl(${resumeConcept.hue} 60% 50%)`
-                        : "hsl(var(--surface-2))",
-                      boxShadow: done ? "none" : "inset 0 0 0 1px hsl(var(--border))",
-                    }}
-                  />
-                );
-              })}
-            </div>
           </Link>
         )}
       </section>
@@ -81,58 +64,26 @@ const Index = () => {
           Chapters
         </div>
         <ul className="space-y-2">
-          {chapters.map((ch) => {
-            const conceptCount = ch.groups.reduce((n, g) => n + g.concepts.length, 0);
-            const conceptsInChapter = ch.groups.flatMap((g) => g.concepts);
-            const visitedInChapter = conceptsInChapter.filter((c) => visited.has(c.id)).length;
-            return (
-              <li key={ch.number}>
-                <Link
-                  to={`/chapter/${ch.number}`}
-                  className="group lift block rounded-[24px] bg-surface px-4 py-4 shadow-soft hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
-                >
-                  <div className="flex items-center gap-4">
-                    <span className="font-mono text-[11px] font-semibold tracking-wide text-accent w-8 shrink-0">
-                      {String(ch.number).padStart(2, "0")}
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <h2 className="font-display text-[19px] leading-[1.15] text-ink text-balance line-clamp-2">
-                        {ch.title}.
-                      </h2>
-                      {/* Mini navigation map — one dot per concept, filled when visited */}
-                      <div className="mt-2.5 flex items-center gap-1.5 flex-wrap">
-                        {ch.groups.map((g) => (
-                          <div key={g.id} className="flex items-center gap-1">
-                            {g.concepts.map((c) => {
-                              const isVisited = visited.has(c.id);
-                              return (
-                                <span
-                                  key={c.id}
-                                  className="h-1.5 w-1.5 rounded-full transition-colors"
-                                  style={{
-                                    background: isVisited
-                                      ? `hsl(${g.hue} 70% 55%)`
-                                      : "hsl(var(--surface-2))",
-                                    boxShadow: isVisited
-                                      ? "none"
-                                      : "inset 0 0 0 1px hsl(var(--border))",
-                                  }}
-                                />
-                              );
-                            })}
-                          </div>
-                        ))}
-                        <span className="ml-1 font-mono text-[10px] text-ink-muted">
-                          {visitedInChapter}/{conceptCount}
-                        </span>
-                      </div>
-                    </div>
-                    <ArrowRight className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" />
+          {chapters.map((ch) => (
+            <li key={ch.number}>
+              <Link
+                to={`/chapter/${ch.number}`}
+                className="group lift block rounded-[24px] bg-surface px-4 py-4 shadow-soft hover:bg-surface-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="font-mono text-[11px] font-semibold tracking-wide text-accent w-8 shrink-0">
+                    {String(ch.number).padStart(2, "0")}
+                  </span>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-display text-[19px] leading-[1.15] text-ink text-balance line-clamp-2">
+                      {ch.title}
+                    </h2>
                   </div>
-                </Link>
-              </li>
-            );
-          })}
+                  <ArrowRight className="h-4 w-4 shrink-0 text-ink-muted transition-transform group-hover:translate-x-0.5" />
+                </div>
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
 

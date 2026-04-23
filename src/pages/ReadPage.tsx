@@ -7,40 +7,22 @@ import { ArrowUpRight } from "lucide-react";
 const ReadPage = () => {
   return (
     <div className="phone-shell pb-safe">
-      <MobileHeader eyebrow={`Read mode · ${chapters.length} chapters`} title="Full text read" />
+      <MobileHeader title="Full text read" />
 
       <article className="px-5 pt-6">
         <div className="space-y-16">
           {chapters.map((chapter) => (
             <section key={chapter.number} id={`ch-${chapter.number}`} className="scroll-mt-20">
-              <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
-                Chapter {chapter.number}
-              </div>
-              <h1 className="mt-2 font-display text-3xl leading-tight text-ink text-balance">
+              <h1 className="font-display text-3xl leading-tight text-ink text-balance">
                 {chapter.title}
               </h1>
-              <p className="mt-3 font-display text-base italic text-ink-soft text-pretty">
-                {chapter.subtitle}
-              </p>
 
               <div className="mt-10 space-y-12">
                 {chapter.groups.map((group) => (
                   <section key={group.id} id={group.id} className="scroll-mt-20">
-                    <div className="flex items-center gap-2">
-                      <span
-                        className="h-2 w-2 rounded-full"
-                        style={{ background: `hsl(${group.hue} 90% 65%)` }}
-                      />
-                      <span className="font-mono text-[10px] tracking-widest text-ink-muted">
-                        {chapter.number}.{group.number}
-                      </span>
-                    </div>
-                    <h2 className="mt-2 font-display text-2xl text-ink text-balance">
+                    <h2 className="font-display text-2xl text-ink text-balance">
                       {group.title}
                     </h2>
-                    <p className="mt-1 font-display text-sm italic text-ink-soft text-pretty">
-                      {group.tagline}
-                    </p>
 
                     <div className="mt-6 space-y-10">
                       {group.concepts.map((c) => (

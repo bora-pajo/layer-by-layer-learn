@@ -50,7 +50,6 @@ const ExamplePage = () => {
     <div className="phone-shell relative animate-fade-in" style={{ minHeight: "100dvh" }}>
       <LayerHeader
         conceptId={concept.id}
-        eyebrow={`${group.number} · ${group.title}`}
         hue={concept.hue}
         variant="paper"
         showTab
