@@ -37,7 +37,10 @@ const Layer2Page = () => {
   const { next } = getAdjacent(concept.id);
 
   return (
-    <div className="phone-shell relative animate-fade-in" style={{ minHeight: "100dvh" }}>
+    <div
+      className="phone-shell relative animate-fade-in"
+      style={{ minHeight: "100dvh", background: "hsl(var(--surface-2))" }}
+    >
       <LayerHeader
         conceptId={concept.id}
         hue={concept.hue}
@@ -45,14 +48,18 @@ const Layer2Page = () => {
         showTab
       />
 
-      <section className="px-6 pt-6 pb-44">
-        <h1 className="font-display text-[32px] leading-[1.08] text-ink text-balance">
-          {concept.title}.
-        </h1>
-
-        <p className="mt-5 font-display text-[18px] leading-[1.55] text-ink-soft text-pretty">
-          {concept.brief}
-        </p>
+      <section className="flex flex-col items-center justify-center px-6 pt-6 pb-40 min-h-[calc(100dvh-160px)]">
+        <div className="max-w-[360px]">
+          <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted text-center">
+            A little more
+          </div>
+          <h1 className="mt-3 text-center font-display text-[32px] leading-[1.08] text-ink text-balance">
+            {concept.title}.
+          </h1>
+          <p className="mt-5 text-center font-display text-[18px] leading-[1.6] text-ink-soft text-pretty">
+            {concept.brief}
+          </p>
+        </div>
       </section>
 
       <div
