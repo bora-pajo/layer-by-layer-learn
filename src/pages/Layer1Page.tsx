@@ -78,7 +78,7 @@ const Layer1Page = () => {
           </h1>
 
           <p className="mt-6 text-center font-serif text-[18px] leading-[1.5] text-ink text-balance max-w-[340px]">
-            {concept.example?.body?.[0] ?? concept.glance}
+            {concept.brief}
           </p>
 
           <div className="mt-8 flex items-center gap-2">
