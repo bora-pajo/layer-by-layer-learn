@@ -17,7 +17,7 @@ interface Props {
 /**
  * Compact, clean mobile header. RORO logo on left when not back. Optional theme toggle.
  */
-export function MobileHeader({ title, eyebrow, back = false, right, showThemeToggle = true, showLogo = true }: Props) {
+export function MobileHeader({ title, eyebrow, back = false, right, showThemeToggle = true, showLogo = true, logoClassName = "h-7" }: Props) {
   const navigate = useNavigate();
   const { theme, toggle } = useTheme();
 
@@ -37,7 +37,7 @@ export function MobileHeader({ title, eyebrow, back = false, right, showThemeTog
           </button>
         ) : showLogo ? (
           <Link to="/" className="flex items-center" aria-label="Tokoro home">
-            <img src={tokoroLogo} alt="Tokoro" className="h-7 w-auto dark:invert-0 invert" />
+            <img src={tokoroLogo} alt="Tokoro" className={`${logoClassName} w-auto dark:invert-0 invert`} />
           </Link>
         ) : null}
 

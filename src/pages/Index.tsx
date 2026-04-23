@@ -27,27 +27,13 @@ const Index = () => {
 
   return (
     <div className="phone-shell pb-safe">
-      <MobileHeader eyebrow={`${chapters.length} chapters`} />
+      <MobileHeader logoClassName="h-10" />
 
       {/* Hero */}
       <section className="px-6 pt-6 pb-2 animate-fade-up">
         <h1 className="font-display text-[44px] leading-[1.02] text-ink text-balance">
-          Research <em className="italic font-display">Methods.</em>
+          Research <em className="italic font-display">Methods</em>
         </h1>
-        <p className="mt-3 font-display text-[15px] italic text-ink-soft text-pretty">
-          Pick a chapter to begin.
-        </p>
-
-        {/* Progress */}
-        <div className="mt-7 flex items-center gap-2">
-          <div className="flex-1 h-1 overflow-hidden rounded-full bg-surface-2">
-            <div
-              className="h-full bg-ink transition-all duration-700"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <span className="font-mono text-[11px] text-ink-muted shrink-0">{pct}%</span>
-        </div>
 
         {/* Resume */}
         {resume && resumeConcept && (
@@ -150,10 +136,6 @@ const Index = () => {
           })}
         </ul>
       </section>
-
-      <div className="mx-6 mt-10 mb-6 rounded-2xl border border-dashed border-border p-5 text-center">
-        <div className="font-display text-base text-ink">More chapters coming soon</div>
-      </div>
 
       <BottomNav />
     </div>
