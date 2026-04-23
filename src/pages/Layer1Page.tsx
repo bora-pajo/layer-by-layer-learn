@@ -63,7 +63,6 @@ const Layer1Page = () => {
     >
       <LayerHeader
         conceptId={concept.id}
-        eyebrow={`${group.number} · ${group.title}`}
         index={index}
         total={total}
         hue={concept.hue}
@@ -71,40 +70,34 @@ const Layer1Page = () => {
         showTab
       />
 
-      {/* Centerpiece — visual + title + tap-for-more */}
-      <section className="flex flex-col items-center justify-center px-6 pt-6 pb-32 min-h-[calc(100dvh-200px)]">
-        <button
-          onClick={() => navigate(`/c/${concept.id}/more`)}
-          className="block w-full max-w-[300px] active:scale-[0.99] transition-transform"
-          aria-label="Tap for more"
-        >
-          <ConceptVisual kind={concept.visual} hue={concept.hue} large />
-        </button>
+      {/* Centerpiece — title + brief explanation; small visual at bottom */}
+      <section className="flex flex-col items-center justify-between px-6 pt-10 pb-32 min-h-[calc(100dvh-200px)]">
+        <div className="flex flex-1 flex-col items-center justify-center">
+          <h1 className="text-center font-display text-[40px] leading-[1.05] text-ink text-balance max-w-[340px]">
+            {concept.title}.
+          </h1>
 
-        <h1 className="mt-8 text-center font-display text-[40px] leading-[1.05] text-ink text-balance max-w-[320px]">
-          {concept.title}.
-        </h1>
+          <p className="mt-6 text-center font-serif text-[18px] leading-[1.5] text-ink text-balance max-w-[340px]">
+            {concept.example?.body?.[0] ?? concept.glance}
+          </p>
 
-        <p className="mt-4 text-center font-serif text-[15px] leading-[1.45] text-ink-soft text-balance max-w-[320px]">
-          {concept.glance}
-        </p>
-
-        <div className="mt-6 flex items-center gap-2">
-          <button
-            onClick={() => navigate(`/c/${concept.id}/more`)}
-            className="rounded-full bg-surface px-5 py-2 font-mono text-[10px] tracking-[0.22em] text-ink-soft shadow-soft active:scale-95 transition-transform"
-          >
-            TAP FOR MORE
-          </button>
-          {concept.example && (
+          <div className="mt-8 flex items-center gap-2">
             <button
-              onClick={() => navigate(`/c/${concept.id}/example`)}
+              onClick={() => navigate(`/c/${concept.id}/more`)}
               className="rounded-full bg-ink px-5 py-2 font-mono text-[10px] tracking-[0.22em] text-background shadow-soft active:scale-95 transition-transform"
             >
-              SEE EXAMPLE
+              TAP FOR MORE
             </button>
-          )}
+          </div>
         </div>
+
+        <button
+          onClick={() => navigate(`/c/${concept.id}/more`)}
+          className="mt-10 block w-full max-w-[120px] opacity-70 active:scale-[0.99] transition-transform"
+          aria-label="Tap for more"
+        >
+          <ConceptVisual kind={concept.visual} hue={concept.hue} />
+        </button>
       </section>
 
       <LayerFooter
