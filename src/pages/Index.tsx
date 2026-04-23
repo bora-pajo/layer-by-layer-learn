@@ -20,7 +20,6 @@ const LAYER_LABEL: Record<Layer, string> = {
 
 const Index = () => {
   const { visited, store, lastVisitedConcept } = useProgress();
-  const pct = Math.round((visited.size / allConcepts.length) * 100);
 
   const resume = lastVisitedConcept();
   const resumeConcept = resume ? allConcepts.find((c) => c.id === resume.id) : null;
