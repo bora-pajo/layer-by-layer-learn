@@ -1,10 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ConceptVisual } from "@/components/ConceptVisual";
 import { LayerHeader } from "@/components/LayerHeader";
-import { LayerFooter } from "@/components/LayerFooter";
 import { JumpDrawer } from "@/components/JumpDrawer";
-import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
+import { ArrowRight } from "lucide-react";
+import { getAdjacent, getConcept } from "@/content/chapter1";
 import { useProgress } from "@/hooks/useProgress";
 import { useTheme } from "@/hooks/useTheme";
 
@@ -49,8 +48,7 @@ const Layer1Page = () => {
     );
   }
 
-  const { prev, next, index, total } = getAdjacent(concept.id);
-  const group = getGroup(concept.groupId)!;
+  const { next } = getAdjacent(concept.id);
 
   // Soft tinted background using the concept hue (theme-aware)
   const { theme } = useTheme();
@@ -63,51 +61,43 @@ const Layer1Page = () => {
     >
       <LayerHeader
         conceptId={concept.id}
-        index={index}
-        total={total}
         hue={concept.hue}
         variant="tinted"
         showTab
       />
 
-      {/* Centerpiece — title + brief explanation; small visual at bottom */}
-      <section className="flex flex-col items-center justify-between px-6 pt-10 pb-32 min-h-[calc(100dvh-200px)]">
-        <div className="flex flex-1 flex-col items-center justify-center">
-          <h1 className="text-center font-display text-[40px] leading-[1.05] text-ink text-balance max-w-[340px]">
-            {concept.title}.
-          </h1>
+      <section className="flex flex-col items-center justify-center px-6 pt-10 pb-40 min-h-[calc(100dvh-160px)]">
+        <h1 className="text-center font-display text-[40px] leading-[1.05] text-ink text-balance max-w-[340px]">
+          {concept.title}.
+        </h1>
 
-          <p className="mt-6 text-center font-serif text-[18px] leading-[1.5] text-ink text-balance max-w-[340px]">
-            {concept.brief}
-          </p>
-
-          <div className="mt-8 flex items-center gap-2">
-            <button
-              onClick={() => navigate(`/c/${concept.id}/more`)}
-              className="rounded-full bg-ink px-5 py-2 font-mono text-[10px] tracking-[0.22em] text-background shadow-soft active:scale-95 transition-transform"
-            >
-              TAP FOR MORE
-            </button>
-          </div>
-        </div>
-
-        <button
-          onClick={() => navigate(`/c/${concept.id}/more`)}
-          className="mt-10 block w-full max-w-[120px] opacity-70 active:scale-[0.99] transition-transform"
-          aria-label="Tap for more"
-        >
-          <ConceptVisual kind={concept.visual} hue={concept.hue} />
-        </button>
+        <p className="mt-6 text-center font-serif text-[18px] leading-[1.5] text-ink text-balance max-w-[340px]">
+          {concept.brief}
+        </p>
       </section>
 
-      <LayerFooter
-        prevId={prev?.id}
-        nextId={next?.id}
-        centerLabel="Go deeper"
-        centerIcon="plus"
-        onCenter={() => navigate(`/c/${concept.id}/more`)}
-        onMenu={() => setShowJump(true)}
-      />
+      <div
+        className="absolute bottom-0 left-0 right-0 z-30 px-5 pt-3"
+        style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 1rem)" }}
+      >
+        <div className="flex items-center justify-center gap-3">
+          <button
+            onClick={() => navigate(`/c/${concept.id}/more`)}
+            className="flex h-12 flex-1 max-w-[200px] items-center justify-center gap-2 rounded-full bg-ink px-6 text-background shadow-lift active:scale-[0.98] transition-transform"
+          >
+            <span className="font-display text-[15px] font-medium">Go deeper</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
+          <button
+            onClick={() => (next ? navigate(`/c/${next.id}`) : navigate("/"))}
+            disabled={!next}
+            className="flex h-12 flex-1 max-w-[200px] items-center justify-center gap-2 rounded-full bg-surface px-6 text-ink shadow-soft active:scale-[0.98] transition-transform disabled:opacity-40"
+          >
+            <span className="font-display text-[15px]">Next concept</span>
+            <ArrowRight className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
 
       <JumpDrawer open={showJump} onClose={() => setShowJump(false)} currentId={concept.id} />
     </div>
