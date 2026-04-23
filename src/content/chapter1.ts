@@ -70,7 +70,7 @@ export const chapter = {
           example: {
             title: "In one image",
             body: [
-              "Your For You Page knows a thousand facts about the world before breakfast. None of that is knowledge until you understand why it matters, what's true in it, and what to do with it.",
+              "Your social media page knows a thousand facts about the world before breakfast. None of that is knowledge until you understand why it matters, what's true in it, and what to do with it.",
             ],
           },
         },
