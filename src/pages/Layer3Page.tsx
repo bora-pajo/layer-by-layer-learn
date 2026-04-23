@@ -1,6 +1,6 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { ChevronLeft, ChevronRight, Bookmark, BookmarkCheck, Type } from "lucide-react";
+import { ChevronLeft, ChevronRight, Bookmark, BookmarkCheck, Type, NotebookPen } from "lucide-react";
 import { getAdjacent, getConcept, getGroup } from "@/content/chapter1";
 import { useTabs } from "@/hooks/useTabs";
 import { useProgress } from "@/hooks/useProgress";
@@ -18,12 +18,19 @@ const Layer3Page = () => {
   const { id = "" } = useParams();
   const navigate = useNavigate();
   const concept = getConcept(id);
-  const { isTabbed, toggleTab } = useTabs();
+  const { isTabbed, toggleTab, getNote, setNote: persistNote } = useTabs();
   const { markLayer } = useProgress();
   const [size, setSize] = useState<FontSize>(() => {
     if (typeof window === "undefined") return "md";
     return (localStorage.getItem(SIZE_KEY) as FontSize) || "md";
   });
+  const [showNotes, setShowNotes] = useState(false);
+  const [note, setNoteState] = useState("");
+
+  useEffect(() => {
+    if (concept) setNoteState(getNote(concept.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
