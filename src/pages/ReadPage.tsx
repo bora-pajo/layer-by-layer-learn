@@ -7,7 +7,7 @@ import { ArrowUpRight } from "lucide-react";
 const ReadPage = () => {
   return (
     <div className="phone-shell pb-safe">
-      <MobileHeader eyebrow={`Read mode · ${chapters.length} chapters`} title="An atlas of research" />
+      <MobileHeader eyebrow={`Read mode · ${chapters.length} chapters`} title="Full text read" />
 
       <article className="px-5 pt-6">
         <div className="space-y-16">
@@ -54,7 +54,7 @@ const ReadPage = () => {
                               to={`/c/${c.id}`}
                               className="inline-flex items-center gap-1 text-[10px] text-accent"
                             >
-                              atlas <ArrowUpRight className="h-3 w-3" />
+                              open <ArrowUpRight className="h-3 w-3" />
                             </Link>
                           </div>
                           <h3 className="mt-2 font-display text-xl text-ink text-balance">{c.title}</h3>

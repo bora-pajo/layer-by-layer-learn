@@ -14,7 +14,7 @@ const LAYER_PATH: Record<Layer, string> = {
 };
 const LAYER_LABEL: Record<Layer, string> = {
   glance: "Glance",
-  brief: "Brief",
+  brief: "More",
   example: "Example",
   full: "Full text",
 };

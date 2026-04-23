@@ -16,7 +16,7 @@ interface Props {
 
 const LAYER_LABELS: Record<Layer, string> = {
   glance: "Glance",
-  brief: "Brief",
+  brief: "More",
   example: "Example",
   full: "Full text",
 };
