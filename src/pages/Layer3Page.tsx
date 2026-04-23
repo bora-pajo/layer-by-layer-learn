@@ -157,6 +157,41 @@ const Layer3Page = () => {
           </p>
         ))}
 
+
+        {/* Margin note */}
+        <div className="mt-10">
+          <button
+            onClick={() => setShowNotes((s) => !s)}
+            aria-expanded={showNotes}
+            className={`flex w-full items-center justify-center gap-2 rounded-2xl px-4 py-3 transition-colors ${
+              showNotes ? "bg-surface text-ink shadow-soft" : "bg-surface-2 text-ink-soft hover:text-ink"
+            }`}
+          >
+            <NotebookPen className="h-4 w-4" />
+            <span className="font-display text-sm">
+              {note ? "Edit your note" : "Add a margin note"}
+            </span>
+          </button>
+
+          {showNotes && (
+            <div className="mt-3 rounded-2xl bg-surface p-4 shadow-soft animate-fade-up">
+              <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted">
+                Margin note
+              </div>
+              <textarea
+                value={note}
+                onChange={(e) => {
+                  setNoteState(e.target.value);
+                  persistNote(concept.id, e.target.value);
+                }}
+                placeholder="Write what this concept sparks for you…"
+                rows={4}
+                className="mt-2 w-full resize-none rounded-xl bg-surface-2 px-3 py-2 font-display text-[15px] leading-relaxed text-ink placeholder:text-ink-muted focus:outline-none focus:ring-2 focus:ring-accent/40"
+              />
+            </div>
+          )}
+        </div>
+
         {/* Meta footer */}
         <div className="mt-10 flex items-center justify-between border-t border-border pt-4">
           <span className="font-mono text-[11px] tracking-widest uppercase text-ink-muted">
