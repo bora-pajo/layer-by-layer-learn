@@ -47,7 +47,10 @@ const ExamplePage = () => {
   const example = concept.example;
 
   return (
-    <div className="phone-shell relative animate-fade-in" style={{ minHeight: "100dvh" }}>
+    <div
+      className="phone-shell relative animate-fade-in"
+      style={{ minHeight: "100dvh", background: cardBg }}
+    >
       <LayerHeader
         conceptId={concept.id}
         hue={concept.hue}
@@ -55,45 +58,43 @@ const ExamplePage = () => {
         showTab
       />
 
-      <section className="px-6 pt-6 pb-44">
-        <h1 className="font-display text-[28px] leading-[1.1] text-ink text-balance">
-          {concept.title}.
-        </h1>
-
-        {example ? (
-          <div
-            className="mt-6 rounded-2xl border p-5"
-            style={{ background: cardBg, borderColor: cardBorder }}
-          >
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5" style={{ color: accent }} />
-              <span
-                className="font-mono text-[10px] tracking-[0.22em] uppercase"
-                style={{ color: accent }}
-              >
-                Scenario
-              </span>
-            </div>
-            <h2 className="mt-2 font-display text-[22px] leading-[1.15] text-ink text-balance">
-              {example.title}
-            </h2>
-            <div className="mt-4 space-y-4">
-              {example.body.map((p, i) => (
-                <p
-                  key={i}
-                  className="font-display text-[16px] leading-[1.6] text-ink-soft text-pretty"
-                >
-                  {p}
-                </p>
-              ))}
-            </div>
+      <section className="flex flex-col items-center justify-center px-6 pt-6 pb-40 min-h-[calc(100dvh-160px)]">
+        <div className="w-full max-w-[380px]">
+          <div className="flex items-center justify-center gap-2">
+            <Sparkles className="h-3.5 w-3.5" style={{ color: accent }} />
+            <span
+              className="font-mono text-[10px] tracking-[0.22em] uppercase"
+              style={{ color: accent }}
+            >
+              In practice
+            </span>
           </div>
-        ) : (
-          <p className="mt-6 font-display text-[15px] text-ink-muted">
-            An applied example for this concept is coming soon.
-          </p>
-        )}
+          <h1 className="mt-3 text-center font-display text-[26px] leading-[1.15] text-ink text-balance">
+            {concept.title}.
+          </h1>
 
+          {example ? (
+            <>
+              <h2 className="mt-5 text-center font-display italic text-[20px] leading-[1.2] text-ink-soft text-balance">
+                {example.title}
+              </h2>
+              <div className="mt-5 space-y-4">
+                {example.body.map((p, i) => (
+                  <p
+                    key={i}
+                    className="font-display text-[16px] leading-[1.65] text-ink-soft text-pretty text-center"
+                  >
+                    {p}
+                  </p>
+                ))}
+              </div>
+            </>
+          ) : (
+            <p className="mt-6 text-center font-display text-[15px] text-ink-muted">
+              An applied example for this concept is coming soon.
+            </p>
+          )}
+        </div>
       </section>
 
       <div
