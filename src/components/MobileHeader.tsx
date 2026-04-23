@@ -11,6 +11,7 @@ interface Props {
   right?: ReactNode;
   showThemeToggle?: boolean;
   showLogo?: boolean;
+  logoClassName?: string;
 }
 
 /**
