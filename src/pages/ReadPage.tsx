@@ -19,10 +19,6 @@ const ReadPage = () => {
               <h1 className="mt-2 font-display text-3xl leading-tight text-ink text-balance">
                 {chapter.title}
               </h1>
-              <p className="mt-3 font-display text-base italic text-ink-soft text-pretty">
-                {chapter.subtitle}
-              </p>
-
               <div className="mt-10 space-y-12">
                 {chapter.groups.map((group) => (
                   <section key={group.id} id={group.id} className="scroll-mt-20">
