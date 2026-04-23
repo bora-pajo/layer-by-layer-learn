@@ -175,9 +175,6 @@ const Index = () => {
                 <h2 className="mt-2 font-display text-[26px] leading-[1.1] text-ink text-balance">
                   {chapter.title}.
                 </h2>
-                <p className="mt-2 font-display text-[14px] italic text-ink-soft text-pretty">
-                  {chapter.subtitle}
-                </p>
               </div>
 
               <div className="space-y-8">
