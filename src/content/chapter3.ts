@@ -116,6 +116,7 @@ export const chapter3 = {
           id: "interlibrary-loan",
           number: "2.3",
           title: "Interlibrary loan",
+          shortTitle: "Interlibrary loan",
           glance: "If your library doesn't have it, another library does.",
           brief:
             "Interlibrary loan lets you request articles, books, even DVDs that your library doesn't own. A librarian sources them from affiliated institutions and ships them to you — usually free, sometimes within hours.",
@@ -169,6 +170,7 @@ export const chapter3 = {
           id: "guiding-table",
           number: "3.1",
           title: "The guiding table",
+          shortTitle: "The guiding table",
           glance: "Every article, every column. The spreadsheet that saves the review.",
           brief:
             "Build a single table with one row per article and columns for ID, year, authors, aim, sample, methods, findings. The table makes patterns visible — and patterns are what the literature review is built from.",
@@ -190,6 +192,7 @@ export const chapter3 = {
           id: "conceptual-graph",
           number: "3.2",
           title: "Returning to the conceptual graph",
+          shortTitle: "The conceptual graph",
           glance: "The variables you mapped in Chapter 2 — now anchor the review to them.",
           brief:
             "The graph of variables and constructs you sketched while formulating your question is also the spine of your literature review. Every section should map back to a node on that graph.",
@@ -211,6 +214,7 @@ export const chapter3 = {
           id: "organizing-work",
           number: "3.3",
           title: "Organizing your work",
+          shortTitle: "Organizing your work",
           glance: "Logical path beats fancy structure.",
           brief:
             "Whatever organizing principle you pick — broad-to-narrow, by methodology, by theme — the test is the same: can a friend follow the logic? Disorganized writing is a literature review jumping between methods and theory and a missing perspective in three sentences.",
@@ -262,6 +266,7 @@ export const chapter3 = {
           id: "reading-critically",
           number: "4.1",
           title: "Reading critically",
+          shortTitle: "Reading critically",
           glance: "Active reading, not passive absorbing.",
           brief:
             "Critical thinking starts with critical reading: arguing with the page in real time. Passive reading is when your eyes move and your mind wanders. Active reading is when each sentence you read triggers a sentence in your head.",
@@ -283,6 +288,7 @@ export const chapter3 = {
           id: "analyzing-studies",
           number: "4.2",
           title: "Analyzing studies",
+          shortTitle: "Analyzing studies",
           glance: "Pull apart the methods. Find the niche they didn't fill.",
           brief:
             "To analyze a study, look at its concepts and theory, then unpack its methodology in detail. Across many studies, methodological patterns become a map — and the white space on that map is where your study lives.",
@@ -334,6 +340,7 @@ export const chapter3 = {
           id: "systematic-vs-narrative",
           number: "5.2",
           title: "Systematic vs. narrative reviews",
+          shortTitle: "Systematic vs. narrative",
           glance: "A narrative review serves your study. A systematic review serves the field.",
           brief:
             "A systematic review is its own kind of research study. It collects every study on a topic following strict, reported procedures, with no agenda to support a particular new study. It reduces selection bias and follows rigorous methodology — including its own literature review inside it.",
