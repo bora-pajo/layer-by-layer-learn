@@ -97,6 +97,7 @@ export const chapter3 = {
           id: "search-engines-boolean",
           number: "2.2",
           title: "Search engines and Boolean operators",
+          shortTitle: "Search & Boolean",
           glance: "AND narrows. OR widens. NOT excludes. Quotes lock a phrase.",
           brief:
             "Always use 'advanced search.' Combine keywords with AND, OR, NOT to shape the result set. Use quotes to keep a phrase intact, an asterisk to truncate word stems, and search abstracts before full text.",
