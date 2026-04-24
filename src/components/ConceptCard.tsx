@@ -49,7 +49,7 @@ export function ConceptCard({ concept, hue, visited, category = "epistemology", 
             <span className="text-[12px] text-ink-muted">{category}</span>
           </div>
           <h3 className="mt-0.5 font-display text-[19px] leading-[1.15] text-ink text-balance line-clamp-2">
-            {concept.title}.
+            {concept.shortTitle ?? concept.title}.
           </h3>
 
         </div>

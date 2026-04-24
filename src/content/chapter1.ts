@@ -23,6 +23,7 @@ export interface Concept {
   id: string;
   number: string;       // e.g. "1.2a"
   title: string;
+  shortTitle?: string;  // 2–5 words for layer 1 / cards
   glance: string;       // 6–14 words
   brief: string;        // 2–4 sentences
   full: string[];       // paragraphs — paste real text here

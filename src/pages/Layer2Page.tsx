@@ -53,10 +53,7 @@ const Layer2Page = () => {
           <div className="font-mono text-[10px] tracking-[0.22em] uppercase text-ink-muted text-center">
             A little more
           </div>
-          <h1 className="mt-3 text-center font-display text-[32px] leading-[1.08] text-ink text-balance">
-            {concept.title}.
-          </h1>
-          <p className="mt-5 text-center font-display text-[18px] leading-[1.6] text-ink-soft text-pretty">
+          <p className="mt-5 text-center font-display text-[20px] leading-[1.55] text-ink text-pretty">
             {concept.brief}
           </p>
         </div>
