@@ -23,6 +23,7 @@ export interface Concept {
   id: string;
   number: string;       // e.g. "1.2a"
   title: string;
+  shortTitle?: string;  // 2–5 words for layer 1 / cards
   glance: string;       // 6–14 words
   brief: string;        // 2–4 sentences
   full: string[];       // paragraphs — paste real text here
@@ -59,6 +60,7 @@ export const chapter = {
           id: "information-is-not-the-same-as-knowledge",
           number: "1.1",
           title: "Information is not the same as Knowledge",
+          shortTitle: "Information ≠ knowledge",
           glance: "Information and knowledge are not the same thing.",
           brief: "Information and knowledge are not the same thing. Information can exist without knowledge, but knowledge cannot exist without information. Knowledge requires understanding, interpretation, and meaning-making.",
           full: [
@@ -78,6 +80,7 @@ export const chapter = {
           id: "scientific-knowledge-is-just-one-kind-of-knowledge",
           number: "1.2",
           title: "Scientific knowledge is just one kind of knowledge",
+          shortTitle: "One kind of knowing",
           glance: "Scientific knowledge is only one kind of knowledge.",
           brief: "Scientific knowledge is only one kind of knowledge. Traditional, authoritative, and experiential knowledge are all legitimate and often rational — they just build and transmit differently. Calling something \"traditional\" doesn't make it unscientific.",
           full: [
@@ -97,6 +100,7 @@ export const chapter = {
           id: "we-get-closer-to-reality-through-knowledge",
           number: "1.3",
           title: "We get closer to Reality through Knowledge",
+          shortTitle: "Closer, never there",
           glance: "Reality and knowledge are distinct.",
           brief: "Reality and knowledge are distinct. Research moves us closer to reality but never captures it fully. Knowledge is always provisional — a climb up the mountain, not arrival at the summit.",
           full: [
@@ -116,6 +120,7 @@ export const chapter = {
           id: "research-is-the-process-scientific-knowledge-is-th",
           number: "1.4",
           title: "Research is the process. Scientific knowledge is the product",
+          shortTitle: "Process vs. product",
           glance: "Research is the process; scientific knowledge is the product.",
           brief: "Research is the process; scientific knowledge is the product. Methodology (the \"how\") is what makes a finding count as scientific.",
           full: [
@@ -144,6 +149,7 @@ export const chapter = {
           id: "according-to-karl-popper-scientific-knowledge-is-t",
           number: "2.1",
           title: "According to Karl Popper, scientific knowledge is the knowledge that can be falsified.",
+          shortTitle: "Popper: falsifiability",
           glance: "Popper's core argument: a theory is only scientific if it could, in principle, be shown false.",
           brief: "Popper's core argument: a theory is only scientific if it could, in principle, be shown false. Theories that explain everything explain nothing scientifically.",
           full: [
@@ -163,6 +169,7 @@ export const chapter = {
           id: "knowledge-grows-by-putting-ideas-at-risk",
           number: "2.2",
           title: "Knowledge grows by putting ideas at risk",
+          shortTitle: "Ideas at risk",
           glance: "Knowledge advances not by piling up confirmations but by putting ideas at risk.",
           brief: "Knowledge advances not by piling up confirmations but by putting ideas at risk. We hold theories as true only until we manage to falsify them, then we build something stronger.",
           full: [
@@ -182,6 +189,7 @@ export const chapter = {
           id: "thomas-kuhn-sees-normal-science-the-science-that-i",
           number: "2.3",
           title: "Thomas Kuhn sees normal science the science that is accepted by the scientific community.  When anomalies start to happen, that's when we see the beginning of a scientific revolution.",
+          shortTitle: "Kuhn: normal science",
           glance: "Kuhn's core argument: science mostly happens inside accepted paradigms (\"normal science\"), not through constant radical testing.",
           brief: "Kuhn's core argument: science mostly happens inside accepted paradigms (\"normal science\"), not through constant radical testing. Paradigms shape what questions get asked and what counts as a good answer.",
           full: [
@@ -201,6 +209,7 @@ export const chapter = {
           id: "change-comes-through-crisis-not-steady-correction",
           number: "2.4",
           title: "Change comes through crisis, not steady correction",
+          shortTitle: "Change through crisis",
           glance: "Major change comes through crisis, not steady correction.",
           brief: "Major change comes through crisis, not steady correction. Anomalies accumulate, the old framework cracks, a revolution happens, and a new paradigm eventually becomes the new normal.",
           full: [
@@ -220,6 +229,7 @@ export const chapter = {
           id: "popper-and-kuhn-are-both-right",
           number: "2.5",
           title: "Popper and Kuhn are both right",
+          shortTitle: "Both are right",
           glance: "Popper and Kuhn disagree but are both right about something.",
           brief: "Popper and Kuhn disagree but are both right about something. Popper captures gradual refinement; Kuhn captures the dramatic shifts. Students should resist picking a \"winner\" — real science shows both patterns.",
           full: [
@@ -239,6 +249,7 @@ export const chapter = {
           id: "newcomers-drive-paradigm-shifts",
           number: "2.6",
           title: "Newcomers drive paradigm shifts",
+          shortTitle: "Newcomers shift paradigms",
           glance: "Newcomers to a field are often the ones who drive paradigm shifts (Kuhn's own…",
           brief: "Newcomers to a field are often the ones who drive paradigm shifts (Kuhn's own observation) — a useful point for undergraduates to hear.",
           full: [
@@ -267,6 +278,7 @@ export const chapter = {
           id: "there-is-no-single-best-methodology",
           number: "3.1",
           title: "There is no single \"best\" methodology.",
+          shortTitle: "No best method",
           glance: "There is no single \"best\" method.",
           brief: "There is no single \"best\" method. Qualitative, quantitative, and mixed methods answer different kinds of questions, and the method must follow the question.",
           full: [
@@ -286,6 +298,7 @@ export const chapter = {
           id: "qualitative-research-inductive-depth",
           number: "3.2",
           title: "Qualitative research = inductive, depth",
+          shortTitle: "Qualitative: depth",
           glance: "Qualitative research is inductive — it moves from specific observations outward to theory, and…",
           brief: "Qualitative research is inductive — it moves from specific observations outward to theory, and it prioritizes depth, meaning, and lived experience over breadth.",
           full: [
@@ -305,6 +318,7 @@ export const chapter = {
           id: "quantitative-research-deductive-breadth",
           number: "3.3",
           title: "Quantitative research = deductive, breadth",
+          shortTitle: "Quantitative: breadth",
           glance: "Quantitative research is deductive — it starts from theory and narrows to measurable variables.",
           brief: "Quantitative research is deductive — it starts from theory and narrows to measurable variables. Most of the heavy work happens before data collection; once the study begins, there is little room to change course.",
           full: [
@@ -324,6 +338,7 @@ export const chapter = {
           id: "depth-vs-breadth-trade-off",
           number: "3.4",
           title: "Depth vs. breadth trade-off",
+          shortTitle: "Depth or breadth",
           glance: "Qualitative gives depth on a small group; quantitative gives breadth on a large one.",
           brief: "Qualitative gives depth on a small group; quantitative gives breadth on a large one. Neither is inherently better.",
           full: [
@@ -343,6 +358,7 @@ export const chapter = {
           id: "mixed-methods-four-designs-each-with-a-purpose",
           number: "3.5",
           title: "Mixed methods — four designs, each with a purpose",
+          shortTitle: "Mixed methods",
           glance: "Mixed methods exist because single-method studies leave real gaps.",
           brief: "Mixed methods exist because single-method studies leave real gaps. The four designs (convergent, explanatory sequential, exploratory sequential, embedded) are not interchangeable — each answers a specific kind of question.",
           full: [
@@ -371,6 +387,7 @@ export const chapter = {
           id: "ai-is-a-tool-not-a-researcher",
           number: "4.1",
           title: "AI is a tool, not a researcher",
+          shortTitle: "A tool, not a researcher",
           glance: "AI is a tool, not a researcher.",
           brief: "AI is a tool, not a researcher. The calculator analogy matters: it speeds up tasks, but it doesn't \"do\" the intellectual work.",
           full: [
@@ -390,6 +407,7 @@ export const chapter = {
           id: "information-knowledge-distinction-applies-to-ai",
           number: "4.2",
           title: "Information/knowledge distinction applies to AI",
+          shortTitle: "AI gives information",
           glance: "The information/knowledge distinction applies directly to AI.",
           brief: "The information/knowledge distinction applies directly to AI. AI is excellent at producing information; it does not produce knowledge on its own.",
           full: [
@@ -409,6 +427,7 @@ export const chapter = {
           id: "ai-can-be-confidently-wrong",
           number: "4.3",
           title: "AI can be confidently wrong",
+          shortTitle: "Confidently wrong",
           glance: "AI can be confidently wrong.",
           brief: "AI can be confidently wrong. Polished, fluent output is not evidence of accuracy — this is arguably its most dangerous property.",
           full: [
@@ -428,6 +447,7 @@ export const chapter = {
           id: "ai-carries-bias",
           number: "4.4",
           title: "AI carries bias",
+          shortTitle: "AI carries bias",
           glance: "AI carries bias from its training data and cannot be treated as neutral.",
           brief: "AI carries bias from its training data and cannot be treated as neutral.",
           full: [
@@ -447,6 +467,7 @@ export const chapter = {
           id: "the-ethics-of-ai-rest-with-the-user",
           number: "4.5",
           title: "The ethics of AI rest with the user",
+          shortTitle: "Ethics live with you",
           glance: "The ethics of AI live with the user, not the tool.",
           brief: "The ethics of AI live with the user, not the tool. This shifts responsibility squarely onto the researcher.",
           full: [
@@ -466,6 +487,7 @@ export const chapter = {
           id: "ai-is-not-a-source-a-participant-or-a-substitute-f",
           number: "4.6",
           title: "AI is not a source, a participant, or a substitute for analysis",
+          shortTitle: "Not a source",
           glance: "AI should never be treated as a source, a participant, or a substitute for analysis.",
           brief: "AI should never be treated as a source, a participant, or a substitute for analysis.",
           full: [
@@ -494,6 +516,7 @@ export const chapter = {
           id: "ethics-come-first",
           number: "5.1",
           title: "Ethics come first",
+          shortTitle: "Ethics come first",
           glance: "Ethical treatment of participants is the first obligation of research, not an afterthought.",
           brief: "Ethical treatment of participants is the first obligation of research, not an afterthought. Informed consent, confidentiality, protection from coercion, and disclosure of conflicts of interest are non-negotiable.",
           full: [
@@ -513,6 +536,7 @@ export const chapter = {
           id: "history-matters-tuskegee-is-not-a-footnote",
           number: "5.2",
           title: "History matters — Tuskegee is not a footnote",
+          shortTitle: "Tuskegee is not a footnote",
           glance: "History matters here.",
           brief: "History matters here. Tuskegee is not a historical footnote — it explains why every rule exists and why distrust of research persists in some communities.",
           full: [
@@ -532,6 +556,7 @@ export const chapter = {
           id: "objectivity-is-imperfect-but-still-required",
           number: "5.3",
           title: "Objectivity is imperfect but still required",
+          shortTitle: "Imperfect, still required",
           glance: "Perfect objectivity is probably unattainable, but reducing bias is both possible and required.",
           brief: "Perfect objectivity is probably unattainable, but reducing bias is both possible and required.",
           full: [
@@ -551,6 +576,7 @@ export const chapter = {
           id: "reflexivity-complements-objectivity",
           number: "5.4",
           title: "Reflexivity complements objectivity",
+          shortTitle: "Reflexivity",
           glance: "Reflexivity complements objectivity rather than replacing it.",
           brief: "Reflexivity complements objectivity rather than replacing it. Honesty about the lens we bring is stronger than pretending we don't have one.",
           full: [
@@ -570,6 +596,7 @@ export const chapter = {
           id: "common-bias-traps-selective-observation-overconfid",
           number: "5.5",
           title: "Common bias traps: selective observation, overconfidence, overgeneralization",
+          shortTitle: "Bias traps",
           glance: "Common bias traps — selective observation, overconfidence, overgeneralization — come from inside the researcher,…",
           brief: "Common bias traps — selective observation, overconfidence, overgeneralization — come from inside the researcher, not from bad data.",
           full: [
@@ -589,6 +616,7 @@ export const chapter = {
           id: "subjectivity-is-a-double-edged-sword",
           number: "5.6",
           title: "Subjectivity is a double-edged sword",
+          shortTitle: "Double-edged subjectivity",
           glance: "Subjectivity is a double-edged claim worth teaching carefully: it produces the biases we must…",
           brief: "Subjectivity is a double-edged claim worth teaching carefully: it produces the biases we must guard against, but it also fuels the creativity that makes research worth doing. Students shouldn't be taught to fear their own perspective — only to manage it.",
           full: [

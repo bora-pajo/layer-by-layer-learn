@@ -67,8 +67,8 @@ const Layer1Page = () => {
       />
 
       <section className="flex flex-col items-center justify-center px-6 pt-10 pb-40 min-h-[calc(100dvh-160px)]">
-        <h1 className="text-center font-display text-[40px] leading-[1.05] text-ink text-balance max-w-[340px]">
-          {concept.title}.
+        <h1 className="text-center font-display text-[44px] leading-[1.02] text-ink text-balance max-w-[340px]">
+          {concept.shortTitle ?? concept.title}.
         </h1>
 
         <p className="mt-6 text-center font-serif text-[18px] leading-[1.5] text-ink text-balance max-w-[340px]">

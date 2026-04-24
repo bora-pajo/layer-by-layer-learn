@@ -69,13 +69,9 @@ const ExamplePage = () => {
               In practice
             </span>
           </div>
-          <h1 className="mt-3 text-center font-display text-[26px] leading-[1.15] text-ink text-balance">
-            {concept.title}.
-          </h1>
-
           {example ? (
             <>
-              <h2 className="mt-5 text-center font-display italic text-[20px] leading-[1.2] text-ink-soft text-balance">
+              <h2 className="mt-4 text-center font-display italic text-[22px] leading-[1.2] text-ink text-balance">
                 {example.title}
               </h2>
               <div className="mt-5 space-y-4">

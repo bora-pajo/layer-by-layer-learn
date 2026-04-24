@@ -21,6 +21,7 @@ export const chapter3 = {
           id: "what-is-litreview",
           number: "1.1",
           title: "What a literature review actually is",
+          shortTitle: "What it actually is",
           glance: "A synthesis of every study, not a list of summaries.",
           brief:
             "The name is a misnomer — a literature review is not a review. It's the synthesis of the entire body of original research on a topic, written as a narrative argument that lands on the question you're about to ask.",
@@ -43,6 +44,7 @@ export const chapter3 = {
           id: "purpose-of-litreview",
           number: "1.2",
           title: "Why you write one",
+          shortTitle: "Why you write one",
           glance: "Prove you know the field. Earn the right to add to it.",
           brief:
             "The literature review has two jobs: show that you genuinely know the body of work on this topic, and build the case that your proposed study fills a real gap. Both are required to defend a study to the scientific community.",
@@ -73,6 +75,7 @@ export const chapter3 = {
           id: "databases",
           number: "2.1",
           title: "Libraries and online databases",
+          shortTitle: "Libraries & databases",
           glance: "Your school library is the door. Databases are the shelves.",
           brief:
             "Most fields have a flagship database: PsycInfo for psychology, PubMed for health, ERIC for education, JSTOR for arts and sciences, ProQuest for dissertations. Learn one well — the rest follow the same logic.",
@@ -94,6 +97,7 @@ export const chapter3 = {
           id: "search-engines-boolean",
           number: "2.2",
           title: "Search engines and Boolean operators",
+          shortTitle: "Search & Boolean",
           glance: "AND narrows. OR widens. NOT excludes. Quotes lock a phrase.",
           brief:
             "Always use 'advanced search.' Combine keywords with AND, OR, NOT to shape the result set. Use quotes to keep a phrase intact, an asterisk to truncate word stems, and search abstracts before full text.",
@@ -116,6 +120,7 @@ export const chapter3 = {
           id: "interlibrary-loan",
           number: "2.3",
           title: "Interlibrary loan",
+          shortTitle: "Interlibrary loan",
           glance: "If your library doesn't have it, another library does.",
           brief:
             "Interlibrary loan lets you request articles, books, even DVDs that your library doesn't own. A librarian sources them from affiliated institutions and ships them to you — usually free, sometimes within hours.",
@@ -138,6 +143,7 @@ export const chapter3 = {
           id: "annotated-bibliography",
           number: "2.4",
           title: "Annotated bibliographies",
+          shortTitle: "Annotated bibliographies",
           glance: "A short summary of every study, written for future-you.",
           brief:
             "An annotated bibliography is a brief summary of each study you read — aim, theory, methods, sample, results, your impressions — kept in a single file. It's the raw material your literature review is built from.",
@@ -169,6 +175,7 @@ export const chapter3 = {
           id: "guiding-table",
           number: "3.1",
           title: "The guiding table",
+          shortTitle: "The guiding table",
           glance: "Every article, every column. The spreadsheet that saves the review.",
           brief:
             "Build a single table with one row per article and columns for ID, year, authors, aim, sample, methods, findings. The table makes patterns visible — and patterns are what the literature review is built from.",
@@ -190,6 +197,7 @@ export const chapter3 = {
           id: "conceptual-graph",
           number: "3.2",
           title: "Returning to the conceptual graph",
+          shortTitle: "The conceptual graph",
           glance: "The variables you mapped in Chapter 2 — now anchor the review to them.",
           brief:
             "The graph of variables and constructs you sketched while formulating your question is also the spine of your literature review. Every section should map back to a node on that graph.",
@@ -211,6 +219,7 @@ export const chapter3 = {
           id: "organizing-work",
           number: "3.3",
           title: "Organizing your work",
+          shortTitle: "Organizing your work",
           glance: "Logical path beats fancy structure.",
           brief:
             "Whatever organizing principle you pick — broad-to-narrow, by methodology, by theme — the test is the same: can a friend follow the logic? Disorganized writing is a literature review jumping between methods and theory and a missing perspective in three sentences.",
@@ -232,6 +241,7 @@ export const chapter3 = {
           id: "patterns",
           number: "3.4",
           title: "Conceptualizing patterns",
+          shortTitle: "Patterns across studies",
           glance: "Sort by similarity and difference. The same way you sort a sock drawer.",
           brief:
             "Especially with smaller bodies of literature, organize the review around patterns: findings several studies share, findings only one study reports, methods that recur, samples that don't. Patterns are the structure, not an afterthought.",
@@ -262,6 +272,7 @@ export const chapter3 = {
           id: "reading-critically",
           number: "4.1",
           title: "Reading critically",
+          shortTitle: "Reading critically",
           glance: "Active reading, not passive absorbing.",
           brief:
             "Critical thinking starts with critical reading: arguing with the page in real time. Passive reading is when your eyes move and your mind wanders. Active reading is when each sentence you read triggers a sentence in your head.",
@@ -283,6 +294,7 @@ export const chapter3 = {
           id: "analyzing-studies",
           number: "4.2",
           title: "Analyzing studies",
+          shortTitle: "Analyzing studies",
           glance: "Pull apart the methods. Find the niche they didn't fill.",
           brief:
             "To analyze a study, look at its concepts and theory, then unpack its methodology in detail. Across many studies, methodological patterns become a map — and the white space on that map is where your study lives.",
@@ -313,6 +325,7 @@ export const chapter3 = {
           id: "hypotheses-or-questions",
           number: "5.1",
           title: "Where hypotheses (or questions) go",
+          shortTitle: "Where hypotheses go",
           glance: "At the end of the review. After the argument. Before the methods.",
           brief:
             "The literature review ends with the study's hypotheses or research question. The whole review has been arguing that something is unanswered — the hypotheses are what you're now claiming to answer. Quantitative studies state both alternative and null; qualitative studies state a question.",
@@ -334,6 +347,7 @@ export const chapter3 = {
           id: "systematic-vs-narrative",
           number: "5.2",
           title: "Systematic vs. narrative reviews",
+          shortTitle: "Systematic vs. narrative",
           glance: "A narrative review serves your study. A systematic review serves the field.",
           brief:
             "A systematic review is its own kind of research study. It collects every study on a topic following strict, reported procedures, with no agenda to support a particular new study. It reduces selection bias and follows rigorous methodology — including its own literature review inside it.",
