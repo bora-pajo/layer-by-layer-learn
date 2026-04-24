@@ -21,6 +21,7 @@ export const chapter3 = {
           id: "what-is-litreview",
           number: "1.1",
           title: "What a literature review actually is",
+          shortTitle: "What it actually is",
           glance: "A synthesis of every study, not a list of summaries.",
           brief:
             "The name is a misnomer — a literature review is not a review. It's the synthesis of the entire body of original research on a topic, written as a narrative argument that lands on the question you're about to ask.",
@@ -43,6 +44,7 @@ export const chapter3 = {
           id: "purpose-of-litreview",
           number: "1.2",
           title: "Why you write one",
+          shortTitle: "Why you write one",
           glance: "Prove you know the field. Earn the right to add to it.",
           brief:
             "The literature review has two jobs: show that you genuinely know the body of work on this topic, and build the case that your proposed study fills a real gap. Both are required to defend a study to the scientific community.",
@@ -73,6 +75,7 @@ export const chapter3 = {
           id: "databases",
           number: "2.1",
           title: "Libraries and online databases",
+          shortTitle: "Libraries & databases",
           glance: "Your school library is the door. Databases are the shelves.",
           brief:
             "Most fields have a flagship database: PsycInfo for psychology, PubMed for health, ERIC for education, JSTOR for arts and sciences, ProQuest for dissertations. Learn one well — the rest follow the same logic.",
@@ -139,6 +142,7 @@ export const chapter3 = {
           id: "annotated-bibliography",
           number: "2.4",
           title: "Annotated bibliographies",
+          shortTitle: "Annotated bibliographies",
           glance: "A short summary of every study, written for future-you.",
           brief:
             "An annotated bibliography is a brief summary of each study you read — aim, theory, methods, sample, results, your impressions — kept in a single file. It's the raw material your literature review is built from.",
@@ -236,6 +240,7 @@ export const chapter3 = {
           id: "patterns",
           number: "3.4",
           title: "Conceptualizing patterns",
+          shortTitle: "Patterns across studies",
           glance: "Sort by similarity and difference. The same way you sort a sock drawer.",
           brief:
             "Especially with smaller bodies of literature, organize the review around patterns: findings several studies share, findings only one study reports, methods that recur, samples that don't. Patterns are the structure, not an afterthought.",
@@ -319,6 +324,7 @@ export const chapter3 = {
           id: "hypotheses-or-questions",
           number: "5.1",
           title: "Where hypotheses (or questions) go",
+          shortTitle: "Where hypotheses go",
           glance: "At the end of the review. After the argument. Before the methods.",
           brief:
             "The literature review ends with the study's hypotheses or research question. The whole review has been arguing that something is unanswered — the hypotheses are what you're now claiming to answer. Quantitative studies state both alternative and null; qualitative studies state a question.",

@@ -67,6 +67,7 @@ export const chapter2 = {
           id: "narrowing-topic",
           number: "1.3",
           title: "Narrowing the topic",
+          shortTitle: "Narrow the topic",
           glance: "Pin down the constructs. Pin down the population.",
           brief:
             "A topic becomes a research question when you've named two things precisely: the constructs you care about, and the population you're studying. 'Society' becomes 'fathers'; 'education' becomes 'public elementary schools.'",
@@ -98,6 +99,7 @@ export const chapter2 = {
           id: "construct",
           number: "2.1",
           title: "What is a construct?",
+          shortTitle: "What is a construct",
           glance: "An abstract idea you can't measure directly — yet.",
           brief:
             "A construct is a concept central to your study (self-esteem, trust, quality of life) that doesn't come with a built-in measuring stick. The work of research is to break it down until parts of it can be observed.",
@@ -142,6 +144,7 @@ export const chapter2 = {
           id: "ethics-operationalization",
           number: "2.3",
           title: "Ethics in measurement",
+          shortTitle: "Ethics in measurement",
           glance: "How you ask matters as much as what you ask.",
           brief:
             "Operationalization isn't ethically neutral. The wording of a question can re-traumatize, condescend, or smuggle in assumptions. Sensitive constructs need sensitive instruments — and sometimes a warning before participants begin.",
@@ -173,6 +176,7 @@ export const chapter2 = {
           id: "independent-dependent",
           number: "3.1",
           title: "Independent & dependent variables",
+          shortTitle: "Independent & dependent",
           glance: "The one that predicts. The one that responds.",
           brief:
             "The independent variable is the predictor — the one you think explains variation. The dependent variable is the outcome — the surprise you're hoping it explains. The same variable can switch roles in a different study.",
@@ -272,6 +276,7 @@ export const chapter2 = {
           id: "hypothesis",
           number: "4.1",
           title: "What is a hypothesis?",
+          shortTitle: "What is a hypothesis",
           glance: "A specific prediction about what your data will show.",
           brief:
             "A hypothesis is a statement that predicts a specific phenomenon or behavior. It belongs to quantitative work — qualitative studies don't use them — and it goes further than a hunch by saying exactly how variables should relate.",
@@ -293,6 +298,7 @@ export const chapter2 = {
           id: "alternative-null",
           number: "4.2",
           title: "Alternative & null hypotheses",
+          shortTitle: "Alternative & null",
           glance: "We test the null. We never accept it.",
           brief:
             "The alternative hypothesis (H₁, H₂, …) predicts a relationship. The null hypothesis (H₀) says there isn't one. Statistical tests target the null — and you can only reject it or fail to reject it, never accept it.",
@@ -337,6 +343,7 @@ export const chapter2 = {
           id: "open-ended",
           number: "4.4",
           title: "Open-ended questions",
+          shortTitle: "Open-ended questions",
           glance: "When you don't have a prediction — only curiosity.",
           brief:
             "If you don't yet have variables, just constructs and curiosity, you may be heading into a qualitative study. Open-ended questions invite stories and meaning rather than measurement.",
@@ -368,6 +375,7 @@ export const chapter2 = {
           id: "visual-model",
           number: "5.1",
           title: "Sketch the question",
+          shortTitle: "Sketch the question",
           glance: "Circles for constructs, rectangles for variables, arrows for direction.",
           brief:
             "Once your question, constructs, variables, and controls start to make sense, draw them. A simple diagram with circles, rectangles, arrows, and + / – signs makes assumptions visible — and almost always reveals a gap.",
